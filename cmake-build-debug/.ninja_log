@@ -1,0 +1,5 @@
+# ninja log v5
+15	1206	8044722032590451	CMakeFiles/SDLProject.dir/main.cpp.obj	fd0cfa4f7bfb1bd8
+1207	1393	8044722033933854	SDLProject.exe	406519b6517450c3
+8	873	8044722029240791	CMakeFiles/SDLProject.dir/Actor/Actor.cpp.obj	89999f5c5ada28f2
+19	1371	8044721851987257	CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj	48d15a8d7f427eac
