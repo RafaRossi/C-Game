@@ -56,12 +56,12 @@ build CMakeFiles/SDLProject.dir/main.cpp.obj: CXX_COMPILER__SDLProject_unscanned
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir
 
-build CMakeFiles/SDLProject.dir/Actor/Actor.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Actor/Actor.cpp || cmake_object_order_depends_target_SDLProject
-  DEP_FILE = CMakeFiles\SDLProject.dir\Actor\Actor.cpp.obj.d
+build CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Actor/Actor.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Actor\Actor.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   INCLUDES = -isystem C:/SDL3-3/include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Actor
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Actor
 
 build CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Game/Game.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Game\Game.cpp.obj.d
@@ -70,12 +70,26 @@ build CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj: CXX_COMPILER__SDLProject
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Game
 
-build CMakeFiles/SDLProject.dir/Core/Renderer/Renderer.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Renderer/Renderer.cpp || cmake_object_order_depends_target_SDLProject
-  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Renderer\Renderer.cpp.obj.d
+build CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Inputs/InputManager.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Inputs\InputManager.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
   INCLUDES = -isystem C:/SDL3-3/include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Renderer
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Inputs
+
+build CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Component/Component.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Component\Component.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SDL3-3/include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Component
+
+build CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Camera/CameraComponent.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Camera\CameraComponent.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -isystem C:/SDL3-3/include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Camera
 
 
 # =============================================================================
@@ -85,7 +99,7 @@ build CMakeFiles/SDLProject.dir/Core/Renderer/Renderer.cpp.obj: CXX_COMPILER__SD
 #############################################
 # Link the executable SDLProject.exe
 
-build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Actor/Actor.cpp.obj CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Core/Renderer/Renderer.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib
+build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib
   FLAGS = -g
   LINK_LIBRARIES = C:/SDL3-3/lib/x64/SDL3.lib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SDLProject.dir

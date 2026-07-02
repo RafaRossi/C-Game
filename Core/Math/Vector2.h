@@ -22,6 +22,13 @@ struct Vector2{
     Vector2 operator-(const Vector2& other) const { return {x - other.x, y - other.y}; }
     Vector2 operator*(float scalar) const { return {x * scalar, y * scalar}; }
 
+    Vector2 operator/(float scalar) const { return {x / scalar, y / scalar }; }
+    Vector2 operator-() const { return {-x, -y }; }
+
+    friend Vector2 operator*(float scalar, const Vector2& v){
+        return {v.x * scalar, v.y * scalar};
+    }
+
     inline float Length() const {
         return std::sqrt(x * x + y * y);
     }

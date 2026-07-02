@@ -11,7 +11,7 @@
 #include <SDL3/SDL_pixels.h>
 #include <SDL3/SDL_render.h>
 #include "../Math/Vector2.h"
-#include "../Renderer/Renderer.h"
+#include "../Component/Component.h"
 
 struct Transform {
     Vector2 position;
@@ -29,50 +29,77 @@ struct Transform {
 };
 
 
-struct Actor {
+class Actor {
+public:
     Transform transform;
-    Renderer renderer;
+
+    virtual ~Actor() = default;
 
     Actor* parent = nullptr;
     std::vector<Actor*> children;
 
-public:
+    void AddChild(Actor* child) {
+        if (child == nullptr || child == this) return;
+        if (child->parent == this) return;
 
-    void Draw(SDL_Renderer* renderer) const;
-    void Update(float deltaTime);
-
-    Vector2 GetWorldPosition() const {
-        if(parent == nullptr)
-            return transform.position;
-
-        return parent->GetWorldPosition() + transform.position;
-    }
-
-    float GetWorldRotation() const {
-        if(parent == nullptr)
-            return transform.rotation;
-
-        return parent->GetWorldRotation() + transform.rotation;
-    }
-
-    void AddChild(Actor* child){
-        if(child == nullptr || child == this) return;
-
-        if(child->parent == this) return;
-
-        if(child->parent != nullptr) child->parent->RemoveChild(child);
+        if (child->parent != nullptr)
+            child->parent->RemoveChild(child);
 
         child->parent = this;
         children.push_back(child);
     }
 
-    void RemoveChild(Actor* child){
+    void RemoveChild(Actor* child) {
         auto it = std::find(children.begin(), children.end(), child);
-        if(it != children.end()){
+        if (it != children.end()) {
             (*it)->parent = nullptr;
             children.erase(it);
         }
     }
+
+    Vector2 GetWorldPosition() const {
+        if (parent == nullptr)
+            return transform.position;
+        return parent->GetWorldPosition() + transform.position;
+    }
+
+    float GetWorldRotation() const {
+        if (parent == nullptr)
+            return transform.rotation;
+        return parent->GetWorldRotation() + transform.rotation;
+    }
+
+    template<typename T>
+    T* AddComponent() {
+        static_assert(std::is_base_of<Component, T>::value,
+                      "T precisa herdar de Component");
+
+        auto* component = new T();
+        component->owner = this;
+        m_Components.push_back(component);
+        return component;
+    }
+
+    template<typename T>
+    T* GetComponent() const {
+        for (auto* c : m_Components)
+            if (auto* casted = dynamic_cast<T*>(c))
+                return casted;
+        return nullptr;
+    }
+
+    virtual void Update(float deltaTime) {
+        for (auto* c : m_Components)
+            c->Update(deltaTime);
+    }
+
+    virtual void Draw(SDL_Renderer* renderer) {
+        for (auto* c : m_Components)
+            c->Draw(renderer);
+    }
+
+private:
+    std::vector<Component*> m_Components;
 };
 
 #endif //SDLPROJECT_ACTOR_H

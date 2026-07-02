@@ -6,12 +6,18 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(${PROJECT_NAME} main.cpp
         Core/Actor/Actor.h
         Core/Actor/Actor.cpp
-        Utils/Utils.h
         Core/Math/Vector2.h
         Core/Math/Math.h
         Core/Game/Game.h
         Core/Game/Game.cpp
-        Core/Renderer/Renderer.h)
+        Core/Renderer/Renderer.h
+        Core/Actor/Actor.cpp
+        Core/Inputs/InputManager.cpp
+        Core/Inputs/InputManager.h
+        Core/Camera/CameraComponent.h
+        Core/Component/Component.cpp
+        Core/Component/Component.h
+        Core/Camera/CameraComponent.cpp)
 
 set(SDL3_DIR "C:/SDL3-3")
 

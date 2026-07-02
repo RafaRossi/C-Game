@@ -1,5 +1,14 @@
 # ninja log v5
-15	1206	8044722032590451	CMakeFiles/SDLProject.dir/main.cpp.obj	fd0cfa4f7bfb1bd8
-1207	1393	8044722033933854	SDLProject.exe	406519b6517450c3
+12	1039	8045331786606403	CMakeFiles/SDLProject.dir/main.cpp.obj	fd0cfa4f7bfb1bd8
+1232	1651	8045331791479007	SDLProject.exe	3244d172c2b4f158
 8	873	8044722029240791	CMakeFiles/SDLProject.dir/Actor/Actor.cpp.obj	89999f5c5ada28f2
-19	1371	8044721851987257	CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj	48d15a8d7f427eac
+1	282	8046499516121983	build.ninja	11a60d1998751bbf
+16	1190	8045331788098221	CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj	48d15a8d7f427eac
+6	841	8045331784620848	CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj	13bc936eca154848
+24	319	8046516075778965	CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj	99669e08397a03d7
+39	1168	8046516084259934	CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj	bf046020857f13ba
+61	865	8046523424624304	CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj	dbafbb70f0f5a323
+16	916	8046523425166999	CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj	13bc936eca154848
+8	1212	8046523428115017	CMakeFiles/SDLProject.dir/main.cpp.obj	fd0cfa4f7bfb1bd8
+5	1216	8046523591330250	CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj	48d15a8d7f427eac
+1217	1791	8046523595753462	SDLProject.exe	a771327b4b073ac2
