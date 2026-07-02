@@ -8,10 +8,15 @@
 
 #include "../Actor/Actor.h"
 #include "../Component/Component.h"
+#include "ClearFlags.h"
 
 class CameraComponent : public Component {
 public:
     float zoom = 1.0f;
+    SDL_Color backgroundColor = { 20, 30, 45, 255 };
+
+    ClearFlags clearFlags = ClearFlags::SolidColor;
+    int cullingMask = ~0;
 
     Vector2 WorldToScreen(const Vector2& worldPos) const {
         return (worldPos - owner->GetWorldPosition()) * zoom;

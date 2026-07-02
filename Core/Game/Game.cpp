@@ -2,6 +2,7 @@
 #include "../Inputs/InputManager.h"
 #include <iostream>
 #include "../Renderer/Renderer.h"
+#include "../Texture/TextureManager.h"
 
 constexpr int WINDOW_WIDTH  = 800;
 constexpr int WINDOW_HEIGHT = 600;
@@ -24,6 +25,8 @@ void Game::Init() {
         std::cerr << "Erro ao criar Janela/Renderer: " << SDL_GetError() << std::endl;
         return;
     }
+
+    TextureManager::Instance().Init(m_Renderer);
 
     m_CameraActor = CreateActor();
     m_CameraActor->AddComponent<CameraComponent>();
@@ -65,10 +68,16 @@ void Game::Render() {
         m_LayerOrderDirty = false;
     }
 
-    GetCamera()->Apply(m_Renderer);
+    auto* camera = GetCamera();
+    camera->Apply(m_Renderer);
 
-    for (auto* actor : m_Actors)
-        actor->Draw(m_Renderer);
+
+    for (auto* actor : m_Actors){
+        bool isVisible = camera->cullingMask & (int)actor->layer;
+
+        if(isVisible)
+            actor->Draw(m_Renderer);
+    }
 
     SDL_SetRenderScale(m_Renderer, 1.0f, 1.0f);
     SDL_SetRenderViewport(m_Renderer, nullptr);
@@ -77,8 +86,11 @@ void Game::Render() {
 }
 
 void Game::Shutdown() {
+    TextureManager::Instance().UnloadAll();
+
     for (auto* actor : m_Actors)
         delete actor;
+
     m_Actors.clear();
 
     SDL_DestroyRenderer(m_Renderer);

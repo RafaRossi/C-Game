@@ -19,7 +19,7 @@ public:
     int orderInLayer = 0;
 
     void Draw(SDL_Renderer* renderer) override {
-        auto bounds = owner->transform.GetBounds(owner->GetWorldPosition());
+        auto bounds = owner->GetBounds();
 
         if(sprite != nullptr){
 

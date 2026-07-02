@@ -12,26 +12,19 @@
 #include <SDL3/SDL_render.h>
 #include "../Math/Vector2.h"
 #include "../Component/Component.h"
+#include "../Layer/Layer.h"
 
 struct Transform {
     Vector2 position;
     float rotation = 0.0f;
     Vector2 size = { 100.f, 100.f};
-
-    SDL_FRect GetBounds(Vector2 worldPosition) const {
-        return {
-                worldPosition.x,
-                worldPosition.y,
-                size.x,
-                size.y
-        };
-    }
 };
 
 
 class Actor {
 public:
     Transform transform;
+    Layer layer;
 
     virtual ~Actor() = default;
 
@@ -67,6 +60,17 @@ public:
         if (parent == nullptr)
             return transform.rotation;
         return parent->GetWorldRotation() + transform.rotation;
+    }
+
+    SDL_FRect GetBounds() const {
+        Vector2 worldPos = GetWorldPosition();
+
+        return {
+                worldPos.x,
+                worldPos.y,
+                transform.size.x,
+                transform.size.y
+        };
     }
 
     template<typename T>

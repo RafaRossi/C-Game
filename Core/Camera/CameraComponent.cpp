@@ -17,7 +17,6 @@ void CameraComponent::Apply(SDL_Renderer *renderer) {
 }
 
 void CameraComponent::RenderBackground(SDL_Renderer *renderer) {
-    SDL_Color bg = {20, 30, 45, 255};
-    SDL_SetRenderDrawColor(renderer, bg.r, bg.g, bg.b, bg.a);
+    SDL_SetRenderDrawColor(renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     SDL_RenderClear(renderer);
 }
