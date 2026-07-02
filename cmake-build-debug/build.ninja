@@ -52,44 +52,107 @@ build cmake_object_order_depends_target_SDLProject: phony || CMakeFiles/SDLProje
 build CMakeFiles/SDLProject.dir/main.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/main.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir
 
 build CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Actor/Actor.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Actor\Actor.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Actor
 
 build CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Game/Game.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Game\Game.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Game
 
 build CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Inputs/InputManager.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Inputs\InputManager.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Inputs
 
 build CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Component/Component.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Component\Component.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Component
 
 build CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Camera/CameraComponent.cpp || cmake_object_order_depends_target_SDLProject
   DEP_FILE = CMakeFiles\SDLProject.dir\Core\Camera\CameraComponent.cpp.obj.d
   FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Camera
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/imgui.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/imgui.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\imgui.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/imgui_draw.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/imgui_draw.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\imgui_draw.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/imgui_tables.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/imgui_tables.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\imgui_tables.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/imgui_widgets.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/imgui_widgets.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\imgui_widgets.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/imgui_demo.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/imgui_demo.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\imgui_demo.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/backends/imgui_impl_sdl3.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/backends/imgui_impl_sdl3.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\backends\imgui_impl_sdl3.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui\backends
+
+build CMakeFiles/SDLProject.dir/Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\imgui\backends\imgui_impl_sdlrenderer3.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor\imgui\backends
+
+build CMakeFiles/SDLProject.dir/Editor/Editor.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Editor/Editor.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Editor\Editor.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Editor
+
+build CMakeFiles/SDLProject.dir/Core/Transform/Transform.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/Core/Transform/Transform.cpp || cmake_object_order_depends_target_SDLProject
+  DEP_FILE = CMakeFiles\SDLProject.dir\Core\Transform\Transform.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject/Editor/imgui -ID:/Projetos/SDLProject/Editor/imgui/backends -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\Core\Transform
 
 
 # =============================================================================
@@ -99,11 +162,11 @@ build CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj: CXX_COMPILE
 #############################################
 # Link the executable SDLProject.exe
 
-build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib C$:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib
+build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Core/Actor/Actor.cpp.obj CMakeFiles/SDLProject.dir/Core/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Core/Inputs/InputManager.cpp.obj CMakeFiles/SDLProject.dir/Core/Component/Component.cpp.obj CMakeFiles/SDLProject.dir/Core/Camera/CameraComponent.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/imgui.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/imgui_draw.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/imgui_tables.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/imgui_widgets.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/imgui_demo.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/backends/imgui_impl_sdl3.cpp.obj CMakeFiles/SDLProject.dir/Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp.obj CMakeFiles/SDLProject.dir/Editor/Editor.cpp.obj CMakeFiles/SDLProject.dir/Core/Transform/Transform.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib C$:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib
   FLAGS = -g
   LINK_LIBRARIES = C:/SDL3-3/lib/x64/SDL3.lib  C:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SDLProject.dir
-  POST_BUILD = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different C:/SDL3-3/lib/x64/SDL3.dll D:/Projetos/SDLProject/cmake-build-debug && cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different C:/SDL3_image-3/cmake/../lib/x64/SDL3_image.dll D:/Projetos/SDLProject/cmake-build-debug && cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory D:/Projetos/SDLProject/Assets D:/Projetos/SDLProject/cmake-build-debug/assets"
+  POST_BUILD = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different C:/SDL3-3/lib/x64/SDL3.dll D:/Projetos/SDLProject/cmake-build-debug && cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_if_different C:/SDL3_image-3/cmake/../lib/x64/SDL3_image.dll D:/Projetos/SDLProject/cmake-build-debug && cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory D:/Projetos/SDLProject/Assets D:/Projetos/SDLProject/cmake-build-debug/assets && cd /D D:\Projetos\SDLProject\cmake-build-debug && "C:\Program Files\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -E copy_directory D:/Projetos/SDLProject/Editor/Fonts D:/Projetos/SDLProject/cmake-build-debug/Editor/Fonts"
   PRE_LINK = cd .
   TARGET_FILE = SDLProject.exe
   TARGET_IMPLIB = libSDLProject.dll.a

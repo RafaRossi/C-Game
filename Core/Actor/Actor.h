@@ -13,13 +13,7 @@
 #include "../Math/Vector2.h"
 #include "../Component/Component.h"
 #include "../Layer/Layer.h"
-
-struct Transform {
-    Vector2 position;
-    float rotation = 0.0f;
-    Vector2 size = { 100.f, 100.f};
-};
-
+#include "../Transform/Transform.h"
 
 class Actor {
 public:

@@ -3,7 +3,8 @@ project(SDLProject)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(${PROJECT_NAME} main.cpp
+add_executable(
+        ${PROJECT_NAME} main.cpp
         Core/Actor/Actor.h
         Core/Actor/Actor.cpp
         Core/Math/Vector2.h
@@ -19,7 +20,21 @@ add_executable(${PROJECT_NAME} main.cpp
         Core/Camera/CameraComponent.cpp
         Core/Texture/TextureManager.h
         Core/Layer/Layer.h
-        Core/Camera/ClearFlags.h)
+        Core/Camera/ClearFlags.h
+
+        Editor/imgui/imgui.cpp
+        Editor/imgui/imgui_draw.cpp
+        Editor/imgui/imgui_tables.cpp
+        Editor/imgui/imgui_widgets.cpp
+        Editor/imgui/imgui_demo.cpp
+        Editor/imgui/backends/imgui_impl_sdl3.cpp
+        Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp
+        Editor/Editor.cpp
+        Editor/Editor.h
+        Editor/Reflection/Reflection.h
+        Core/Transform/Transform.cpp
+        Core/Transform/Transform.h
+)
 
 set(SDL3_DIR "C:/SDL3-3")
 list(APPEND CMAKE_PREFIX_PATH "${SDL3_DIR}")
@@ -34,6 +49,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         SDL3_image::SDL3_image
 )
 
+target_include_directories(${PROJECT_NAME} PRIVATE
+        Editor/imgui
+        Editor/imgui/backends
+)
+
 if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -43,12 +63,18 @@ if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "$<TARGET_FILE:SDL3_image::SDL3_image>"
-            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"  # ← fechado corretamente
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
     )
 
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
             "${CMAKE_SOURCE_DIR}/Assets"
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
+    )
+
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/Editor/Fonts"
+            "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Editor/Fonts"
     )
 endif()
