@@ -5,35 +5,40 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_executable(
         ${PROJECT_NAME} main.cpp
-        Core/Actor/Actor.h
-        Core/Actor/Actor.cpp
-        Core/Math/Vector2.h
-        Core/Math/Math.h
-        Core/Game/Game.h
-        Core/Game/Game.cpp
-        Core/Renderer/Renderer.h
-        Core/Inputs/InputManager.cpp
-        Core/Inputs/InputManager.h
-        Core/Camera/CameraComponent.h
-        Core/Component/Component.cpp
-        Core/Component/Component.h
-        Core/Camera/CameraComponent.cpp
-        Core/Texture/TextureManager.h
-        Core/Layer/Layer.h
-        Core/Camera/ClearFlags.h
+        Engine/Game/Core/Actor/Actor.h
+        Engine/Game/Core/Math/Vector2.h
+        Engine/Game/Core/Math/Math.h
+        Engine/Game/Game.h
+        Engine/Game/Game.cpp
+        Engine/Game/Core/Renderer/Renderer.h
+        Engine/Game/Core/Inputs/InputManager.cpp
+        Engine/Game/Core/Inputs/InputManager.h
+        Engine/Game/Core/Camera/CameraComponent.h
+        Engine/Game/Core/Component/Component.cpp
+        Engine/Game/Core/Component/Component.h
+        Engine/Game/Core/Camera/CameraComponent.cpp
+        Engine/Game/Core/Texture/TextureManager.h
+        Engine/Game/Core/Layer/Layer.h
+        Engine/Game/Core/Camera/ClearFlags.h
 
-        Editor/imgui/imgui.cpp
-        Editor/imgui/imgui_draw.cpp
-        Editor/imgui/imgui_tables.cpp
-        Editor/imgui/imgui_widgets.cpp
-        Editor/imgui/imgui_demo.cpp
-        Editor/imgui/backends/imgui_impl_sdl3.cpp
-        Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp
-        Editor/Editor.cpp
-        Editor/Editor.h
-        Editor/Reflection/Reflection.h
-        Core/Transform/Transform.cpp
-        Core/Transform/Transform.h
+        Engine/Editor/imgui/imgui.cpp
+        Engine/Editor/imgui/imgui_draw.cpp
+        Engine/Editor/imgui/imgui_tables.cpp
+        Engine/Editor/imgui/imgui_widgets.cpp
+        Engine/Editor/imgui/imgui_demo.cpp
+        Engine/Editor/imgui/backends/imgui_impl_sdl3.cpp
+        Engine/Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp
+        Engine/Editor/Editor.cpp
+        Engine/Editor/Editor.h
+        Engine/Editor/Reflection/Reflection.h
+        Engine/Game/Core/Transform/Transform.cpp
+        Engine/Game/Core/Transform/Transform.h
+        Engine/Engine.h
+        Engine/Engine.cpp
+        Engine/Editor/Camera/EditorCamera.cpp
+        Engine/Editor/Camera/EditorCamera.h
+        Engine/Game/Core/Scene/Scene.cpp
+        Engine/Game/Core/Scene/Scene.h
 )
 
 set(SDL3_DIR "C:/SDL3-3")
@@ -50,8 +55,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        Editor/imgui
-        Editor/imgui/backends
+        Engine/Editor/imgui
+        Engine/Editor/imgui/backends
 )
 
 if(WIN32)
@@ -74,7 +79,7 @@ if(WIN32)
 
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/Editor/Fonts"
+            "${CMAKE_SOURCE_DIR}/Engine/Editor/Fonts"
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Editor/Fonts"
     )
 endif()

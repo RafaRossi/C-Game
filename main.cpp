@@ -1,15 +1,8 @@
-#include <SDL3/SDL.h>
-#include <iostream>
-#include "Core/Game/Game.h"
-#include "Editor/Editor.h"
+#include "Engine/Engine.h"
 
 int main(int argc, char* argv[]) {
-
-    //Game game;
-
-    //game.Run();
-
-    Editor editor(nullptr);
-    editor.Run();
+    Engine engine;
+    engine.Init();
+    engine.Run();
     return 0;
 }
