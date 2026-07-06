@@ -42,7 +42,7 @@ void Scene::Serialize() {
 
     for (auto* actor : m_Actors) {
         ActorSnapshot snap;
-        snap.name = actor->Name;
+        snap.name = actor->name;
         snap.position = actor->transform()->position;
         snap.size     = actor->transform()->size;
         snap.rotation = actor->transform()->rotation;
@@ -57,7 +57,7 @@ void Scene::Deserialize() {
     if (m_Snapshot.size() != m_Actors.size()) return;
 
     for (int i = 0; i < m_Actors.size(); i++) {
-        m_Actors[i]->Name = m_Snapshot[i].name;
+        m_Actors[i]->name = m_Snapshot[i].name;
         m_Actors[i]->transform()->position = m_Snapshot[i].position;
         m_Actors[i]->transform()->size     = m_Snapshot[i].size;
         m_Actors[i]->transform()->rotation = m_Snapshot[i].rotation;

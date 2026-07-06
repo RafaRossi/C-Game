@@ -8,6 +8,7 @@
 
 #include "Reflection/Reflection.h"
 #include "Camera/EditorCamera.h"
+#include "IconsFontAwesome6.h"
 
 class Engine;
 class Actor;
@@ -32,6 +33,9 @@ private:
     bool          m_IsRunning = false;
     Actor*        m_SelectedActor = nullptr;
 
+    ImFont* m_FontDefault = nullptr;
+    ImFont* m_FontLarge = nullptr;
+
     EditorCamera m_EditorCamera;
 
     void RenderMainMenuBar();
@@ -39,14 +43,17 @@ private:
     void RenderActorNode(Actor* actor);
     void RenderGameView();
 
+    void SetupEngineStyle();
+
     void DrawInspector(void* instance, ClassMetadata& meta);
     void DrawInspectorForActor(Actor* actor);
-
-    void CreateActorOnScene(Actor* parent);
 
     void OpenContextMenu(Actor* actor);
 
     Game* GetGame() const;
+
+    Actor* CreateActorOnScene(Actor* parent);
+    Actor* CreateActorOnScene(Actor *parent, Actor *source);
 };
 
 #endif //SDLPROJECT_EDITOR_H

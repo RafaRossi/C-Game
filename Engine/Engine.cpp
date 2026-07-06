@@ -17,7 +17,7 @@ void Engine::Init() {
         return;
     }
 
-    if (!SDL_CreateWindowAndRenderer("TR Engine", WINDOW_WIDTH, WINDOW_HEIGHT, 0,
+    if (!SDL_CreateWindowAndRenderer("TR Engine", WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE,
                                      &m_Window, &m_Renderer)) {
         std::cerr << "Erro ao criar janela/renderer: " << SDL_GetError() << std::endl;
         return;
@@ -152,6 +152,13 @@ void Engine::Update() {
 }
 
 void Engine::Render() {
+
+    if (m_ViewportTexture != nullptr) SDL_DestroyTexture(m_ViewportTexture);
+    m_ViewportTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_ViewportWidth, m_ViewportHeight);
+
+    if (m_GameViewTexture != nullptr) SDL_DestroyTexture(m_GameViewTexture);
+    m_GameViewTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_GameViewWidth, m_GameViewHeight);
+
     SDL_SetRenderDrawColor(m_Renderer, 30, 30, 30, 255);
     SDL_RenderClear(m_Renderer);
 

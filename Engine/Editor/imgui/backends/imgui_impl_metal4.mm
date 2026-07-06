@@ -8,6 +8,7 @@
 // Missing features or Issues:
 //  [ ] Metal-cpp support.
 //  [ ] Texture view pool support? Reevaluate which type to use for ImtextureID.
+//  [ ] Renderer: Multi-viewport support (multiple windows).
 
 // You can use unmodified imgui_impl_* files in your project. See examples/ folder for examples of using this.
 // Prefer including the entire imgui/ repository into your project (either as a copy or as a submodule), and only build the backends you need.

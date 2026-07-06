@@ -17,7 +17,7 @@
 
 class Actor {
 public:
-    std::string Name;
+    std::string name;
     Transform* transform() const { return m_Transform; }
     Layer layer = Layer::Default;
 
@@ -89,6 +89,25 @@ public:
             if (auto* casted = dynamic_cast<T*>(c))
                 return casted;
         return nullptr;
+    }
+
+    bool RemoveComponent(Component* component) {
+        if(component == m_Transform) return false;
+
+        auto it = std::find(m_Components.begin(), m_Components.end(), component);
+        if(it != m_Components.end()){
+            delete *it;
+            m_Components.erase(it);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    void AddExistingComponent(Component* component) {
+        component->owner = this;
+        m_Components.push_back(component);
     }
 
     const std::vector<Component*>& GetComponents() const {

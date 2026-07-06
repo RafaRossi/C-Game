@@ -39,6 +39,7 @@ add_executable(
         Engine/Editor/Camera/EditorCamera.h
         Engine/Game/Core/Scene/Scene.cpp
         Engine/Game/Core/Scene/Scene.h
+        Engine/Editor/Macros/EngineMacros.h
 )
 
 set(SDL3_DIR "C:/SDL3-3")

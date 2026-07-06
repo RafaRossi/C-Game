@@ -31,6 +31,9 @@ public:
     void Apply(SDL_Renderer* renderer);
 
     std::string GetClassName() const override { return "CameraComponent"; }
+
+    Component* Clone() const override;
+
 };
 
 

@@ -35,13 +35,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 52,
+				"line" : 53,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 57,
+				"line" : 58,
 				"parent" : 0
 			}
 		]
@@ -189,7 +189,8 @@
 				27,
 				28,
 				31,
-				33
+				33,
+				34
 			]
 		}
 	],
@@ -380,6 +381,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "Engine/Game/Core/Scene/Scene.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Engine/Editor/Macros/EngineMacros.h",
 			"sourceGroupIndex" : 1
 		}
 	],

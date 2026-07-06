@@ -12,12 +12,13 @@
 #include "../Component/Component.h"
 
 class Transform : public Component {
+COMPONENT_BODY(Transform)
+
 public:
     Vector2 position;
     float rotation = 0.0f;
     Vector2 size = { 100.f, 100.f};
 
-    std::string GetClassName() const override { return "Transform"; }
     void* GetInstance() { return this; }
 };
 #endif //SDLPROJECT_TRANSFORM_H
