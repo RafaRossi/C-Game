@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//Compile with Editor Support
+BUILD_WITH_EDITOR:BOOL=ON
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=C:/Program Files/JetBrains/CLion 2023.3.4/bin/mingw/bin/addr2line.exe
 
@@ -455,8 +458,21 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_TAPI-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding Python3
+FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[C:/Users/rossi/AppData/Local/Programs/Python/Python311/python.exe][cfound components: Interpreter ][v3.11.3()]
 //Result of TRY_COMPILE
 SDL_CPU_CHECK_ALL:INTERNAL=TRUE
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
+//Compiler reason failure
+_Python3_Compiler_REASON_FAILURE:INTERNAL=
+//Development reason failure
+_Python3_Development_REASON_FAILURE:INTERNAL=
+//Path to a program.
+_Python3_EXECUTABLE:INTERNAL=C:/Users/rossi/AppData/Local/Programs/Python/Python311/python.exe
+//Python3 Properties
+_Python3_INTERPRETER_PROPERTIES:INTERNAL=Python;3;11;3;64;32;;cp311-win_amd64;;C:\Users\rossi\AppData\Local\Programs\Python\Python311\Lib;C:\Users\rossi\AppData\Local\Programs\Python\Python311\Lib;C:\Users\rossi\AppData\Local\Programs\Python\Python311\Lib\site-packages;C:\Users\rossi\AppData\Local\Programs\Python\Python311\Lib\site-packages
+_Python3_INTERPRETER_SIGNATURE:INTERNAL=ddfb27e191c09f0968937e683e63a7b1
+//NumPy reason failure
+_Python3_NumPy_REASON_FAILURE:INTERNAL=
 

@@ -11,6 +11,7 @@
 #include "ClearFlags.h"
 
 class CameraComponent : public Component {
+COMPONENT_BODY(CameraComponent)
 public:
     float zoom = 1.0f;
     SDL_Color backgroundColor = { 20, 30, 45, 255 };
@@ -30,10 +31,7 @@ public:
 
     void Apply(SDL_Renderer* renderer);
 
-    std::string GetClassName() const override { return "CameraComponent"; }
-
-    Component* Clone() const override;
-
+    bool IsUnique() const override { return true; }
 };
 
 

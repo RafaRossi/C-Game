@@ -12,6 +12,8 @@
 #include "../Actor/Actor.h"
 
 class Renderer : public Component {
+COMPONENT_BODY(Renderer)
+
 public:
     SDL_Color color = {255, 255, 255, 255};
     SDL_Texture* sprite = nullptr;
@@ -31,8 +33,6 @@ public:
             SetRenderFillRect(renderer, &bounds);
         }
     }
-
-    std::string GetClassName() const override { return "Renderer"; }
 
     static bool SetRenderDrawColor(SDL_Renderer* renderer, const SDL_Color color){
         return SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);

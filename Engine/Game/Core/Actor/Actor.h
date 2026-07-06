@@ -75,11 +75,31 @@ public:
     template<typename T>
     T* AddComponent() {
         static_assert(std::is_base_of<Component, T>::value,
-                      "T precisa herdar de Component");
+                      "T is not a component.");
 
         auto* component = new T();
+
+        if(component->IsUnique() && HasComponent(component->GetClassName())){
+            delete component;
+            return nullptr;
+        }
+
         component->owner = this;
         m_Components.push_back(component);
+        return component;
+    }
+
+    Component* AddComponent(Component* component){
+        if(!component) return nullptr;
+
+        if(component->IsUnique() && HasComponent(component->GetClassName())){
+            delete component;
+            return nullptr;
+        }
+
+        component->owner = this;
+        m_Components.push_back(component);
+
         return component;
     }
 
@@ -91,8 +111,26 @@ public:
         return nullptr;
     }
 
+    bool HasComponent(const std::string& className) const {
+        for (auto* comp : m_Components) {
+            if (comp->GetClassName() == className) return true;
+        }
+        return false;
+    }
+
+    template<typename T>
+    bool HasComponent() const {
+        static_assert((std::is_base_of<Component, T>::value, "T is not a component."));
+        for (auto *comp: m_Components)
+            if (dynamic_cast<T *>(comp) != nullptr) {
+                return true;
+            }
+
+        return false;
+    }
+
     bool RemoveComponent(Component* component) {
-        if(component == m_Transform) return false;
+        if(!component->CanBeRemoved()) return false;
 
         auto it = std::find(m_Components.begin(), m_Components.end(), component);
         if(it != m_Components.end()){
@@ -103,11 +141,6 @@ public:
         }
 
         return false;
-    }
-
-    void AddExistingComponent(Component* component) {
-        component->owner = this;
-        m_Components.push_back(component);
     }
 
     const std::vector<Component*>& GetComponents() const {

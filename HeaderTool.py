@@ -1,40 +1,54 @@
-import os
-import re
-import sys
+import re, sys
 
-pattern = re.compile(r'PROPERTY\((.*?)\)\s*([a-zA-Z0-9_:]+)\s+([a-zA-Z0-9_]+)\s*;')
+component_pattern = re.compile(r'COMPONENT_BODY\((\w+)\)')
+property_pattern = re.compile(r'PROPERTY\((.*?)\)\s*([a-zA-Z0-9_:<>]+)\s+([a-zA-Z0-9_]+)\s*(?:=.*?)?;')
+
+TYPE_MAP = {"int": True, "float": True, "bool": True}  # expanda depois pra Vector2/string
 
 
-def parse_header(filepath):
-    with open(filepath, 'r') as file:
-        content = file.read()
+def parse_header(header_path):
+    with open(header_path, 'r', encoding='utf-8', errors='replace') as f:
+        content = f.read()
 
-    matches = pattern.findall(content)
-    if not matches:
-        return None
+    if '#define COMPONENT_BODY' in content or '#define PROPERTY' in content:
+        return "// DO NOT EDIT.\n"
 
-    generated_code = "//DO NOT EDIT.\n"
-    generated_code += "private:\n"
-    generated_code += "    void AutoExposeField() {\n"
-    generated_code += "#ifdef SDL_ENGINE_EDITOR\n"
+    class_match = component_pattern.search(content)
 
-    for match in matches:
-        options, var_type, var_name = match
+    if class_match:
+        class_name = class_match.group(1)
+        if not re.search(rf'\bclass\s+{re.escape(class_name)}\b', content):
+            class_match = None
 
-        if var_type == "int" or var_type == "float" or var_type == "bool":
-            generated_code += f'        ExposeField("{var_name}", &{var_name});\n'
+    code = "// DO NOT EDIT. Auto-generated.\n"
+    code += f'#include "{header_path}"\n\n'
 
-    generated_code += "endif // SDL_ENGINE_EDITOR\n"
-    generated_code += "    }\n"
+    if not class_match:
+        return code
 
-    return generated_code
+    class_name = class_match.group(1)
+    props = property_pattern.findall(content)
+
+    code += '#include "Engine/Editor/ComponentFactory/ComponentFactory.h"\n\n'
+
+    code += "#ifdef TR_EDITOR\n"
+
+    code += f"void {class_name}::AutoExposeField(FieldCollector& collector) {{\n"
+    for options, var_type, var_name in props:
+        if var_type in TYPE_MAP:
+            code += f'    collector.Expose("{var_name}", &{var_name});\n'
+    code += "}\n\n"
+
+    code += f"static bool bReg_{class_name} = []() {{\n"
+    code += f'    ComponentFactory::Register("{class_name}", []() {{ return new {class_name}(); }});\n'
+    code += "    return true;\n"
+    code += "}();\n"
+
+    code += "#endif // TR_EDITOR\n"
+    return code
 
 
 if __name__ == "__main__":
-    header_path = sys.argv[1]
-    output_path = sys.argv[2]
-
-    code = parse_header(header_path)
-    if code:
-        with open(output_path, 'w') as f:
-            f.write(code)
+    header_path, output_path = sys.argv[1], sys.argv[2]
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(parse_header(header_path))

@@ -3,8 +3,42 @@ project(SDLProject)
 
 set(CMAKE_CXX_STANDARD 23)
 
+set(ENGINE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/Engine")
+set(USER_PROJECT_DIR "${CMAKE_SOURCE_DIR}/Sandbox")
+
+option(BUILD_WITH_EDITOR "Compile with Editor Support" ON)
+
+file(GLOB_RECURSE COMPONENT_HEADERS CONFIGURE_DEPENDS
+    "${ENGINE_SOURCE_DIR}/*.h"
+        "${USER_PROJECT_DIR}/*.h"
+)
+
+set(GENERATED_FILES ""
+        Engine/Editor/PropertyType/PropertyType.h
+        Engine/Editor/ComponentFactory/ComponentFactory.h)
+
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+foreach (HEADER ${COMPONENT_HEADERS})
+    file(RELATIVE_PATH REL_PATH ${CMAKE_SOURCE_DIR} ${HEADER})
+    get_filename_component(REL_DIR ${REL_PATH} DIRECTORY)
+    get_filename_component(BASENAME ${HEADER} NAME_WE)
+    set(GENERATED_FILE "${CMAKE_CURRENT_BINARY_DIR}/generated/${REL_DIR}/${BASENAME}.generated.cpp")
+    get_filename_component(GEN_DIR ${GENERATED_FILE} DIRECTORY)
+    file(MAKE_DIRECTORY ${GEN_DIR})
+
+    add_custom_command(
+            OUTPUT ${GENERATED_FILE}
+            COMMAND Python3::Interpreter ${CMAKE_SOURCE_DIR}/HeaderTool.py ${HEADER} ${GENERATED_FILE}
+            DEPENDS ${HEADER} ${CMAKE_SOURCE_DIR}/HeaderTool.py
+    )
+
+    list(APPEND GENERATED_FILES ${GENERATED_FILE})
+endforeach ()
+
 add_executable(
         ${PROJECT_NAME} main.cpp
+        ${GENERATED_FILES}
         Engine/Game/Core/Actor/Actor.h
         Engine/Game/Core/Math/Vector2.h
         Engine/Game/Core/Math/Math.h
@@ -21,17 +55,15 @@ add_executable(
         Engine/Game/Core/Layer/Layer.h
         Engine/Game/Core/Camera/ClearFlags.h
 
-        Engine/Editor/imgui/imgui.cpp
-        Engine/Editor/imgui/imgui_draw.cpp
-        Engine/Editor/imgui/imgui_tables.cpp
-        Engine/Editor/imgui/imgui_widgets.cpp
-        Engine/Editor/imgui/imgui_demo.cpp
-        Engine/Editor/imgui/backends/imgui_impl_sdl3.cpp
-        Engine/Editor/imgui/backends/imgui_impl_sdlrenderer3.cpp
+        imgui/imgui.cpp
+        imgui/imgui_draw.cpp
+        imgui/imgui_tables.cpp
+        imgui/imgui_widgets.cpp
+        imgui/imgui_demo.cpp
+        imgui/backends/imgui_impl_sdl3.cpp
+        imgui/backends/imgui_impl_sdlrenderer3.cpp
         Engine/Editor/Editor.cpp
         Engine/Editor/Editor.h
-        Engine/Editor/Reflection/Reflection.h
-        Engine/Game/Core/Transform/Transform.cpp
         Engine/Game/Core/Transform/Transform.h
         Engine/Engine.h
         Engine/Engine.cpp
@@ -40,7 +72,12 @@ add_executable(
         Engine/Game/Core/Scene/Scene.cpp
         Engine/Game/Core/Scene/Scene.h
         Engine/Editor/Macros/EngineMacros.h
+        Engine/Editor/ComponentFactory/ComponentFactory.h
 )
+
+if(BUILD_WITH_EDITOR)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE TR_EDITOR)
+endif ()
 
 set(SDL3_DIR "C:/SDL3-3")
 list(APPEND CMAKE_PREFIX_PATH "${SDL3_DIR}")
@@ -56,8 +93,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        Engine/Editor/imgui
-        Engine/Editor/imgui/backends
+        ${CMAKE_SOURCE_DIR}
+        imgui
+        imgui/backends
+        ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 if(WIN32)
@@ -74,7 +113,7 @@ if(WIN32)
 
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/Assets"
+            "${CMAKE_SOURCE_DIR}/Sandbox/Assets"
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
     )
 

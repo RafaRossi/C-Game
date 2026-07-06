@@ -5,15 +5,15 @@
 #include "imgui_impl_sdl3.h"
 #include "imgui_impl_sdlrenderer3.h"
 #include <SDL3/SDL.h>
+#include <vector>
 
-#include "Reflection/Reflection.h"
 #include "Camera/EditorCamera.h"
 #include "IconsFontAwesome6.h"
+#include "PropertyType/PropertyType.h"
 
 class Engine;
 class Actor;
 class Game;
-struct ClassMetadata;
 
 class Editor {
 public:
@@ -45,7 +45,7 @@ private:
 
     void SetupEngineStyle();
 
-    void DrawInspector(void* instance, ClassMetadata& meta);
+    void DrawInspector(const std::vector<ExposedField>& fields);
     void DrawInspectorForActor(Actor* actor);
 
     void OpenContextMenu(Actor* actor);

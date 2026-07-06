@@ -7,6 +7,11 @@
 
 #include <SDL3/SDL_render.h>
 #include <string>
+#include "../../../Editor/Macros/EngineMacros.h"
+
+#ifdef TR_EDITOR
+#include "../../../Editor/PropertyType/PropertyType.h"
+#endif
 
 class Actor;
 
@@ -22,16 +27,13 @@ public:
 
     virtual std::string GetClassName() const = 0;
     virtual Component* Clone() const = 0;
-};
 
-#define COMPONENT_BODY(Type) \
-public: \
-    virtual Component* Clone() const override { \
-        return new Type(*this); \
-    } \
-    virtual std::string GetClassName() const override { \
-        return #Type; \
-    } \
-private:
+    virtual bool IsUnique() const { return false; }
+    virtual bool CanBeRemoved() { return true; }
+
+#ifdef TR_EDITOR
+    virtual void AutoExposeField(FieldCollector& collector) { }
+#endif
+};
 
 #endif //SDLPROJECT_COMPONENT_H

@@ -1,5 +1,7 @@
 #include "Editor.h"
-#include "../Engine.h"  // Engine precisa do header completo aqui
+#include "../Engine.h"
+#include "PropertyType/PropertyType.h"
+#include "Engine/Editor/ComponentFactory/ComponentFactory.h"
 #include <iostream>
 
 void Editor::Init(SDL_Window* window, SDL_Renderer* renderer) {
@@ -212,68 +214,78 @@ void Editor::DrawInspectorForActor(Actor* actor) {
     ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_NoCollapse);
 
     if (actor == nullptr) {
-        ImGui::TextDisabled("Nenhum Actor selecionado");
+        ImGui::TextDisabled("No Selected Actor");
         ImGui::End();
         return;
     }
 
     char buffer[256];
-    strncpy(buffer, actor->name.c_str(), sizeof(buffer));
+    strncpy(buffer, actor->name.c_str(), sizeof(buffer) - 1);
+    buffer[sizeof(buffer) - 1] = '\0';
 
     if(ImGui::InputText("##name", buffer, sizeof(buffer))){
         actor->name = buffer;
     }
 
     for (auto* component : actor->GetComponents()) {
-        auto meta = GetMetadata(component->GetClassName());
-        if (!meta.Properties.empty()) {
-            bool isHeaderOpen = ImGui::CollapsingHeader(component->GetClassName().c_str(),ImGuiTreeNodeFlags_DefaultOpen);
+        FieldCollector collector;
+        component->AutoExposeField(collector);
 
+        const auto& fields = collector.GetFields();
+
+        ImGui::PushID(component);
+
+        ImGui::SetNextItemAllowOverlap();
+        bool isHeaderOpen = ImGui::CollapsingHeader(component->GetClassName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+
+        if(component->CanBeRemoved()){
             ImGui::SameLine(ImGui::GetWindowWidth() - 30);
-
             if(ImGui::Button("X")){
                 actor->RemoveComponent(component);
-            }
 
-            if (isHeaderOpen) DrawInspector(component, meta);
+                ImGui::PopID();
+                break;
+            }
         }
+
+        if (isHeaderOpen) {
+            if (!fields.empty()) {
+                DrawInspector(fields);
+            } else {
+                ImGui::TextDisabled("No exposed properties.");
+            }
+        }
+
+        ImGui::PopID();
     }
 
     ImGui::End();
 }
 
-void Editor::DrawInspector(void* instance, ClassMetadata& meta) {
-    auto* bytes = static_cast<uint8_t*>(instance);
-
-    for (const auto& prop : meta.Properties) {
-        void* varAddress = bytes + prop.Offset;
-
-        switch (prop.Type) {
+void Editor::DrawInspector(const std::vector<ExposedField>& fields) {
+    for (const auto& field : fields) {
+        switch (field.Type) {
             case PropertyType::Float: {
-                auto* v = static_cast<float*>(varAddress);
-                ImGui::DragFloat(prop.Name.c_str(), v, 0.1f);
+                ImGui::DragFloat(field.Name.c_str(), static_cast<float*>(field.Ptr), 0.1f);
                 break;
             }
             case PropertyType::Int: {
-                auto* v = static_cast<int*>(varAddress);
-                ImGui::DragInt(prop.Name.c_str(), v);
+                ImGui::DragInt(field.Name.c_str(), static_cast<int*>(field.Ptr));
                 break;
             }
             case PropertyType::Bool: {
-                auto* v = static_cast<bool*>(varAddress);
-                ImGui::Checkbox(prop.Name.c_str(), v);
+                ImGui::Checkbox(field.Name.c_str(), static_cast<bool*>(field.Ptr));
                 break;
             }
             case PropertyType::Vector2: {
-                auto* v = static_cast<float*>(varAddress);
-                ImGui::DragFloat2(prop.Name.c_str(), v, 0.1f);
+                ImGui::DragFloat2(field.Name.c_str(), reinterpret_cast<float*>(field.Ptr), 0.1f);
                 break;
             }
             case PropertyType::String: {
-                auto* v = static_cast<std::string*>(varAddress);
+                auto* v = static_cast<std::string*>(field.Ptr);
                 char buffer[256];
                 strncpy(buffer, v->c_str(), sizeof(buffer));
-                if (ImGui::InputText(prop.Name.c_str(), buffer, sizeof(buffer)))
+                if (ImGui::InputText(field.Name.c_str(), buffer, sizeof(buffer)))
                     *v = buffer;
                 break;
             }
@@ -323,6 +335,17 @@ void Editor::OpenContextMenu(Actor *actor) {
     }
 
     if(ImGui::BeginMenu("Components")){
+
+        for(const auto& [compName, creatorFunc] : ComponentFactory::GetRegistry()){
+            if(ImGui::MenuItem(compName.c_str())){
+                Component* newComp = ComponentFactory::Create(compName);
+
+                if(newComp){
+                    actor->AddComponent(newComp);
+                }
+            }
+        }
+
         ImGui::EndMenu();
     }
 
