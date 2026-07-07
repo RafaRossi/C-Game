@@ -54,6 +54,13 @@ private:
 
     Actor* CreateActorOnScene(Actor* parent);
     Actor* CreateActorOnScene(Actor *parent, Actor *source);
+
+    void DrawGizmo(Actor* actor, ImVec2 imageOrigin);
+
+    int m_GizmoDraggingAxis = -1;
+
+    Vector2 m_GizmoDraggingStartMouse;
+    Vector2 m_GizmoDragStartPos;
 };
 
 #endif //SDLPROJECT_EDITOR_H

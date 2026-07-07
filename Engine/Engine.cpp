@@ -25,6 +25,9 @@ void Engine::Init() {
 
     m_Scene = new Scene();
 
+    m_Game = new Game();
+    m_Game->Init(m_Renderer, m_Scene);
+
     m_Editor = new Editor(this);
     m_Editor->Init(m_Window, m_Renderer);
 
@@ -78,9 +81,6 @@ void Engine::Play() {
 
     m_Scene->Serialize();
 
-    m_Game = new Game();
-    m_Game->Init(m_Renderer, m_Scene);
-
     m_IsPlaying = true;
     m_IsPaused  = false;
 
@@ -113,10 +113,6 @@ void Engine::ResizeGameView(int w, int h) {
 
 void Engine::Stop() {
     if (!m_IsPlaying) return;
-
-    m_Game->Shutdown();
-    delete m_Game;
-    m_Game = nullptr;
 
     m_Scene->Deserialize();
 

@@ -112,14 +112,14 @@ void Editor::RenderMainMenuBar() {
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File")) { ImGui::EndMenu(); }
 
+        if (ImGui::BeginMenu("Edit")) { ImGui::EndMenu(); }
+
         if (ImGui::BeginMenu("Actions")) {
             if (ImGui::MenuItem("Create Actor")){
                 CreateActorOnScene(nullptr);
             }
             ImGui::EndMenu();
         }
-
-        if (ImGui::BeginMenu("Edit")) { ImGui::EndMenu(); }
 
         if (ImGui::BeginMenu("Window")) { ImGui::EndMenu(); }
 
@@ -307,7 +307,11 @@ void Editor::RenderSceneView() {
 
     SDL_Texture* tex = m_Engine->GetViewportTexture();
     if (tex != nullptr)
+    {
         ImGui::Image((ImTextureID)tex, size);
+        ImVec2 imageOrigin = ImGui::GetItemRectMin();
+        DrawGizmo(m_SelectedActor, imageOrigin);
+    }
 
     ImGui::End();
     ImGui::PopStyleVar();
@@ -425,4 +429,91 @@ void Editor::SetupEngineStyle() {
     colors[ImGuiCol_SeparatorActive]  = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);
 
     colors[ImGuiCol_DockingPreview]   = ImVec4(0.30f, 0.30f, 0.30f, 0.50f);
+}
+
+void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
+    if (actor == nullptr) return;
+
+    ImDrawList* drawList = ImGui::GetWindowDrawList();
+    ImGuiIO& io = ImGui::GetIO();
+
+    Vector2 worldPos  = actor->GetWorldPosition();
+    Vector2 screenPos = m_EditorCamera.WorldToScreen(worldPos);
+    ImVec2 origin = { imageOrigin.x + screenPos.x, imageOrigin.y + screenPos.y };
+
+    const float axisLength   = 60.0f;
+    const float arrowSize    = 8.0f;
+    const float hitThreshold = 8.0f;
+
+    ImVec2 xEnd = { origin.x + axisLength, origin.y };
+    ImVec2 yEnd = { origin.x, origin.y + axisLength };
+
+    ImU32 colorX      = IM_COL32(220, 60, 60, 255);
+    ImU32 colorY      = IM_COL32(60, 220, 90, 255);
+    ImU32 colorXHover = IM_COL32(255, 120, 120, 255);
+    ImU32 colorYHover = IM_COL32(120, 255, 150, 255);
+
+    ImVec2 mouse = io.MousePos;
+
+    auto distToSegment = [](ImVec2 p, ImVec2 a, ImVec2 b) -> float {
+        ImVec2 ab = { b.x - a.x, b.y - a.y };
+        ImVec2 ap = { p.x - a.x, p.y - a.y };
+        float lenSq = ab.x * ab.x + ab.y * ab.y;
+        float t = lenSq > 0.0f ? (ap.x * ab.x + ap.y * ab.y) / lenSq : 0.0f;
+        t = std::clamp(t, 0.0f, 1.0f);
+        ImVec2 closest = { a.x + ab.x * t, a.y + ab.y * t };
+        float dx = p.x - closest.x;
+        float dy = p.y - closest.y;
+        return std::sqrt(dx * dx + dy * dy);
+    };
+
+    bool hoverX = distToSegment(mouse, origin, xEnd) <= hitThreshold;
+    bool hoverY = distToSegment(mouse, origin, yEnd) <= hitThreshold;
+
+    if (m_GizmoDraggingAxis == -1) {
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
+            if (hoverX) m_GizmoDraggingAxis = 0;
+            else if (hoverY) m_GizmoDraggingAxis = 1;
+
+            if (m_GizmoDraggingAxis != -1) {
+                m_GizmoDraggingStartMouse = { mouse.x, mouse.y };
+                m_GizmoDragStartPos   = actor->transform()->position;
+            }
+        }
+    } else {
+        if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+            Vector2 deltaScreen = { mouse.x - m_GizmoDraggingStartMouse.x, mouse.y - m_GizmoDraggingStartMouse.y };
+            Vector2 deltaWorld  = deltaScreen * (1.0f / m_EditorCamera.zoom);
+
+            Vector2 newPos = m_GizmoDragStartPos;
+            if (m_GizmoDraggingAxis == 0) newPos.x = m_GizmoDragStartPos.x + deltaWorld.x;
+            else                          newPos.y = m_GizmoDragStartPos.y + deltaWorld.y;
+
+            actor->transform()->position = newPos;
+        } else {
+            m_GizmoDraggingAxis = -1;
+        }
+    }
+
+    bool draggingX = m_GizmoDraggingAxis == 0;
+    bool draggingY = m_GizmoDraggingAxis == 1;
+
+    drawList->AddLine(origin, xEnd, (hoverX || draggingX) ? colorXHover : colorX, 3.0f);
+    drawList->AddLine(origin, yEnd, (hoverY || draggingY) ? colorYHover : colorY, 3.0f);
+
+    drawList->AddTriangleFilled(
+            { xEnd.x, xEnd.y - arrowSize * 0.5f },
+            { xEnd.x, xEnd.y + arrowSize * 0.5f },
+            { xEnd.x + arrowSize, xEnd.y },
+            (hoverX || draggingX) ? colorXHover : colorX
+    );
+
+    drawList->AddTriangleFilled(
+            { yEnd.x - arrowSize * 0.5f, yEnd.y },
+            { yEnd.x + arrowSize * 0.5f, yEnd.y },
+            { yEnd.x, yEnd.y + arrowSize },
+            (hoverY || draggingY) ? colorYHover : colorY
+    );
+
+    drawList->AddCircleFilled(origin, 4.0f, IM_COL32(230, 230, 230, 255));
 }
