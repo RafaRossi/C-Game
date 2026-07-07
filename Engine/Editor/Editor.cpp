@@ -299,8 +299,10 @@ void Editor::RenderSceneView() {
 
     ImVec2 size = ImGui::GetContentRegionAvail();
 
-    if (size.x > 0 && size.y > 0)
+    if (size.x > 0 && size.y > 0){
         m_Engine->ResizeViewport((int)size.x, (int)size.y);
+        m_EditorCamera.SetViewportSize(size.x, size.y);
+    }
 
     bool hovered = ImGui::IsWindowHovered();
     m_EditorCamera.ProcessInput(hovered);
@@ -310,7 +312,9 @@ void Editor::RenderSceneView() {
     {
         ImGui::Image((ImTextureID)tex, size);
         ImVec2 imageOrigin = ImGui::GetItemRectMin();
-        DrawGizmo(m_SelectedActor, imageOrigin);
+
+        DrawGrid({imageOrigin.x, imageOrigin.y}, {size.x, size.y} );
+        DrawGizmo(m_SelectedActor, { imageOrigin.x, imageOrigin.y });
     }
 
     ImGui::End();
@@ -431,7 +435,33 @@ void Editor::SetupEngineStyle() {
     colors[ImGuiCol_DockingPreview]   = ImVec4(0.30f, 0.30f, 0.30f, 0.50f);
 }
 
-void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
+void Editor::DrawGrid(Vector2 imageOrigin, Vector2 size) {
+    ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+    float gridSize = 50.0f;
+
+    ImU32 thinColor = IM_COL32(255, 255, 255, 15);
+    ImU32 thickColor = IM_COL32(255, 255, 255, 50);
+
+    Vector2 minWorld = m_EditorCamera.ScreenToWorld({ 0.0f, 0.0f });
+    Vector2 maxWorld = m_EditorCamera.ScreenToWorld( { size.x, size.y });
+
+    for (float x = std::floor(minWorld.x / gridSize) * gridSize; x <= maxWorld.x; x += gridSize) {
+        Vector2 screenPos = m_EditorCamera.WorldToScreen({x, 0.0f});
+        float lineX = imageOrigin.x + screenPos.x;
+        ImU32 col = (std::abs(x) < 0.1f) ? thickColor : thinColor;
+        drawList->AddLine({lineX, imageOrigin.y}, {lineX, imageOrigin.y + size.y}, col, (std::abs(x) < 0.1f) ? 2.0f : 1.0f);
+    }
+
+    for (float y = std::floor(minWorld.y / gridSize) * gridSize; y <= maxWorld.y; y += gridSize) {
+        Vector2 screenPos = m_EditorCamera.WorldToScreen({0.0f, y});
+        float lineY = imageOrigin.y + screenPos.y;
+        ImU32 col = (std::abs(y) < 0.1f) ? thickColor : thinColor;
+        drawList->AddLine({imageOrigin.x, lineY}, {imageOrigin.x + size.x, lineY}, col, (std::abs(y) < 0.1f) ? 2.0f : 1.0f);
+    }
+}
+
+void Editor::DrawGizmo(Actor* actor, Vector2 imageOrigin) {
     if (actor == nullptr) return;
 
     ImDrawList* drawList = ImGui::GetWindowDrawList();
@@ -441,17 +471,20 @@ void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
     Vector2 screenPos = m_EditorCamera.WorldToScreen(worldPos);
     ImVec2 origin = { imageOrigin.x + screenPos.x, imageOrigin.y + screenPos.y };
 
-    const float axisLength   = 60.0f;
-    const float arrowSize    = 8.0f;
-    const float hitThreshold = 8.0f;
+    const float axisLength   = 82.0f;
+    const float arrowSize    = 20.0f;
+    const float hitThreshold = 20.0f;
+    const float rectSize     = 22.0f;
 
     ImVec2 xEnd = { origin.x + axisLength, origin.y };
     ImVec2 yEnd = { origin.x, origin.y + axisLength };
 
     ImU32 colorX      = IM_COL32(220, 60, 60, 255);
     ImU32 colorY      = IM_COL32(60, 220, 90, 255);
+    ImU32 colorBoth   = IM_COL32(60, 160, 220, 255);
     ImU32 colorXHover = IM_COL32(255, 120, 120, 255);
     ImU32 colorYHover = IM_COL32(120, 255, 150, 255);
+    ImU32 colorBothHover = IM_COL32(120, 200, 255, 255);
 
     ImVec2 mouse = io.MousePos;
 
@@ -467,12 +500,16 @@ void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
         return std::sqrt(dx * dx + dy * dy);
     };
 
-    bool hoverX = distToSegment(mouse, origin, xEnd) <= hitThreshold;
-    bool hoverY = distToSegment(mouse, origin, yEnd) <= hitThreshold;
+    bool hoverBoth = mouse.x >= origin.x && mouse.x <= origin.x + rectSize &&
+                     mouse.y >= origin.y && mouse.y <= origin.y + rectSize;
+
+    bool hoverX = !hoverBoth && distToSegment(mouse, origin, xEnd) <= hitThreshold;
+    bool hoverY = !hoverBoth && distToSegment(mouse, origin, yEnd) <= hitThreshold;
 
     if (m_GizmoDraggingAxis == -1) {
         if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
-            if (hoverX) m_GizmoDraggingAxis = 0;
+            if (hoverBoth) m_GizmoDraggingAxis = 2; // Eixo 2 = Ambos
+            else if (hoverX) m_GizmoDraggingAxis = 0;
             else if (hoverY) m_GizmoDraggingAxis = 1;
 
             if (m_GizmoDraggingAxis != -1) {
@@ -486,8 +523,15 @@ void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
             Vector2 deltaWorld  = deltaScreen * (1.0f / m_EditorCamera.zoom);
 
             Vector2 newPos = m_GizmoDragStartPos;
-            if (m_GizmoDraggingAxis == 0) newPos.x = m_GizmoDragStartPos.x + deltaWorld.x;
-            else                          newPos.y = m_GizmoDragStartPos.y + deltaWorld.y;
+
+            if (m_GizmoDraggingAxis == 0) {
+                newPos.x = m_GizmoDragStartPos.x + deltaWorld.x;
+            } else if (m_GizmoDraggingAxis == 1) {
+                newPos.y = m_GizmoDragStartPos.y + deltaWorld.y;
+            } else if (m_GizmoDraggingAxis == 2) {
+                newPos.x = m_GizmoDragStartPos.x + deltaWorld.x;
+                newPos.y = m_GizmoDragStartPos.y + deltaWorld.y;
+            }
 
             actor->transform()->position = newPos;
         } else {
@@ -497,6 +541,7 @@ void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
 
     bool draggingX = m_GizmoDraggingAxis == 0;
     bool draggingY = m_GizmoDraggingAxis == 1;
+    bool draggingBoth = m_GizmoDraggingAxis == 2;
 
     drawList->AddLine(origin, xEnd, (hoverX || draggingX) ? colorXHover : colorX, 3.0f);
     drawList->AddLine(origin, yEnd, (hoverY || draggingY) ? colorYHover : colorY, 3.0f);
@@ -516,4 +561,7 @@ void Editor::DrawGizmo(Actor* actor, ImVec2 imageOrigin) {
     );
 
     drawList->AddCircleFilled(origin, 4.0f, IM_COL32(230, 230, 230, 255));
+
+    ImU32 rectColor = (hoverBoth || draggingBoth) ? colorBothHover : colorBoth;
+    drawList->AddRectFilled(origin, {origin.x + rectSize, origin.y + rectSize}, rectColor);
 }

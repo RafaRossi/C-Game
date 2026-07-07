@@ -54,9 +54,19 @@ void EditorCamera::Reset() {
 }
 
 Vector2 EditorCamera::ScreenToWorld(const Vector2 &screenPos) const {
-    return screenPos/zoom + position;
+    Vector2 worldPos;
+    worldPos.x = ((screenPos.x - (viewportSize.x * 0.5f)) / zoom) + position.x;
+    worldPos.y = ((screenPos.y - (viewportSize.y * 0.5f)) / zoom) + position.y;
+    return worldPos;
 }
 
 Vector2 EditorCamera::WorldToScreen(const Vector2 &worldPos) const {
-    return (worldPos - position) * zoom;
+    Vector2 screenPos;
+    screenPos.x = ((worldPos.x - position.x) * zoom) + (viewportSize.x * 0.5f);
+    screenPos.y = ((worldPos.y - position.y) * zoom) + (viewportSize.y * 0.5f);
+    return screenPos;
+}
+
+void EditorCamera::SetViewportSize(float width, float height) {
+    viewportSize = {width, height};
 }

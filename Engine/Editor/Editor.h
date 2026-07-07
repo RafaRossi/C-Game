@@ -55,7 +55,8 @@ private:
     Actor* CreateActorOnScene(Actor* parent);
     Actor* CreateActorOnScene(Actor *parent, Actor *source);
 
-    void DrawGizmo(Actor* actor, ImVec2 imageOrigin);
+    void DrawGrid(Vector2 imageOrigin, Vector2 size);
+    void DrawGizmo(Actor* actor, Vector2 imageOrigin);
 
     int m_GizmoDraggingAxis = -1;
 
