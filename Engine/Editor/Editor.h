@@ -6,6 +6,7 @@
 #include "imgui_impl_sdlrenderer3.h"
 #include <SDL3/SDL.h>
 #include <vector>
+#include <filesystem>
 
 #include "Camera/EditorCamera.h"
 #include "IconsFontAwesome6.h"
@@ -26,7 +27,8 @@ public:
     void Shutdown();
 
     EditorCamera* GetEditorCamera() { return &m_EditorCamera; }
-    void RenderSceneView(); // ← novo
+
+    void RenderSceneView();
 
 private:
     Engine*       m_Engine   = nullptr;
@@ -38,10 +40,18 @@ private:
 
     EditorCamera m_EditorCamera;
 
+    std::string m_CurrentScenePath;
+    Actor* m_CopiedActor;
+
     void RenderMainMenuBar();
     void RenderHierarchy();
     void RenderActorNode(Actor* actor);
     void RenderGameView();
+
+    void RenderContentBrowser();
+
+    void HandleShortcuts();
+    void CreateNewScene();
 
     void SetupEngineStyle();
 
@@ -52,8 +62,8 @@ private:
 
     Game* GetGame() const;
 
-    Actor* CreateActorOnScene(Actor* parent);
-    Actor* CreateActorOnScene(Actor *parent, Actor *source);
+    Actor* CreateNewActorOnScene(Actor* parent);
+    Actor* DuplicateActorOnScene(Actor *parent, Actor *source);
 
     void DrawGrid(Vector2 imageOrigin, Vector2 size);
     void DrawGizmo(Actor* actor, Vector2 imageOrigin);
@@ -62,6 +72,14 @@ private:
 
     Vector2 m_GizmoDraggingStartMouse;
     Vector2 m_GizmoDragStartPos;
+
+    std::string GetUniqueNameInHierarchy(Actor *parent, const std::string &baseName);
+
+    std::string OpenFileDialog(const std::string &title, const std::vector<std::string> &filters);
+
+    std::string SaveFileDialog(const std::string &title, const std::vector<std::string> &filters);
+
+    void DrawDirectoryNodes(const std::filesystem::path& directoryPath);
 };
 
 #endif //SDLPROJECT_EDITOR_H

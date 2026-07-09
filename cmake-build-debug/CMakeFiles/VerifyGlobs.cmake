@@ -10,6 +10,7 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Editor/Editor.h"
   "D:/Projetos/SDLProject/Engine/Editor/Macros/EngineMacros.h"
   "D:/Projetos/SDLProject/Engine/Editor/PropertyType/PropertyType.h"
+  "D:/Projetos/SDLProject/Engine/Editor/SceneSerializer/SceneSerializer.h"
   "D:/Projetos/SDLProject/Engine/Engine.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Actor/Actor.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Camera/CameraComponent.h"
@@ -24,6 +25,7 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Game/Core/Texture/TextureManager.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Transform/Transform.h"
   "D:/Projetos/SDLProject/Engine/Game/Game.h"
+  "D:/Projetos/SDLProject/Engine/ThirdParty/portable-file-dialogs.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

@@ -2,7 +2,10 @@
 #include "../Engine.h"
 #include "PropertyType/PropertyType.h"
 #include "Engine/Editor/ComponentFactory/ComponentFactory.h"
+#include "Engine/Editor/SceneSerializer/SceneSerializer.h"
+#include "Engine/ThirdParty/portable-file-dialogs.h"
 #include <iostream>
+#include <filesystem>
 
 void Editor::Init(SDL_Window* window, SDL_Renderer* renderer) {
     const char* basePath = SDL_GetBasePath();
@@ -78,11 +81,15 @@ void Editor::Render() {
         ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
     }
 
+    HandleShortcuts();
+
     RenderMainMenuBar();
 
     RenderHierarchy();
     RenderSceneView();
     RenderGameView();
+
+    RenderContentBrowser();
 
     DrawInspectorForActor(m_SelectedActor);
 
@@ -110,13 +117,52 @@ void Editor::RenderMainMenuBar() {
     ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImColor(30, 30, 30).Value);
 
     if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("File")) { ImGui::EndMenu(); }
+        if (ImGui::BeginMenu("File")) {
+            std::vector<std::string> sceneFilter = { "Cenas da Engine (*.tscene)", "*.tscene" };
+
+            if (ImGui::MenuItem("New Scene", "Ctrl+N")){
+                CreateNewScene();
+                m_CurrentScenePath = "";
+            }
+            if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+                if(m_CurrentScenePath.empty()){
+                    std::string filePath = SaveFileDialog("Salvar Nova Cena", sceneFilter);
+
+                    if (!filePath.empty()) {
+                        m_CurrentScenePath = filePath;
+                        SceneSerializer::SaveScene(m_Engine->GetScene(), m_CurrentScenePath);
+                    }else{
+                        SceneSerializer::SaveScene(m_Engine->GetScene(), m_CurrentScenePath);
+                    }
+                }
+            }
+
+            if (ImGui::MenuItem("Save As...")) {
+                std::string filepath = SaveFileDialog("Salvar Cena Como...", sceneFilter);
+                if (!filepath.empty()) {
+                    m_CurrentScenePath = filepath;
+                    SceneSerializer::SaveScene(m_Engine->GetScene(), m_CurrentScenePath);
+                }
+            }
+            if (ImGui::MenuItem("Load Scene", "Ctrl+O")) {
+                std::string filepath = OpenFileDialog("Abrir Cena do Jogo", sceneFilter);
+
+                if (!filepath.empty()) {
+                    SceneAsset asset;
+                    asset.filePath = filepath;
+
+                    m_Engine->ChangeScene(asset.Instantiate());
+                    m_CurrentScenePath = filepath;
+                }
+            }
+            ImGui::EndMenu();
+        }
 
         if (ImGui::BeginMenu("Edit")) { ImGui::EndMenu(); }
 
         if (ImGui::BeginMenu("Actions")) {
             if (ImGui::MenuItem("Create Actor")){
-                CreateActorOnScene(nullptr);
+                CreateNewActorOnScene(nullptr);
             }
             ImGui::EndMenu();
         }
@@ -236,7 +282,7 @@ void Editor::DrawInspectorForActor(Actor* actor) {
         ImGui::PushID(component);
 
         ImGui::SetNextItemAllowOverlap();
-        bool isHeaderOpen = ImGui::CollapsingHeader(component->GetClassName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+        bool isHeaderOpen = ImGui::CollapsingHeader(component->GetComponentName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
         if(component->CanBeRemoved()){
             ImGui::SameLine(ImGui::GetWindowWidth() - 30);
@@ -327,13 +373,13 @@ void Editor::OpenContextMenu(Actor *actor) {
 
     }
     if (ImGui::MenuItem("Duplicate")) {
-        CreateActorOnScene(nullptr, actor);
+        m_SelectedActor = DuplicateActorOnScene(m_SelectedActor->parent, actor);
     }
 
     ImGui::Separator();
 
     if(ImGui::MenuItem("Add Child")){
-        CreateActorOnScene(actor);
+        m_SelectedActor = CreateNewActorOnScene(actor);
     }
 
     if (ImGui::MenuItem("Delete")) {
@@ -360,11 +406,12 @@ void Editor::OpenContextMenu(Actor *actor) {
     ImGui::EndPopup();
 }
 
-Actor* Editor::CreateActorOnScene(Actor* parent) {
+Actor* Editor::CreateNewActorOnScene(Actor* parent) {
     auto scene = m_Engine->GetScene();
 
     auto actor = scene->CreateActor();
-    actor->name = "New Actor";
+    actor->name = GetUniqueNameInHierarchy(parent, actor->name);
+
     actor->transform()->position = { 0.0f, 0.0f };
 
     if(parent != nullptr)
@@ -375,17 +422,96 @@ Actor* Editor::CreateActorOnScene(Actor* parent) {
     return actor;
 }
 
-Actor* Editor::CreateActorOnScene(Actor* parent, Actor* source) {
-    auto actor = CreateActorOnScene(parent);
-
-    actor->name = source->name + " (Copy)";
+Actor* Editor::DuplicateActorOnScene(Actor* parent, Actor* source) {
+    auto actor = CreateNewActorOnScene(parent);
     actor->layer = source->layer;
 
     actor->transform()->position = source->transform()->position;
     actor->transform()->rotation = source->transform()->rotation;
     actor->transform()->size = source->transform()->size;
 
+    for (auto* component : source->GetComponents()) {
+        if (component->GetComponentName() == "Transform") continue;
+
+        auto* newComponent = ComponentFactory::Create(component->GetComponentName());
+
+        if(newComponent){
+            actor->AddComponent(newComponent);
+
+            FieldCollector sourceCollector;
+            component->AutoExposeField(sourceCollector);
+
+            FieldCollector destCollector;
+            newComponent->AutoExposeField(destCollector);
+
+            const auto& sourceFields = sourceCollector.GetFields();
+            const auto& destFields = destCollector.GetFields();
+
+            for (size_t i = 0; i < sourceFields.size(); ++i) {
+                if (sourceFields[i].Type == destFields[i].Type) {
+                    switch (sourceFields[i].Type) {
+                        case PropertyType::Float:
+                            *(float*)destFields[i].Ptr = *(float*)sourceFields[i].Ptr;
+                            break;
+                        case PropertyType::Int:
+                            *(int*)destFields[i].Ptr = *(int*)sourceFields[i].Ptr;
+                            break;
+                        case PropertyType::Bool:
+                            *(bool*)destFields[i].Ptr = *(bool*)sourceFields[i].Ptr;
+                            break;
+                        case PropertyType::Vector2:
+                            *(Vector2*)destFields[i].Ptr = *(Vector2*)sourceFields[i].Ptr;
+                            break;
+                        case PropertyType::String:
+                            *(std::string*)destFields[i].Ptr = *(std::string*)sourceFields[i].Ptr;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    for (auto* child : source->children) {
+        DuplicateActorOnScene(actor, child);
+    }
+
     return actor;
+}
+
+std::string Editor::GetUniqueNameInHierarchy(Actor* parent, const std::string& baseName) {
+    auto scene = m_Engine->GetScene();
+    std::vector<Actor*> siblings;
+
+    if (parent != nullptr) {
+        siblings = parent->children;
+    } else {
+        for (auto* actor : scene->GetActors()) {
+            if (actor->parent == nullptr) {
+                siblings.push_back(actor);
+            }
+        }
+    }
+
+    std::string candidateName = baseName;
+    bool nameExists = true;
+    int counter = 1;
+
+    while (nameExists) {
+        nameExists = false;
+        for (auto* sibling : siblings) {
+            if (sibling->name == candidateName) {
+                nameExists = true;
+                break;
+            }
+        }
+
+        if (nameExists) {
+            candidateName = baseName + " (" + std::to_string(counter) + ")";
+            counter++;
+        }
+    }
+
+    return candidateName;
 }
 
 void Editor::SetupEngineStyle() {
@@ -565,3 +691,119 @@ void Editor::DrawGizmo(Actor* actor, Vector2 imageOrigin) {
     ImU32 rectColor = (hoverBoth || draggingBoth) ? colorBothHover : colorBoth;
     drawList->AddRectFilled(origin, {origin.x + rectSize, origin.y + rectSize}, rectColor);
 }
+
+void Editor::HandleShortcuts() {
+    ImGuiIO& io = ImGui::GetIO();
+
+    if(io.WantTextInput) return;
+
+    if(io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_D)){
+        if(m_SelectedActor != nullptr){
+            m_SelectedActor = DuplicateActorOnScene(m_SelectedActor->parent, m_SelectedActor);
+        }
+    }
+
+    if (io.KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S)) {
+        std::string scenePath = std::string(PROJECT_SOURCE_DIR) + "/Scenes/Test.tscene";
+        SceneSerializer::SaveScene(m_Engine->GetScene(), scenePath);
+    }
+
+    if (ImGui::IsKeyPressed(ImGuiKey_Delete)) {
+        if (m_SelectedActor != nullptr) {
+            m_Engine->GetScene()->RemoveActor(m_SelectedActor);
+            m_SelectedActor = nullptr;
+        }
+    }
+}
+
+void Editor::RenderContentBrowser() {
+    ImGui::Begin("Content Browser");
+
+    std::string assetsPath = std::string(PROJECT_SOURCE_DIR) + "/Sandbox";
+    assetsPath.erase(std::remove(assetsPath.begin(), assetsPath.end(), '\"'), assetsPath.end());
+
+    if (!std::filesystem::exists(assetsPath)) {
+        std::filesystem::create_directories(assetsPath);
+    }
+
+    DrawDirectoryNodes(assetsPath);
+
+    ImGui::End();
+}
+
+void Editor::CreateNewScene() {
+    m_SelectedActor = nullptr;
+    m_CopiedActor = nullptr;
+
+    auto* newScene = new Scene();
+    auto* actorCamera = newScene->CreateActor("Main Camera");
+
+    newScene->SetMainCamera(actorCamera->AddComponent<CameraComponent>());
+
+    m_Engine->ChangeScene(newScene);
+    m_CurrentScenePath = "";
+}
+
+std::string Editor::OpenFileDialog(const std::string& title, const std::vector<std::string>& filters) {
+    std::string defaultPath = std::string(PROJECT_SOURCE_DIR) + "/Sandbox/";
+    auto dialog = pfd::open_file(title, ".", filters);
+    auto selection = dialog.result();
+
+    if (!selection.empty()) {
+        return selection[0];
+    }
+
+    return "";
+}
+
+std::string Editor::SaveFileDialog(const std::string& title, const std::vector<std::string>& filters) {
+    std::string defaultPath = std::string(PROJECT_SOURCE_DIR) + "/Sandbox/";
+    std::filesystem::create_directories(defaultPath);
+
+    auto dialog = pfd::save_file(title, defaultPath, filters);
+    std::string destination = dialog.result();
+
+    if(!destination.empty()){
+        if(destination.find(".tscene") == std::string::npos){
+            destination += ".tscene";
+        }
+    }
+
+    return destination;
+}
+
+void Editor::DrawDirectoryNodes(const std::filesystem::path& directoryPath) {
+    for (const auto& entry : std::filesystem::directory_iterator(directoryPath)) {
+        const auto& path = entry.path();
+        auto filename = path.filename().string();
+
+        if (entry.is_directory()) {
+            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+            bool isOpen = ImGui::TreeNodeEx(filename.c_str(), flags);
+            if (isOpen) {
+                DrawDirectoryNodes(path);
+                ImGui::TreePop();
+            }
+        } else {
+            ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+            ImGui::TreeNodeEx(filename.c_str(), flags);
+
+            if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+                if (path.extension() == ".tscene") {
+                    SceneAsset asset;
+                    asset.filePath = path.string();
+
+                    m_SelectedActor = nullptr;
+                    m_CopiedActor = nullptr;
+
+                    m_Engine->ChangeScene(asset.Instantiate());
+                    m_CurrentScenePath = path.string();
+                    std::cout << "[Editor] Cena carregada pelo Browser: " << filename << "\n";
+                }
+            }
+        }
+    }
+}
+

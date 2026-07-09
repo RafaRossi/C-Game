@@ -4,7 +4,9 @@
 
 #include "Scene.h"
 
-Scene::Scene() = default;
+Scene::Scene(){
+
+}
 
 Scene::~Scene(){
     for(auto* actor : m_Actors)
@@ -13,8 +15,8 @@ Scene::~Scene(){
     m_Actors.clear();
 }
 
-Actor* Scene::CreateActor() {
-    auto* actor = new Actor();
+Actor* Scene::CreateActor(const std::string& actorName) {
+    auto* actor = new Actor(actorName);
     m_Actors.push_back(actor);
     m_LayerOrderDirty = true;
     return actor;
@@ -23,11 +25,13 @@ Actor* Scene::CreateActor() {
 void Scene::RemoveActor(Actor* actor) {
     if (actor == nullptr) return;
 
+    for (auto* child : actor->children)
+    {
+        RemoveActor(child);
+    }
+
     if (actor->parent != nullptr)
         actor->parent->RemoveChild(actor);
-
-    for (auto* child : actor->children)
-        child->parent = nullptr;
 
     auto it = std::find(m_Actors.begin(), m_Actors.end(), actor);
     if (it != m_Actors.end()) {
@@ -64,4 +68,12 @@ void Scene::Deserialize() {
         m_Actors[i]->SetActive(m_Snapshot[i].isActive);
         m_Actors[i]->layer                 = m_Snapshot[i].layer;
     }
+}
+
+Scene *SceneAsset::Instantiate() const {
+    auto* runtimeScene = new Scene();
+
+    SceneSerializer::LoadScene(runtimeScene, filePath);
+
+    return runtimeScene;
 }

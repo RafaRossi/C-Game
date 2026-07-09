@@ -23,13 +23,21 @@ void Engine::Init() {
         return;
     }
 
-    m_Scene = new Scene();
+    m_Editor = new Editor(this);
+    m_Editor->Init(m_Window, m_Renderer);
+
+    if(!SceneSerializer::LoadScene(m_Scene = new Scene(), "../Scenes/Default Scene.tscene"))
+    {
+        auto* cameraActor = m_Scene->CreateActor("Main Camera");
+        auto* cameraComponent = cameraActor->AddComponent<CameraComponent>();
+
+        m_Scene->SetMainCamera(cameraComponent);
+
+        SceneSerializer::SaveScene(m_Scene, "../Scenes/Default Scene.tscene");
+    }
 
     m_Game = new Game();
     m_Game->Init(m_Renderer, m_Scene);
-
-    m_Editor = new Editor(this);
-    m_Editor->Init(m_Window, m_Renderer);
 
     m_ViewportTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_ViewportWidth, m_ViewportHeight);
 
@@ -39,6 +47,8 @@ void Engine::Init() {
 
 void Engine::Run() {
     while (m_IsRunning) {
+        ApplySceneChange();
+
         ProcessEvents();
 
         m_Editor->NewFrame();
@@ -179,4 +189,21 @@ void Engine::Render() {
     m_Editor->Render();
 
     SDL_RenderPresent(m_Renderer);
+}
+
+void Engine::ChangeScene(Scene *scene) {
+    if(scene == nullptr) return;
+
+    m_NextScene = scene;
+}
+
+void Engine::ApplySceneChange() {
+    if(m_NextScene == nullptr) return;
+
+    if(m_Scene != nullptr){
+        delete m_Scene;
+    }
+
+    m_Scene = m_NextScene;
+    m_NextScene = nullptr;
 }

@@ -3,7 +3,13 @@ import re, sys
 component_pattern = re.compile(r'COMPONENT_BODY\((\w+)\)')
 property_pattern = re.compile(r'PROPERTY\((.*?)\)\s*([a-zA-Z0-9_:<>]+)\s+([a-zA-Z0-9_]+)\s*(?:=.*?)?;')
 
-TYPE_MAP = {"int": True, "float": True, "bool": True}  # expanda depois pra Vector2/string
+TYPE_MAP = {
+    "float": "PropertyType::Float",
+    "int": "PropertyType::Int",
+    "bool": "PropertyType::Bool",
+    "std::string": "PropertyType::String",
+    "Vector2": "PropertyType::Vector2"
+}
 
 
 def parse_header(header_path):

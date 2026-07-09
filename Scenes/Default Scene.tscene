@@ -1,0 +1,32 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "class": "Transform",
+                    "properties": {
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": 0.0,
+                        "size": [
+                            100.0,
+                            100.0
+                        ],
+                        "teste": ""
+                    }
+                },
+                {
+                    "class": "CameraComponent",
+                    "properties": {}
+                }
+            ],
+            "id": 1,
+            "layer": 1,
+            "name": "Main Camera",
+            "parent_id": 0
+        }
+    ]
+}

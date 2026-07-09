@@ -15,7 +15,9 @@ file(GLOB_RECURSE COMPONENT_HEADERS CONFIGURE_DEPENDS
 
 set(GENERATED_FILES ""
         Engine/Editor/PropertyType/PropertyType.h
-        Engine/Editor/ComponentFactory/ComponentFactory.h)
+        Engine/Editor/ComponentFactory/ComponentFactory.h
+        Engine/Editor/SceneSerializer/SceneSerializer.cpp
+        Engine/Editor/SceneSerializer/SceneSerializer.h)
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
@@ -54,6 +56,12 @@ add_executable(
         Engine/Game/Core/Texture/TextureManager.h
         Engine/Game/Core/Layer/Layer.h
         Engine/Game/Core/Camera/ClearFlags.h
+        Engine/ThirdParty/json.hpp
+
+        Engine/ThirdParty/portable-file-dialogs.h
+
+        Engine/Editor/SceneSerializer/SceneSerializer.cpp
+        Engine/Editor/SceneSerializer/SceneSerializer.h
 
         imgui/imgui.cpp
         imgui/imgui_draw.cpp
@@ -81,6 +89,10 @@ add_executable(
 if(BUILD_WITH_EDITOR)
     target_compile_definitions(${PROJECT_NAME} PRIVATE TR_EDITOR)
 endif ()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+        PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
+)
 
 set(SDL3_DIR "C:/SDL3-3")
 list(APPEND CMAKE_PREFIX_PATH "${SDL3_DIR}")

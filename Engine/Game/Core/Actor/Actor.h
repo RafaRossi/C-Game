@@ -21,12 +21,18 @@ public:
     Transform* transform() const { return m_Transform; }
     Layer layer = Layer::Default;
 
-    virtual ~Actor() = default;
+    virtual ~Actor() {
+        for (auto* component : m_Components) {
+            delete component;
+        }
+        m_Components.clear();
+    }
 
     Actor* parent = nullptr;
     std::vector<Actor*> children;
 
-    Actor(){
+    explicit Actor(const std::string& actorName = "New Actor"){
+        name = actorName;
         m_Transform = AddComponent<Transform>();
     }
 
@@ -79,7 +85,7 @@ public:
 
         auto* component = new T();
 
-        if(component->IsUnique() && HasComponent(component->GetClassName())){
+        if(component->IsUnique() && HasComponent(component->GetComponentName())){
             delete component;
             return nullptr;
         }
@@ -92,7 +98,7 @@ public:
     Component* AddComponent(Component* component){
         if(!component) return nullptr;
 
-        if(component->IsUnique() && HasComponent(component->GetClassName())){
+        if(component->IsUnique() && HasComponent(component->GetComponentName())){
             delete component;
             return nullptr;
         }
@@ -113,7 +119,7 @@ public:
 
     bool HasComponent(const std::string& className) const {
         for (auto* comp : m_Components) {
-            if (comp->GetClassName() == className) return true;
+            if (comp->GetComponentName() == className) return true;
         }
         return false;
     }

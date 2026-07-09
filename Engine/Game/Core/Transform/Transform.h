@@ -15,10 +15,11 @@ class Transform : public Component {
 COMPONENT_BODY(Transform)
 
 public:
-    Vector2 position;
-
+    PROPERTY() Vector2 position;
     PROPERTY() float rotation = 0.0f;
-    Vector2 size = { 100.f, 100.f};
+    PROPERTY() Vector2 size = { 100.f, 100.f};
+
+    PROPERTY() std::string teste;
 
     void* GetInstance() { return this; }
 

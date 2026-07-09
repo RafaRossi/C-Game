@@ -33,12 +33,15 @@ public:
     void ResizeViewport(int w, int h);
 
     Scene* GetScene() const { return m_Scene; }
+    void ChangeScene(Scene* scene);
 
 private:
     void ProcessEvents();
     void Update();
     void Render();
     float CalculateDeltaTime();
+
+    void ApplySceneChange();
 
     SDL_Window*   m_Window    = nullptr;
     SDL_Renderer* m_Renderer  = nullptr;
@@ -50,6 +53,8 @@ private:
     Scene* m_Scene   = nullptr;
     Game*   m_Game   = nullptr;
     Editor* m_Editor = nullptr;
+
+    Scene* m_NextScene = nullptr;
 
     SDL_Texture* m_GameViewTexture = nullptr;
     int m_GameViewWidth = 800;

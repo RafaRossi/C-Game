@@ -1,0 +1,80 @@
+{
+    "actors": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "class": "Transform",
+                    "properties": {
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": 0.0,
+                        "size": [
+                            100.0,
+                            100.0
+                        ],
+                        "teste": ""
+                    }
+                },
+                {
+                    "class": "CameraComponent",
+                    "properties": {}
+                }
+            ],
+            "id": 1,
+            "layer": 1,
+            "name": "Main Camera",
+            "parent_id": 0
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "class": "Transform",
+                    "properties": {
+                        "position": [
+                            -118.0,
+                            -228.0
+                        ],
+                        "rotation": 0.0,
+                        "size": [
+                            100.0,
+                            100.0
+                        ],
+                        "teste": ""
+                    }
+                }
+            ],
+            "id": 2,
+            "layer": 1,
+            "name": "New Actor",
+            "parent_id": 0
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "class": "Transform",
+                    "properties": {
+                        "position": [
+                            76.0,
+                            -97.0
+                        ],
+                        "rotation": 0.0,
+                        "size": [
+                            100.0,
+                            100.0
+                        ],
+                        "teste": ""
+                    }
+                }
+            ],
+            "id": 3,
+            "layer": 1,
+            "name": "New Actor (1)",
+            "parent_id": 0
+        }
+    ]
+}

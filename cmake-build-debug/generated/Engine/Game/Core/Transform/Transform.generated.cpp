@@ -5,7 +5,10 @@
 
 #ifdef TR_EDITOR
 void Transform::AutoExposeField(FieldCollector& collector) {
+    collector.Expose("position", &position);
     collector.Expose("rotation", &rotation);
+    collector.Expose("size", &size);
+    collector.Expose("teste", &teste);
 }
 
 static bool bReg_Transform = []() {

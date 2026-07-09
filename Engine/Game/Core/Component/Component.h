@@ -25,7 +25,7 @@ public:
 
     virtual void* GetInstance() { return this; }
 
-    virtual std::string GetClassName() const = 0;
+    virtual std::string GetComponentName() const = 0;
     virtual Component* Clone() const = 0;
 
     virtual bool IsUnique() const { return false; }

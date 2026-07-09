@@ -9,6 +9,8 @@
 #include <string>
 #include "../Actor/Actor.h"
 #include "../Camera/CameraComponent.h"
+#include "Engine/Editor/SceneSerializer/SceneSerializer.h"
+
 
 class Scene {
 public:
@@ -17,12 +19,13 @@ public:
     Scene();
     ~Scene();
 
-    Actor* CreateActor();
+    Actor* CreateActor(const std::string& actorName = "New Actor");
     void RemoveActor(Actor* actor);
     std::vector<Actor*>& GetActors() { return m_Actors; }
 
     Actor* GetCameraActor() const { return m_CameraActor; }
     CameraComponent* GetCamera() const { return m_CameraActor->GetComponent<CameraComponent>(); }
+    void SetMainCamera(CameraComponent* cameraComponent) { m_CameraActor = cameraComponent->owner; }
 
     bool IsLayerOrderDirty() const { return m_LayerOrderDirty; }
     void SetLayerOrderDirty(bool dirty) { m_LayerOrderDirty = dirty; }
@@ -51,5 +54,11 @@ private:
     std::vector<ActorSnapshot> m_Snapshot;
 };
 
+class SceneAsset{
+public:
+    std::string filePath;
+
+    Scene* Instantiate() const;
+};
 
 #endif //SDLPROJECT_SCENE_H
