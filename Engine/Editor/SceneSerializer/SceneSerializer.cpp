@@ -1,5 +1,5 @@
 #include "SceneSerializer.h"
-#include "../ComponentFactory/ComponentFactory.h"
+#include "../Factory/Factory.h"
 #include "Engine/ThirdParty/json.hpp"
 #include "Engine/Game/Core/Actor/Actor.h"
 #include <fstream>
@@ -39,7 +39,7 @@ void SceneSerializer::SaveScene(Scene* scene, const std::string& path) {
             component->AutoExposeField(collector);
 
             json compJson;
-            compJson["class"] = component->GetComponentName();
+            compJson["class"] = component->GetTypeName();
             compJson["properties"] = json::object();
 
             for (const auto& field : collector.GetFields()) {
@@ -61,6 +61,11 @@ void SceneSerializer::SaveScene(Scene* scene, const std::string& path) {
                     case PropertyType::String:
                         compJson["properties"][field.Name] = *static_cast<std::string*>(field.Ptr);
                         break;
+                    case PropertyType::Color: {
+                        auto* c = static_cast<Color*>(field.Ptr);
+                        compJson["properties"][field.Name] = {c->r, c->g, c->b, c->a};
+                        break;
+                    }
                 }
             }
             actorJson["components"].push_back(compJson);
@@ -104,7 +109,7 @@ bool SceneSerializer::LoadScene(Scene* scene, const std::string& path) {
             if (className == "Transform") {
                 component = actor->transform();
             } else {
-                component = ComponentFactory::Create(className);
+                component = Factory<Component>::Create(className);
                 if (component == nullptr) continue;
                 actor->AddComponent(component);
             }
@@ -135,6 +140,13 @@ bool SceneSerializer::LoadScene(Scene* scene, const std::string& path) {
                     case PropertyType::String:
                         *static_cast<std::string*>(field.Ptr) = props[field.Name].get<std::string>();
                         break;
+                    case PropertyType::Color:{
+                        auto arr = props[field.Name].get<std::vector<float>>();
+                        if (arr.size() == 4) {
+                            *static_cast<Color*>(field.Ptr) = Color(arr[0], arr[1], arr[2], arr[3]);
+                        }
+                        break;
+                    }
                 }
             }
         }

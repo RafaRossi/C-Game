@@ -11,7 +11,7 @@
 #include "ClearFlags.h"
 
 class CameraComponent : public Component {
-COMPONENT_BODY(CameraComponent)
+    REGISTER_BODY(CameraComponent, Component)
 public:
     float zoom = 1.0f;
     SDL_Color backgroundColor = { 20, 30, 45, 255 };

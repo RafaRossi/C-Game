@@ -73,8 +73,8 @@ public:
         return {
                 worldPos.x,
                 worldPos.y,
-                m_Transform->size.x,
-                m_Transform->size.y
+                m_Transform->scale.x,
+                m_Transform->scale.y
         };
     }
 
@@ -85,7 +85,7 @@ public:
 
         auto* component = new T();
 
-        if(component->IsUnique() && HasComponent(component->GetComponentName())){
+        if(component->IsUnique() && HasComponent(component->GetTypeName())){
             delete component;
             return nullptr;
         }
@@ -98,7 +98,7 @@ public:
     Component* AddComponent(Component* component){
         if(!component) return nullptr;
 
-        if(component->IsUnique() && HasComponent(component->GetComponentName())){
+        if(component->IsUnique() && HasComponent(component->GetTypeName())){
             delete component;
             return nullptr;
         }
@@ -119,7 +119,7 @@ public:
 
     bool HasComponent(const std::string& className) const {
         for (auto* comp : m_Components) {
-            if (comp->GetComponentName() == className) return true;
+            if (comp->GetTypeName() == className) return true;
         }
         return false;
     }

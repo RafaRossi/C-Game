@@ -30,13 +30,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 41,
+				"line" : 44,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 105,
+				"line" : 108,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 96,
 				"parent" : 0
 			},
 			{
@@ -46,15 +52,9 @@
 				"parent" : 0
 			},
 			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 90,
-				"parent" : 0
-			},
-			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 110,
+				"line" : 113,
 				"parent" : 0
 			}
 		]
@@ -120,10 +120,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				3,
-				5,
-				6,
-				7,
+				2,
 				8,
 				9,
 				10,
@@ -142,21 +139,27 @@
 				23,
 				24,
 				25,
+				26,
+				27,
+				28,
+				29,
 				30,
-				32,
-				35,
-				37,
+				31,
+				36,
+				38,
+				41,
 				43,
-				44,
-				45,
-				46,
-				47,
-				48,
 				49,
 				50,
+				51,
+				52,
+				53,
 				54,
 				55,
-				57
+				56,
+				60,
+				61,
+				63
 			]
 		}
 	],
@@ -204,10 +207,7 @@
 			"sourceIndexes" : 
 			[
 				0,
-				3,
-				5,
-				6,
-				7,
+				2,
 				8,
 				9,
 				10,
@@ -226,21 +226,27 @@
 				23,
 				24,
 				25,
+				26,
+				27,
+				28,
+				29,
 				30,
-				32,
-				35,
-				37,
+				31,
+				36,
+				38,
+				41,
 				43,
-				44,
-				45,
-				46,
-				47,
-				48,
 				49,
 				50,
+				51,
+				52,
+				53,
 				54,
 				55,
-				57
+				56,
+				60,
+				61,
+				63
 			]
 		},
 		{
@@ -248,39 +254,36 @@
 			"sourceIndexes" : 
 			[
 				1,
-				2,
+				3,
 				4,
-				26,
-				27,
-				28,
-				29,
-				31,
+				5,
+				6,
+				7,
+				32,
 				33,
 				34,
-				36,
-				38,
+				35,
+				37,
 				39,
 				40,
-				41,
 				42,
-				51,
-				52,
-				53,
-				56,
+				44,
+				45,
+				46,
+				47,
+				48,
+				57,
 				58,
-				59
+				59,
+				62,
+				64,
+				65
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				60,
-				61,
-				62,
-				63,
-				64,
-				65,
 				66,
 				67,
 				68,
@@ -295,7 +298,16 @@
 				77,
 				78,
 				79,
-				80
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89
 			]
 		}
 	],
@@ -314,11 +326,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Engine/Editor/ComponentFactory/ComponentFactory.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Engine/Editor/SceneSerializer/SceneSerializer.cpp",
 			"sourceGroupIndex" : 0
@@ -326,6 +333,26 @@
 		{
 			"backtrace" : 1,
 			"path" : "Engine/Editor/SceneSerializer/SceneSerializer.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Engine/Game/Core/Color/Color.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Engine/Game/Core/Shape/Shape.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Engine/Editor/Factory/Factory.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Engine/Game/Core/RenderType/RenderType.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -339,14 +366,14 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp",
+			"path" : "cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp",
+			"path" : "cmake-build-debug/generated/Engine/Editor/Factory/Factory.generated.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -402,6 +429,13 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/Color/Color.generated.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Component/Component.generated.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -437,6 +471,13 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -445,6 +486,13 @@
 			"compileGroupIndex" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Scene/Scene.generated.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/Shape/Shape.generated.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -669,13 +717,13 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp.rule",
+			"path" : "cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp.rule",
 			"sourceGroupIndex" : 2
 		},
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp.rule",
+			"path" : "cmake-build-debug/generated/Engine/Editor/Factory/Factory.generated.cpp.rule",
 			"sourceGroupIndex" : 2
 		},
 		{
@@ -723,6 +771,12 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/Color/Color.generated.cpp.rule",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Component/Component.generated.cpp.rule",
 			"sourceGroupIndex" : 2
 		},
@@ -753,6 +807,12 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp.rule",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp.rule",
 			"sourceGroupIndex" : 2
 		},
@@ -760,6 +820,12 @@
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "cmake-build-debug/generated/Engine/Game/Core/Scene/Scene.generated.cpp.rule",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "cmake-build-debug/generated/Engine/Game/Core/Shape/Shape.generated.cpp.rule",
 			"sourceGroupIndex" : 2
 		},
 		{

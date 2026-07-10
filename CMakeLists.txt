@@ -15,9 +15,12 @@ file(GLOB_RECURSE COMPONENT_HEADERS CONFIGURE_DEPENDS
 
 set(GENERATED_FILES ""
         Engine/Editor/PropertyType/PropertyType.h
-        Engine/Editor/ComponentFactory/ComponentFactory.h
         Engine/Editor/SceneSerializer/SceneSerializer.cpp
-        Engine/Editor/SceneSerializer/SceneSerializer.h)
+        Engine/Editor/SceneSerializer/SceneSerializer.h
+        Engine/Game/Core/Color/Color.h
+        Engine/Game/Core/Shape/Shape.h
+        Engine/Editor/Factory/Factory.h
+        Engine/Game/Core/RenderType/RenderType.h)
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 
@@ -83,7 +86,7 @@ add_executable(
         Engine/Game/Core/Scene/Scene.cpp
         Engine/Game/Core/Scene/Scene.h
         Engine/Editor/Macros/EngineMacros.h
-        Engine/Editor/ComponentFactory/ComponentFactory.h
+        Engine/Editor/Factory/Factory.h
 )
 
 if(BUILD_WITH_EDITOR)

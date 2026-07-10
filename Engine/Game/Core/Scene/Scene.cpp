@@ -48,7 +48,7 @@ void Scene::Serialize() {
         ActorSnapshot snap;
         snap.name = actor->name;
         snap.position = actor->transform()->position;
-        snap.size     = actor->transform()->size;
+        snap.scale     = actor->transform()->scale;
         snap.rotation = actor->transform()->rotation;
         snap.isActive = actor->IsActive();
         snap.layer    = actor->layer;
@@ -63,7 +63,7 @@ void Scene::Deserialize() {
     for (int i = 0; i < m_Actors.size(); i++) {
         m_Actors[i]->name = m_Snapshot[i].name;
         m_Actors[i]->transform()->position = m_Snapshot[i].position;
-        m_Actors[i]->transform()->size     = m_Snapshot[i].size;
+        m_Actors[i]->transform()->scale     = m_Snapshot[i].scale;
         m_Actors[i]->transform()->rotation = m_Snapshot[i].rotation;
         m_Actors[i]->SetActive(m_Snapshot[i].isActive);
         m_Actors[i]->layer                 = m_Snapshot[i].layer;

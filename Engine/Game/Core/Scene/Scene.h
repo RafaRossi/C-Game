@@ -43,7 +43,7 @@ private:
         std::string name;
 
         Vector2 position;
-        Vector2 size;
+        Vector2 scale;
 
         float rotation;
         bool isActive;

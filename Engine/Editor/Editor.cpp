@@ -1,7 +1,7 @@
 #include "Editor.h"
 #include "../Engine.h"
 #include "PropertyType/PropertyType.h"
-#include "Engine/Editor/ComponentFactory/ComponentFactory.h"
+#include "Engine/Editor/Factory/Factory.h"
 #include "Engine/Editor/SceneSerializer/SceneSerializer.h"
 #include "Engine/ThirdParty/portable-file-dialogs.h"
 #include <iostream>
@@ -282,7 +282,7 @@ void Editor::DrawInspectorForActor(Actor* actor) {
         ImGui::PushID(component);
 
         ImGui::SetNextItemAllowOverlap();
-        bool isHeaderOpen = ImGui::CollapsingHeader(component->GetComponentName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
+        bool isHeaderOpen = ImGui::CollapsingHeader(component->GetTypeName().c_str(), ImGuiTreeNodeFlags_DefaultOpen);
 
         if(component->CanBeRemoved()){
             ImGui::SameLine(ImGui::GetWindowWidth() - 30);
@@ -296,7 +296,7 @@ void Editor::DrawInspectorForActor(Actor* actor) {
 
         if (isHeaderOpen) {
             if (!fields.empty()) {
-                DrawInspector(fields);
+                DrawFields(fields);
             } else {
                 ImGui::TextDisabled("No exposed properties.");
             }
@@ -308,7 +308,7 @@ void Editor::DrawInspectorForActor(Actor* actor) {
     ImGui::End();
 }
 
-void Editor::DrawInspector(const std::vector<ExposedField>& fields) {
+void Editor::DrawFields(const std::vector<ExposedField>& fields) {
     for (const auto& field : fields) {
         switch (field.Type) {
             case PropertyType::Float: {
@@ -333,6 +333,43 @@ void Editor::DrawInspector(const std::vector<ExposedField>& fields) {
                 strncpy(buffer, v->c_str(), sizeof(buffer));
                 if (ImGui::InputText(field.Name.c_str(), buffer, sizeof(buffer)))
                     *v = buffer;
+                break;
+            }
+            case PropertyType::Color : {
+                auto* color = static_cast<Color*>(field.Ptr);
+
+                ImGui::ColorEdit4(field.Name.c_str(), &color->r);
+                break;
+            }
+
+            case PropertyType::Polymorphic: {
+                std::string currentType = field.GetCurrentTypeName();
+
+                if(ImGui::BeginCombo(field.Name.c_str(), currentType.c_str())){
+                    if (ImGui::Selectable("None", currentType == "None")) {
+                        field.InstantiateFunc("None");
+                    }
+
+                    for (const auto& typeName : field.AvailableTypes) {
+                        bool isSelected = (currentType == typeName);
+                        if (ImGui::Selectable(typeName.c_str(), isSelected)) {
+                            field.InstantiateFunc(typeName);
+                        }
+                        if (isSelected) ImGui::SetItemDefaultFocus();
+                    }
+                    ImGui::EndCombo();
+                }
+
+                if(currentType != "None"){
+                    ImGui::Indent();
+
+                    FieldCollector nestedCollector;
+                    field.ExposeCurrentObjectFunc(nestedCollector);
+
+                    DrawFields(nestedCollector.GetFields());
+                    ImGui::Unindent();
+                }
+
                 break;
             }
         }
@@ -390,9 +427,9 @@ void Editor::OpenContextMenu(Actor *actor) {
 
     if(ImGui::BeginMenu("Components")){
 
-        for(const auto& [compName, creatorFunc] : ComponentFactory::GetRegistry()){
+        for(const auto& [compName, creatorFunc] : Factory<Component>::GetRegistry()){
             if(ImGui::MenuItem(compName.c_str())){
-                Component* newComp = ComponentFactory::Create(compName);
+                Component* newComp = Factory<Component>::Create(compName);
 
                 if(newComp){
                     actor->AddComponent(newComp);
@@ -428,12 +465,12 @@ Actor* Editor::DuplicateActorOnScene(Actor* parent, Actor* source) {
 
     actor->transform()->position = source->transform()->position;
     actor->transform()->rotation = source->transform()->rotation;
-    actor->transform()->size = source->transform()->size;
+    actor->transform()->scale = source->transform()->scale;
 
     for (auto* component : source->GetComponents()) {
-        if (component->GetComponentName() == "Transform") continue;
+        if (component->GetTypeName() == "Transform") continue;
 
-        auto* newComponent = ComponentFactory::Create(component->GetComponentName());
+        auto* newComponent = Factory<Component>::Create(component->GetTypeName());
 
         if(newComponent){
             actor->AddComponent(newComponent);
@@ -806,4 +843,3 @@ void Editor::DrawDirectoryNodes(const std::filesystem::path& directoryPath) {
         }
     }
 }
-

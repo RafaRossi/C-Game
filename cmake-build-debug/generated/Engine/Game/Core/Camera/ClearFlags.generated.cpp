@@ -1,3 +1,1 @@
-// DO NOT EDIT. Auto-generated.
-#include "D:/Projetos/SDLProject/Engine/Game/Core/Camera/ClearFlags.h"
-
+// No macros found.

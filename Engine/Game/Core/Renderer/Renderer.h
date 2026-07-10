@@ -10,29 +10,38 @@
 #include <SDL3/SDL_render.h>
 #include "../Component/Component.h"
 #include "../Actor/Actor.h"
+#include "Engine/Game/Core/RenderType/RenderType.h"
 
 class Renderer : public Component {
-COMPONENT_BODY(Renderer)
+REGISTER_BODY(Renderer, Component)
 
 public:
-    SDL_Color color = {255, 255, 255, 255};
-    SDL_Texture* sprite = nullptr;
+    PROPERTY() Color color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    PROPERTY() int orderInLayer = 0;
 
-    int orderInLayer = 0;
+    PROPERTY(DisplayName = "Render Type") RenderType* renderType = nullptr;
 
     void Draw(SDL_Renderer* renderer) override {
-        auto bounds = owner->GetBounds();
-
-        if(sprite != nullptr){
-
-            SetTextureAlphaMod(sprite, color.a);
-            SetTextureColorMod(sprite, color);
-            SetRendererTexture(renderer, sprite, nullptr, &bounds);
-        }else{
-            SetRenderDrawColor(renderer, color);
-            SetRenderFillRect(renderer, &bounds);
+        if(renderType){
+            renderType->Draw(renderer, owner->GetBounds(), color);
         }
     }
+
+    /*SDL_Texture* sprite = nullptr;
+     void Draw(SDL_Renderer* renderer) override {
+        auto bounds = owner->GetBounds();
+
+        SDL_Color sdlColor = color.ToSDLColor();
+
+        if(sprite != nullptr){
+            SetTextureAlphaMod(sprite, sdlColor.a);
+            SetTextureColorMod(sprite, sdlColor);
+            SetRendererTexture(renderer, sprite, nullptr, &bounds);
+        } else {
+            SetRenderDrawColor(renderer, sdlColor);
+            SetRenderFillRect(renderer, &bounds);
+        }
+    }*/
 
     static bool SetRenderDrawColor(SDL_Renderer* renderer, const SDL_Color color){
         return SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);

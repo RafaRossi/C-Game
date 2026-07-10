@@ -12,14 +12,12 @@
 #include "../Component/Component.h"
 
 class Transform : public Component {
-COMPONENT_BODY(Transform)
+REGISTER_BODY(Transform, Component)
 
 public:
     PROPERTY() Vector2 position;
     PROPERTY() float rotation = 0.0f;
-    PROPERTY() Vector2 size = { 100.f, 100.f};
-
-    PROPERTY() std::string teste;
+    PROPERTY() Vector2 scale = { 1.f, 1.f};
 
     void* GetInstance() { return this; }
 

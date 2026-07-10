@@ -55,7 +55,7 @@ private:
 
     void SetupEngineStyle();
 
-    void DrawInspector(const std::vector<ExposedField>& fields);
+    void DrawFields(const std::vector<ExposedField>& fields);
     void DrawInspectorForActor(Actor* actor);
 
     void OpenContextMenu(Actor* actor);

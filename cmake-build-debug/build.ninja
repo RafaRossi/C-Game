@@ -47,7 +47,7 @@ cmake_ninja_workdir = D$:/Projetos/SDLProject/cmake-build-debug/
 #############################################
 # Order-only phony target for SDLProject
 
-build cmake_object_order_depends_target_SDLProject: phony || generated/Engine/Editor/Camera/EditorCamera.generated.cpp generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp generated/Engine/Editor/Editor.generated.cpp generated/Engine/Editor/Macros/EngineMacros.generated.cpp generated/Engine/Editor/PropertyType/PropertyType.generated.cpp generated/Engine/Editor/SceneSerializer/SceneSerializer.generated.cpp generated/Engine/Engine.generated.cpp generated/Engine/Game/Core/Actor/Actor.generated.cpp generated/Engine/Game/Core/Camera/CameraComponent.generated.cpp generated/Engine/Game/Core/Camera/ClearFlags.generated.cpp generated/Engine/Game/Core/Component/Component.generated.cpp generated/Engine/Game/Core/Inputs/InputManager.generated.cpp generated/Engine/Game/Core/Layer/Layer.generated.cpp generated/Engine/Game/Core/Math/Math.generated.cpp generated/Engine/Game/Core/Math/Vector2.generated.cpp generated/Engine/Game/Core/Renderer/Renderer.generated.cpp generated/Engine/Game/Core/Scene/Scene.generated.cpp generated/Engine/Game/Core/Texture/TextureManager.generated.cpp generated/Engine/Game/Core/Transform/Transform.generated.cpp generated/Engine/Game/Game.generated.cpp generated/Engine/ThirdParty/portable-file-dialogs.generated.cpp
+build cmake_object_order_depends_target_SDLProject: phony || generated/Engine/Editor/Camera/EditorCamera.generated.cpp generated/Engine/Editor/Editor.generated.cpp generated/Engine/Editor/Factory/Factory.generated.cpp generated/Engine/Editor/Macros/EngineMacros.generated.cpp generated/Engine/Editor/PropertyType/PropertyType.generated.cpp generated/Engine/Editor/SceneSerializer/SceneSerializer.generated.cpp generated/Engine/Engine.generated.cpp generated/Engine/Game/Core/Actor/Actor.generated.cpp generated/Engine/Game/Core/Camera/CameraComponent.generated.cpp generated/Engine/Game/Core/Camera/ClearFlags.generated.cpp generated/Engine/Game/Core/Color/Color.generated.cpp generated/Engine/Game/Core/Component/Component.generated.cpp generated/Engine/Game/Core/Inputs/InputManager.generated.cpp generated/Engine/Game/Core/Layer/Layer.generated.cpp generated/Engine/Game/Core/Math/Math.generated.cpp generated/Engine/Game/Core/Math/Vector2.generated.cpp generated/Engine/Game/Core/RenderType/RenderType.generated.cpp generated/Engine/Game/Core/Renderer/Renderer.generated.cpp generated/Engine/Game/Core/Scene/Scene.generated.cpp generated/Engine/Game/Core/Shape/Shape.generated.cpp generated/Engine/Game/Core/Texture/TextureManager.generated.cpp generated/Engine/Game/Core/Transform/Transform.generated.cpp generated/Engine/Game/Game.generated.cpp generated/Engine/ThirdParty/portable-file-dialogs.generated.cpp
 
 build CMakeFiles/SDLProject.dir/main.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/main.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
@@ -73,14 +73,6 @@ build CMakeFiles/SDLProject.dir/generated/Engine/Editor/Camera/EditorCamera.gene
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Editor\Camera
 
-build CMakeFiles/SDLProject.dir/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp || cmake_object_order_depends_target_SDLProject
-  DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
-  DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Editor\ComponentFactory\ComponentFactory.generated.cpp.obj.d
-  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
-  INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
-  OBJECT_DIR = CMakeFiles\SDLProject.dir
-  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Editor\ComponentFactory
-
 build CMakeFiles/SDLProject.dir/generated/Engine/Editor/Editor.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
   DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Editor\Editor.generated.cpp.obj.d
@@ -88,6 +80,14 @@ build CMakeFiles/SDLProject.dir/generated/Engine/Editor/Editor.generated.cpp.obj
   INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Editor
+
+build CMakeFiles/SDLProject.dir/generated/Engine/Editor/Factory/Factory.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/Factory/Factory.generated.cpp || cmake_object_order_depends_target_SDLProject
+  DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
+  DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Editor\Factory\Factory.generated.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Editor\Factory
 
 build CMakeFiles/SDLProject.dir/generated/Engine/Editor/Macros/EngineMacros.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/Macros/EngineMacros.generated.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
@@ -145,6 +145,14 @@ build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Camera/ClearFlags.gen
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Camera
 
+build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Color/Color.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Color/Color.generated.cpp || cmake_object_order_depends_target_SDLProject
+  DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
+  DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Color\Color.generated.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Color
+
 build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Component/Component.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Component/Component.generated.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
   DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Component\Component.generated.cpp.obj.d
@@ -185,6 +193,14 @@ build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Math/Vector2.generate
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Math
 
+build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp || cmake_object_order_depends_target_SDLProject
+  DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
+  DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\RenderType\RenderType.generated.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\RenderType
+
 build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
   DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Renderer\Renderer.generated.cpp.obj.d
@@ -200,6 +216,14 @@ build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Scene/Scene.generated
   INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
   OBJECT_DIR = CMakeFiles\SDLProject.dir
   OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Scene
+
+build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Shape/Shape.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Shape/Shape.generated.cpp || cmake_object_order_depends_target_SDLProject
+  DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
+  DEP_FILE = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Shape\Shape.generated.cpp.obj.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -ID:/Projetos/SDLProject -ID:/Projetos/SDLProject/imgui -ID:/Projetos/SDLProject/imgui/backends -ID:/Projetos/SDLProject/cmake-build-debug -isystem C:/SDL3-3/include -isystem C:/SDL3_image-3/cmake/../include
+  OBJECT_DIR = CMakeFiles\SDLProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\SDLProject.dir\generated\Engine\Game\Core\Shape
 
 build CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Texture/TextureManager.generated.cpp.obj: CXX_COMPILER__SDLProject_unscanned_Debug D$:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Texture/TextureManager.generated.cpp || cmake_object_order_depends_target_SDLProject
   DEFINES = -DPROJECT_SOURCE_DIR=\"D:/Projetos/SDLProject\" -DTR_EDITOR
@@ -361,7 +385,7 @@ build CMakeFiles/SDLProject.dir/Engine/Game/Core/Scene/Scene.cpp.obj: CXX_COMPIL
 #############################################
 # Link the executable SDLProject.exe
 
-build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/SceneSerializer/SceneSerializer.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Camera/EditorCamera.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Editor.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Macros/EngineMacros.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/PropertyType/PropertyType.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/SceneSerializer/SceneSerializer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Engine.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Actor/Actor.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Camera/CameraComponent.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Camera/ClearFlags.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Component/Component.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Inputs/InputManager.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Layer/Layer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Math/Math.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Math/Vector2.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Scene/Scene.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Texture/TextureManager.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Transform/Transform.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Game.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/ThirdParty/portable-file-dialogs.generated.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Inputs/InputManager.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Component/Component.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Camera/CameraComponent.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_draw.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_tables.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_widgets.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_demo.cpp.obj CMakeFiles/SDLProject.dir/imgui/backends/imgui_impl_sdl3.cpp.obj CMakeFiles/SDLProject.dir/imgui/backends/imgui_impl_sdlrenderer3.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/Editor.cpp.obj CMakeFiles/SDLProject.dir/Engine/Engine.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/Camera/EditorCamera.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Scene/Scene.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib C$:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib
+build SDLProject.exe: CXX_EXECUTABLE_LINKER__SDLProject_Debug CMakeFiles/SDLProject.dir/main.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/SceneSerializer/SceneSerializer.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Camera/EditorCamera.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Editor.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Factory/Factory.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/Macros/EngineMacros.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/PropertyType/PropertyType.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Editor/SceneSerializer/SceneSerializer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Engine.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Actor/Actor.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Camera/CameraComponent.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Camera/ClearFlags.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Color/Color.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Component/Component.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Inputs/InputManager.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Layer/Layer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Math/Math.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Math/Vector2.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Renderer/Renderer.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Scene/Scene.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Shape/Shape.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Texture/TextureManager.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Core/Transform/Transform.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/Game/Game.generated.cpp.obj CMakeFiles/SDLProject.dir/generated/Engine/ThirdParty/portable-file-dialogs.generated.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Game.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Inputs/InputManager.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Component/Component.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Camera/CameraComponent.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_draw.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_tables.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_widgets.cpp.obj CMakeFiles/SDLProject.dir/imgui/imgui_demo.cpp.obj CMakeFiles/SDLProject.dir/imgui/backends/imgui_impl_sdl3.cpp.obj CMakeFiles/SDLProject.dir/imgui/backends/imgui_impl_sdlrenderer3.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/Editor.cpp.obj CMakeFiles/SDLProject.dir/Engine/Engine.cpp.obj CMakeFiles/SDLProject.dir/Engine/Editor/Camera/EditorCamera.cpp.obj CMakeFiles/SDLProject.dir/Engine/Game/Core/Scene/Scene.cpp.obj | C$:/SDL3-3/lib/x64/SDL3.lib C$:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib
   FLAGS = -g
   LINK_LIBRARIES = C:/SDL3-3/lib/x64/SDL3.lib  C:/SDL3_image-3/cmake/../lib/x64/SDL3_image.lib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\SDLProject.dir
@@ -405,20 +429,20 @@ build generated/Engine/Editor/Camera/EditorCamera.generated.cpp | ${cmake_ninja_
 
 
 #############################################
-# Custom command for generated\Engine\Editor\ComponentFactory\ComponentFactory.generated.cpp
-
-build generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Editor/ComponentFactory/ComponentFactory.h D$:/Projetos/SDLProject/HeaderTool.py
-  COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Editor/ComponentFactory/ComponentFactory.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp"
-  DESC = Generating generated/Engine/Editor/ComponentFactory/ComponentFactory.generated.cpp
-  restat = 1
-
-
-#############################################
 # Custom command for generated\Engine\Editor\Editor.generated.cpp
 
 build generated/Engine/Editor/Editor.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Editor/Editor.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Editor/Editor.h D$:/Projetos/SDLProject/HeaderTool.py
   COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Editor/Editor.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/Editor.generated.cpp"
   DESC = Generating generated/Engine/Editor/Editor.generated.cpp
+  restat = 1
+
+
+#############################################
+# Custom command for generated\Engine\Editor\Factory\Factory.generated.cpp
+
+build generated/Engine/Editor/Factory/Factory.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Editor/Factory/Factory.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Editor/Factory/Factory.h D$:/Projetos/SDLProject/HeaderTool.py
+  COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Editor/Factory/Factory.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Editor/Factory/Factory.generated.cpp"
+  DESC = Generating generated/Engine/Editor/Factory/Factory.generated.cpp
   restat = 1
 
 
@@ -486,6 +510,15 @@ build generated/Engine/Game/Core/Camera/ClearFlags.generated.cpp | ${cmake_ninja
 
 
 #############################################
+# Custom command for generated\Engine\Game\Core\Color\Color.generated.cpp
+
+build generated/Engine/Game/Core/Color/Color.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/Color/Color.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/Color/Color.h D$:/Projetos/SDLProject/HeaderTool.py
+  COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Game/Core/Color/Color.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Color/Color.generated.cpp"
+  DESC = Generating generated/Engine/Game/Core/Color/Color.generated.cpp
+  restat = 1
+
+
+#############################################
 # Custom command for generated\Engine\Game\Core\Component\Component.generated.cpp
 
 build generated/Engine/Game/Core/Component/Component.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/Component/Component.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/Component/Component.h D$:/Projetos/SDLProject/HeaderTool.py
@@ -531,6 +564,15 @@ build generated/Engine/Game/Core/Math/Vector2.generated.cpp | ${cmake_ninja_work
 
 
 #############################################
+# Custom command for generated\Engine\Game\Core\RenderType\RenderType.generated.cpp
+
+build generated/Engine/Game/Core/RenderType/RenderType.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/RenderType/RenderType.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/RenderType/RenderType.h D$:/Projetos/SDLProject/HeaderTool.py
+  COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Game/Core/RenderType/RenderType.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/RenderType/RenderType.generated.cpp"
+  DESC = Generating generated/Engine/Game/Core/RenderType/RenderType.generated.cpp
+  restat = 1
+
+
+#############################################
 # Custom command for generated\Engine\Game\Core\Renderer\Renderer.generated.cpp
 
 build generated/Engine/Game/Core/Renderer/Renderer.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/Renderer/Renderer.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/Renderer/Renderer.h D$:/Projetos/SDLProject/HeaderTool.py
@@ -545,6 +587,15 @@ build generated/Engine/Game/Core/Renderer/Renderer.generated.cpp | ${cmake_ninja
 build generated/Engine/Game/Core/Scene/Scene.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/Scene/Scene.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/Scene/Scene.h D$:/Projetos/SDLProject/HeaderTool.py
   COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Game/Core/Scene/Scene.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Scene/Scene.generated.cpp"
   DESC = Generating generated/Engine/Game/Core/Scene/Scene.generated.cpp
+  restat = 1
+
+
+#############################################
+# Custom command for generated\Engine\Game\Core\Shape\Shape.generated.cpp
+
+build generated/Engine/Game/Core/Shape/Shape.generated.cpp | ${cmake_ninja_workdir}generated/Engine/Game/Core/Shape/Shape.generated.cpp: CUSTOM_COMMAND D$:/Projetos/SDLProject/Engine/Game/Core/Shape/Shape.h D$:/Projetos/SDLProject/HeaderTool.py
+  COMMAND = cmd.exe /C "cd /D D:\Projetos\SDLProject\cmake-build-debug && C:\Users\rossi\AppData\Local\Programs\Python\Python311\python.exe D:/Projetos/SDLProject/HeaderTool.py D:/Projetos/SDLProject/Engine/Game/Core/Shape/Shape.h D:/Projetos/SDLProject/cmake-build-debug/generated/Engine/Game/Core/Shape/Shape.generated.cpp"
+  DESC = Generating generated/Engine/Game/Core/Shape/Shape.generated.cpp
   restat = 1
 
 

@@ -13,16 +13,16 @@
 #endif
 
 #ifdef TR_EDITOR
-#define COMPONENT_BODY(ClassName) \
-    public: \
-    std::string GetComponentName() const override { return #ClassName; } \
-    Component* Clone() const override { return new ClassName(*this); } \
+#define REGISTER_BODY(ClassName, BaseClassName)                                \
+    public:                                                                    \
+    std::string GetTypeName() const override { return #ClassName; }            \
+    BaseClassName* Clone() const override { return new ClassName(*this); }     \
     void AutoExposeField(FieldCollector& collector) override;
 #else
-#define COMPONENT_BODY(ClassName) \
-    public: \
-    std::string GetClassName() const override { return #ClassName; }
-    Component* Clone() const override { return new ClassName(*this); }
+#define REGISTER_BODY(ClassName, BaseClassName)                                 \
+    public:                                                                     \
+    std::string GetTypeName() const override { return #ClassName; }             \
+    BaseClassName* Clone() const override { return new ClassName(*this); }
 #endif
 
 #endif //SDLPROJECT_ENGINEMACROS_H
