@@ -34,8 +34,8 @@
                     "class": "Transform",
                     "properties": {
                         "position": [
-                            0.0,
-                            0.0
+                            -312.0,
+                            -187.0
                         ],
                         "rotation": 0.0,
                         "scale": [
@@ -43,24 +43,12 @@
                             1.0
                         ]
                     }
-                },
-                {
-                    "class": "Renderer",
-                    "properties": {
-                        "color": [
-                            1.0,
-                            1.0,
-                            1.0,
-                            1.0
-                        ],
-                        "orderInLayer": 0
-                    }
                 }
             ],
             "id": 2,
             "layer": 1,
-            "name": "New Actor",
-            "parent_id": 1
+            "name": "Objeto aaaaaa",
+            "parent_id": 0
         }
     ]
 }

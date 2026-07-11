@@ -24,7 +24,6 @@ public:
 
     SDL_Renderer* GetRenderer() const { return m_Renderer; }
     SDL_Window*   GetWindow()   const { return m_Window;   }
-    Game*         GetGame()     const { return m_Game;     }
 
     SDL_Texture* GetGameViewTexture() const { return m_GameViewTexture; }
     void ResizeGameView(int w, int h);
@@ -51,7 +50,6 @@ private:
     Uint64        m_LastTime  = 0;
 
     Scene* m_Scene   = nullptr;
-    Game*   m_Game   = nullptr;
     Editor* m_Editor = nullptr;
 
     Scene* m_NextScene = nullptr;

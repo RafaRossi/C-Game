@@ -5,6 +5,7 @@
 
 #ifdef TR_EDITOR
 void CameraComponent::AutoExposeField(FieldCollector& collector) {
+    collector.Expose("m_IsMainCamera", &m_IsMainCamera);
 }
 
 static bool bReg_CameraComponent = []() {

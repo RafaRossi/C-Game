@@ -32,6 +32,12 @@ public:
     void Apply(SDL_Renderer* renderer);
 
     bool IsUnique() const override { return true; }
+
+    bool IsMainCamera() const { return m_IsMainCamera; }
+    void SetMainCamera(bool value) { m_IsMainCamera = value; }
+
+private:
+    PROPERTY() bool m_IsMainCamera;
 };
 
 

@@ -166,9 +166,21 @@ public:
     void SetActive(bool active)
     {
         m_IsActive = active;
+
+        if(m_IsActive){
+            OnEnabled();
+        }
+        else{
+            OnDisabled();
+        }
     }
 
     bool IsActive() { return m_IsActive; }
+
+    virtual void OnEnabled() { };
+    virtual void OnDisabled() { };
+
+    virtual void OnCreated() { };
 
 private:
     std::vector<Component*> m_Components;

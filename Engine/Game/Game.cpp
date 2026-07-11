@@ -6,15 +6,6 @@
 constexpr int WINDOW_WIDTH  = 800;
 constexpr int WINDOW_HEIGHT = 600;
 
-void Game::Init(SDL_Renderer* renderer, Scene* scene) {
-    m_Renderer = renderer;
-    m_Scene = scene;
-
-    TextureManager::Instance().Init(m_Renderer);
-
-    m_IsRunning = true;
-}
-
 void Game::ProcessEvents() {
     InputManager::Instance().NewFrame();
 
@@ -90,7 +81,9 @@ void Game::Run() {
 void Game::RenderScene(EditorCamera *editorCamera) {
     editorCamera->Apply(m_Renderer);
 
-    for (auto* actor : m_Scene->GetActors()) {
+    auto actors = m_Scene->GetActors();
+
+    for (auto* actor : actors) {
         if (!actor->IsActive()) continue;
         actor->Draw(m_Renderer);
     }

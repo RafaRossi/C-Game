@@ -20,7 +20,9 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Color/Color.h
         Engine/Game/Core/Shape/Shape.h
         Engine/Editor/Factory/Factory.h
-        Engine/Game/Core/RenderType/RenderType.h)
+        Engine/Game/Core/RenderType/RenderType.h
+        Engine/Game/Core/RenderType/ShapeRender.cpp
+        Engine/Game/Core/RenderType/ShapeRender.h)
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 

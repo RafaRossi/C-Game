@@ -109,10 +109,6 @@ void Editor::Shutdown() {
     ImGui::DestroyContext();
 }
 
-Game* Editor::GetGame() const {
-    return m_Engine->GetGame();
-}
-
 void Editor::RenderMainMenuBar() {
     ImGui::PushStyleColor(ImGuiCol_MenuBarBg, ImColor(30, 30, 30).Value);
 
@@ -266,6 +262,7 @@ void Editor::DrawInspectorForActor(Actor* actor) {
     }
 
     char buffer[256];
+
     strncpy(buffer, actor->name.c_str(), sizeof(buffer) - 1);
     buffer[sizeof(buffer) - 1] = '\0';
 

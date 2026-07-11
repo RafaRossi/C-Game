@@ -25,7 +25,12 @@ public:
 
     Actor* GetCameraActor() const { return m_CameraActor; }
     CameraComponent* GetCamera() const { return m_CameraActor->GetComponent<CameraComponent>(); }
-    void SetMainCamera(CameraComponent* cameraComponent) { m_CameraActor = cameraComponent->owner; }
+
+    void SetMainCamera(CameraComponent* cameraComponent) {
+        GetCamera()->SetMainCamera(false);
+        m_CameraActor = cameraComponent->owner;
+        GetCamera()->SetMainCamera(true);
+    }
 
     bool IsLayerOrderDirty() const { return m_LayerOrderDirty; }
     void SetLayerOrderDirty(bool dirty) { m_LayerOrderDirty = dirty; }
@@ -38,6 +43,7 @@ private:
     std::vector<Actor*> m_Actors;
 
     bool m_LayerOrderDirty = true;
+    bool m_sceneIsDirty = false;
 
     struct ActorSnapshot {
         std::string name;

@@ -16,24 +16,17 @@
 class Actor;
 
 class Component {
+INSTANCED(Component)
 public:
     Actor* owner = nullptr;
 
-    virtual ~Component() = default;
     virtual void Update(float deltaTime) {}
     virtual void Draw(SDL_Renderer* renderer) {}
 
     virtual void* GetInstance() { return this; }
 
-    virtual std::string GetTypeName() const = 0;
-    virtual Component* Clone() const = 0;
-
     virtual bool IsUnique() const { return false; }
     virtual bool CanBeRemoved() { return true; }
-
-#ifdef TR_EDITOR
-    virtual void AutoExposeField(FieldCollector& collector) { }
-#endif
 };
 
 #endif //SDLPROJECT_COMPONENT_H

@@ -23,6 +23,7 @@ void Engine::Init() {
         return;
     }
 
+#ifdef TR_EDITOR
     m_Editor = new Editor(this);
     m_Editor->Init(m_Window, m_Renderer);
 
@@ -36,8 +37,11 @@ void Engine::Init() {
         SceneSerializer::SaveScene(m_Scene, "../Scenes/Default Scene.tscene");
     }
 
-    m_Game = new Game();
-    m_Game->Init(m_Renderer, m_Scene);
+#else
+    m_IsPlaying = true;
+    SceneSerializer::LoadScene(m_Scene = new Scene(), "Data/Scene1.tscene");
+#endif
+
 
     m_ViewportTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_ViewportWidth, m_ViewportHeight);
 
@@ -59,11 +63,11 @@ void Engine::Run() {
 }
 
 void Engine::Shutdown() {
-    if (m_Game != nullptr) {
+    /*if (m_Game != nullptr) {
         m_Game->Shutdown();
         delete m_Game;
         m_Game = nullptr;
-    }
+    }*/
 
     if (m_Editor != nullptr) {
         m_Editor->Shutdown();
@@ -153,17 +157,11 @@ void Engine::ProcessEvents() {
 }
 
 void Engine::Update() {
-    if (m_IsPlaying && !m_IsPaused && m_Game != nullptr)
-        m_Game->Update(CalculateDeltaTime());
+    /*if (m_IsPlaying && !m_IsPaused && m_Game != nullptr)
+        m_Game->Update(CalculateDeltaTime());*/
 }
 
 void Engine::Render() {
-
-    if (m_ViewportTexture != nullptr) SDL_DestroyTexture(m_ViewportTexture);
-    m_ViewportTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_ViewportWidth, m_ViewportHeight);
-
-    if (m_GameViewTexture != nullptr) SDL_DestroyTexture(m_GameViewTexture);
-    m_GameViewTexture = SDL_CreateTexture(m_Renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, m_GameViewWidth, m_GameViewHeight);
 
     SDL_SetRenderDrawColor(m_Renderer, 30, 30, 30, 255);
     SDL_RenderClear(m_Renderer);
@@ -172,17 +170,12 @@ void Engine::Render() {
     SDL_SetRenderDrawColor(m_Renderer, 20, 30, 45, 255);
     SDL_RenderClear(m_Renderer);
 
-    if(m_Game != nullptr)
-        m_Game->RenderScene(m_Editor->GetEditorCamera());
-
     SDL_SetRenderTarget(m_Renderer, nullptr);
 
     SDL_SetRenderTarget(m_Renderer, m_GameViewTexture);
     SDL_SetRenderDrawColor(m_Renderer, 20, 30, 45, 255);
     SDL_RenderClear(m_Renderer);
 
-    if (m_IsPlaying && m_Game != nullptr)
-        m_Game->Render();
 
     SDL_SetRenderTarget(m_Renderer, nullptr);
 
@@ -194,15 +187,16 @@ void Engine::Render() {
 void Engine::ChangeScene(Scene *scene) {
     if(scene == nullptr) return;
 
+    if (m_Editor != nullptr)
+        m_Editor->OnSceneChanged();
+
     m_NextScene = scene;
 }
 
 void Engine::ApplySceneChange() {
     if(m_NextScene == nullptr) return;
 
-    if(m_Scene != nullptr){
-        delete m_Scene;
-    }
+    delete m_Scene;
 
     m_Scene = m_NextScene;
     m_NextScene = nullptr;

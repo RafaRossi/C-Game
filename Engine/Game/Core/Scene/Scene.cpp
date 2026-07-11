@@ -5,7 +5,7 @@
 #include "Scene.h"
 
 Scene::Scene(){
-
+    m_CameraActor = nullptr;
 }
 
 Scene::~Scene(){
@@ -19,6 +19,11 @@ Actor* Scene::CreateActor(const std::string& actorName) {
     auto* actor = new Actor(actorName);
     m_Actors.push_back(actor);
     m_LayerOrderDirty = true;
+
+    m_sceneIsDirty = true;
+
+    actor->OnCreated();
+
     return actor;
 }
 
@@ -39,6 +44,8 @@ void Scene::RemoveActor(Actor* actor) {
         m_Actors.erase(it);
         m_LayerOrderDirty = true;
     }
+
+    m_sceneIsDirty = true;
 }
 
 void Scene::Serialize() {

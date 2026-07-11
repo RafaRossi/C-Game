@@ -11,25 +11,10 @@
 #include "../Actor/Actor.h"
 
 class RenderType {
-public:
-    virtual ~RenderType() = default;
+INSTANCED(RenderType)
 
+public:
     virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) = 0;
-
-    virtual std::string GetTypeName() const = 0;
-    virtual RenderType* Clone() const = 0;
-    virtual void AutoExposeField(FieldCollector& collector) {}
-};
-
-class ShapeRenderer : public RenderType {
-    REGISTER_BODY(ShapeRenderer, RenderType)
-
-public:
-    PROPERTY() std::string teste;
-
-    void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
-
-    }
 };
 
 #endif //SDLPROJECT_RENDERTYPE_H

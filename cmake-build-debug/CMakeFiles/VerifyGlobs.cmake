@@ -22,6 +22,7 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Game/Core/Math/Math.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Math/Vector2.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/RenderType/RenderType.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/RenderType/ShapeRender.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Renderer/Renderer.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Scene/Scene.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Shape/Shape.h"

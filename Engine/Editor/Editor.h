@@ -18,7 +18,10 @@ class Game;
 
 class Editor {
 public:
-    explicit Editor(Engine* engine) : m_Engine(engine) {}
+    explicit Editor(Engine* engine) : m_Engine(engine) {
+        m_SelectedActor = nullptr;
+        m_CopiedActor = nullptr;
+    }
 
     void Init(SDL_Window* window, SDL_Renderer* renderer);
     void NewFrame();
@@ -29,6 +32,11 @@ public:
     EditorCamera* GetEditorCamera() { return &m_EditorCamera; }
 
     void RenderSceneView();
+
+    void OnSceneChanged(){
+        m_SelectedActor = nullptr;
+        m_CopiedActor = nullptr;
+    }
 
 private:
     Engine*       m_Engine   = nullptr;
