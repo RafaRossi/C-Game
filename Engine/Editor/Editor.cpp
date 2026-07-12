@@ -1,3 +1,4 @@
+#ifdef TR_EDITOR
 #include "Editor.h"
 #include "../Engine.h"
 #include "PropertyType/PropertyType.h"
@@ -840,3 +841,4 @@ void Editor::DrawDirectoryNodes(const std::filesystem::path& directoryPath) {
         }
     }
 }
+#endif

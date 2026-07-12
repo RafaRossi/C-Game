@@ -9,7 +9,7 @@
 #include <string>
 #include "../Actor/Actor.h"
 #include "../Camera/CameraComponent.h"
-#include "Engine/Editor/SceneSerializer/SceneSerializer.h"
+#include "Engine/Game/Core/Serialization/SceneSerializer/SceneSerializer.h"
 
 
 class Scene {
@@ -23,11 +23,13 @@ public:
     void RemoveActor(Actor* actor);
     std::vector<Actor*>& GetActors() { return m_Actors; }
 
-    Actor* GetCameraActor() const { return m_CameraActor; }
     CameraComponent* GetCamera() const { return m_CameraActor->GetComponent<CameraComponent>(); }
 
+
     void SetMainCamera(CameraComponent* cameraComponent) {
-        GetCamera()->SetMainCamera(false);
+        if(m_CameraActor){
+            GetCamera()->SetMainCamera(false);
+        }
         m_CameraActor = cameraComponent->owner;
         GetCamera()->SetMainCamera(true);
     }
@@ -37,6 +39,8 @@ public:
 
     void Serialize();
     void Deserialize();
+
+    virtual void InitializeScene() = 0;
 
 private:
     Actor* m_CameraActor = nullptr;

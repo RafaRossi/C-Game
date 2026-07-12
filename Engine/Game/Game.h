@@ -6,21 +6,33 @@
 #include <algorithm>
 #include "Core/Actor/Actor.h"
 #include "Core/Camera/CameraComponent.h"
-#include "../Editor/Camera/EditorCamera.h"
 #include "Core/Scene/Scene.h"
 
 class Game {
 public:
-    void Init(SDL_Renderer* renderer, Scene* scene);
-    void Run();
 
-    void ProcessEvents();
+    static Game& Instance(){
+        static Game instance;
+        return instance;
+    }
+
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
+    void Init(Scene *scene, SDL_Renderer* renderer);
+
+    void ProcessEvents(SDL_Event event);
+
     void Update(float deltaTime);
     void Render();
-    void RenderScene(EditorCamera* editorCamera);
     void Shutdown();
 
+    SDL_Renderer* GetRenderer() { return m_Renderer; }
+
 private:
+    Game() = default;
+    ~Game() = default;
+
     SDL_Renderer* m_Renderer    = nullptr;
     Scene*        m_Scene = nullptr;
 

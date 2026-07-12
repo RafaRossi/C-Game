@@ -67,17 +67,6 @@ public:
         return parent->GetWorldRotation() + m_Transform->rotation;
     }
 
-    SDL_FRect GetBounds() const {
-        Vector2 worldPos = GetWorldPosition();
-
-        return {
-                worldPos.x,
-                worldPos.y,
-                m_Transform->scale.x,
-                m_Transform->scale.y
-        };
-    }
-
     template<typename T>
     T* AddComponent() {
         static_assert(std::is_base_of<Component, T>::value,
@@ -156,11 +145,6 @@ public:
     virtual void Update(float deltaTime) {
         for (auto* c : m_Components)
             c->Update(deltaTime);
-    }
-
-    virtual void Draw(SDL_Renderer* renderer) {
-        for (auto* c : m_Components)
-            c->Draw(renderer);
     }
 
     void SetActive(bool active)

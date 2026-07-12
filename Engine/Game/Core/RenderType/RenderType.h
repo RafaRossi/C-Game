@@ -9,10 +9,10 @@
 #include <SDL3/SDL_render.h>
 #include "../Component/Component.h"
 #include "../Actor/Actor.h"
+#include "Engine/Game/Core/Color/Color.h"
 
 class RenderType {
 INSTANCED(RenderType)
-
 public:
     virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) = 0;
 };

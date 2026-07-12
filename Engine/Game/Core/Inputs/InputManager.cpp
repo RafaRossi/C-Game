@@ -17,6 +17,7 @@ void InputManager::ProcessEvent(const SDL_Event &event) {
         case SDL_EVENT_KEY_DOWN:
             if(!event.key.repeat){
                 m_KeysDown.insert(event.key.scancode);
+                m_KeysPressed.insert(event.key.scancode);
             }
             break;
 
@@ -66,4 +67,17 @@ bool InputManager::IsMouseButtonPressed(Uint8 button) const {
 
 bool InputManager::IsMouseButtonReleased(Uint8 button) const {
     return m_MouseButtonsReleased.contains(button);
+}
+
+float InputManager::GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) {
+    float value = 0.0f;
+
+    if(IsKeyDown(negativeKey)) value -= 1.f;
+    if(IsKeyDown(positiveKey)) value += 1.f;
+
+    return value;
+}
+
+Vector2 InputManager::GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey) {
+    return Vector2 {GetAxis(leftKey, rightKey), GetAxis(upKey, downKey)};
 }

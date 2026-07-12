@@ -7,20 +7,22 @@
 
 
 #include "RenderType.h"
-
-class Shape;
+#include "Engine/Game/Core/Shape/Shape.h"
 
 class ShapeRender : public RenderType {
     REGISTER_BODY(ShapeRender, RenderType)
-
 public:
-    PROPERTY() Shape* shape;
+    ~ShapeRender() = default;
+
     void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
-
+        m_Shape->Draw(renderer, bounds, color);
     }
-};
 
-class Shape {
-INSTANCED(Shape)
+    void SetShape(Shape* shape){
+        m_Shape = shape;
+    }
+
+private:
+    Shape* m_Shape = nullptr;
 };
 #endif //SDLPROJECT_SHAPERENDER_H

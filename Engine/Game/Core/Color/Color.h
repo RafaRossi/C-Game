@@ -13,6 +13,8 @@ struct Color {
 
     Color() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
 
+    Color(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {}
+
     Color(float red, float green, float blue, float alpha = 1.0f)
             : r(red), g(green), b(blue), a(alpha) {}
 
@@ -24,5 +26,6 @@ struct Color {
                     static_cast<Uint8>(a * 255.0f)
             };
     }
+
 };
 #endif //SDLPROJECT_COLOR_H

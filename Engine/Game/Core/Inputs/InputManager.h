@@ -29,6 +29,9 @@ public:
     bool IsMouseButtonPressed(Uint8 button) const;
     bool IsMouseButtonReleased(Uint8 button) const;
 
+    float GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey);
+    Vector2 GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey);
+
 private:
     InputManager() = default;
 

@@ -6,24 +6,24 @@
 constexpr int WINDOW_WIDTH  = 800;
 constexpr int WINDOW_HEIGHT = 600;
 
-void Game::ProcessEvents() {
+void Game::ProcessEvents(SDL_Event event) {
     InputManager::Instance().NewFrame();
 
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        InputManager::Instance().ProcessEvent(event);
+    InputManager::Instance().ProcessEvent(event);
 
-        if (event.type == SDL_EVENT_QUIT)
-            m_IsRunning = false;
-    }
+    if (event.type == SDL_EVENT_QUIT)
+        m_IsRunning = false;
 
     if (InputManager::Instance().IsKeyPressed(SDL_SCANCODE_ESCAPE))
         m_IsRunning = false;
 }
 
 void Game::Update(float deltaTime) {
-    for (auto* actor : m_Scene->GetActors())
+    for (auto* actor : m_Scene->GetActors()){
+        if(!actor->IsActive()) continue;
+
         actor->Update(deltaTime);
+    }
 }
 
 void Game::Render() {
@@ -45,12 +45,17 @@ void Game::Render() {
     camera->Apply(m_Renderer);
 
     for (auto* actor : m_Scene->GetActors()){
-        if(!actor -> IsActive()) continue;
+
+        if(!actor -> IsActive() ) continue;
+        auto* renderer = actor->GetComponent<Renderer>();
+
+        if(!renderer) continue;
 
         bool isVisible = camera->cullingMask & (int)actor->layer;
 
-        if(isVisible)
-            actor->Draw(m_Renderer);
+        if(isVisible) {
+            renderer->Draw();
+        }
     }
 
     SDL_SetRenderScale(m_Renderer, 1.0f, 1.0f);
@@ -64,30 +69,9 @@ void Game::Shutdown() {
     m_Renderer = nullptr;
 }
 
-void Game::Run() {
-    Uint64 lastTime = SDL_GetTicks();
+void Game::Init(Scene *scene, SDL_Renderer* renderer) {
+    m_Scene = scene;
+    m_Renderer = renderer;
 
-    while (m_IsRunning) {
-        Uint64 currentTime = SDL_GetTicks();
-        float deltaTime    = (currentTime - lastTime) / 1000.0f;
-        lastTime           = currentTime;
-
-        ProcessEvents();
-        Update(deltaTime);
-        Render();
-    }
-}
-
-void Game::RenderScene(EditorCamera *editorCamera) {
-    editorCamera->Apply(m_Renderer);
-
-    auto actors = m_Scene->GetActors();
-
-    for (auto* actor : actors) {
-        if (!actor->IsActive()) continue;
-        actor->Draw(m_Renderer);
-    }
-
-    SDL_SetRenderScale(m_Renderer, 1.0f, 1.0f);
-    SDL_SetRenderViewport(m_Renderer, nullptr);
+    m_Scene->InitializeScene();
 }

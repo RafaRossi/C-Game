@@ -78,9 +78,10 @@ void Scene::Deserialize() {
 }
 
 Scene *SceneAsset::Instantiate() const {
-    auto* runtimeScene = new Scene();
+    /*auto* runtimeScene = new Scene();
 
     SceneSerializer::LoadScene(runtimeScene, filePath);
 
-    return runtimeScene;
+    return runtimeScene;*/
+    return nullptr;
 }

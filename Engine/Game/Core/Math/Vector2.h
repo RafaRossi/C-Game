@@ -29,6 +29,8 @@ struct Vector2{
         return {v.x * scalar, v.y * scalar};
     }
 
+public:
+
     inline float Length() const {
         return std::sqrt(x * x + y * y);
     }

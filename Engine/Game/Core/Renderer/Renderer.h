@@ -11,20 +11,41 @@
 #include "../Component/Component.h"
 #include "../Actor/Actor.h"
 #include "Engine/Game/Core/RenderType/RenderType.h"
+#include "../../Game.h"
 
 class Renderer : public Component {
 REGISTER_BODY(Renderer, Component)
 
 public:
-    PROPERTY() Color color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+    PROPERTY() Color color = Color(255, 255, 255, 255);
     PROPERTY() int orderInLayer = 0;
+    PROPERTY() Vector2 renderSize = {100, 150};
 
     PROPERTY(DisplayName = "Render Type") RenderType* renderType = nullptr;
 
-    void Draw(SDL_Renderer* renderer) override {
+    void Draw() {
         if(renderType){
-            renderType->Draw(renderer, owner->GetBounds(), color);
+            renderType->Draw(Game::Instance().GetRenderer(), GetBounds(owner->GetWorldPosition(), renderSize), color);
         }
+    }
+
+    template<typename T>
+    T* SetRenderType(T* type)
+    {
+        static_assert(std::is_base_of_v<RenderType, T>, "T is not a RenderType.");
+
+        renderType = type;
+
+        return type;
+    }
+
+    SDL_FRect GetBounds(Vector2 worldPosition, Vector2 size) const {
+        return {
+                worldPosition.x,
+                worldPosition.y,
+                size.x,
+                size.y
+        };
     }
 
     /*SDL_Texture* sprite = nullptr;

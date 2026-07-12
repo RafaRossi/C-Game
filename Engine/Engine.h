@@ -4,7 +4,9 @@
 #include <SDL3/SDL.h>
 #include "Game/Game.h"
 
+#ifdef TR_EDITOR
 class Editor;
+#endif
 
 class Engine {
 public:
@@ -22,9 +24,6 @@ public:
     bool IsPlaying() const { return m_IsPlaying; }
     bool IsPaused()  const { return m_IsPaused;  }
 
-    SDL_Renderer* GetRenderer() const { return m_Renderer; }
-    SDL_Window*   GetWindow()   const { return m_Window;   }
-
     SDL_Texture* GetGameViewTexture() const { return m_GameViewTexture; }
     void ResizeGameView(int w, int h);
 
@@ -33,6 +32,7 @@ public:
 
     Scene* GetScene() const { return m_Scene; }
     void ChangeScene(Scene* scene);
+
 
 private:
     void ProcessEvents();
@@ -44,13 +44,17 @@ private:
 
     SDL_Window*   m_Window    = nullptr;
     SDL_Renderer* m_Renderer  = nullptr;
+
     bool          m_IsRunning = false;
     bool          m_IsPlaying = false;
     bool          m_IsPaused  = false;
     Uint64        m_LastTime  = 0;
 
     Scene* m_Scene   = nullptr;
+
+#ifdef TR_EDITOR
     Editor* m_Editor = nullptr;
+#endif
 
     Scene* m_NextScene = nullptr;
 

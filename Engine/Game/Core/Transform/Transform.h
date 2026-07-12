@@ -14,12 +14,13 @@
 class Transform : public Component {
 REGISTER_BODY(Transform, Component)
 
+
 public:
     PROPERTY() Vector2 position;
     PROPERTY() float rotation = 0.0f;
     PROPERTY() Vector2 scale = { 1.f, 1.f};
 
-    void* GetInstance() { return this; }
+    void* GetInstance() override { return this; }
 
     bool IsUnique() const override { return true; }
     bool CanBeRemoved() override { return false; }

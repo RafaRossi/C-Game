@@ -7,11 +7,7 @@
 
 #include <SDL3/SDL_render.h>
 #include <string>
-#include "../../../Editor/Macros/EngineMacros.h"
-
-#ifdef TR_EDITOR
-#include "../../../Editor/PropertyType/PropertyType.h"
-#endif
+#include "../../../Game/Core/Macros/EngineMacros.h"
 
 class Actor;
 
@@ -20,8 +16,7 @@ INSTANCED(Component)
 public:
     Actor* owner = nullptr;
 
-    virtual void Update(float deltaTime) {}
-    virtual void Draw(SDL_Renderer* renderer) {}
+    virtual void Update(float deltaTime) { }
 
     virtual void* GetInstance() { return this; }
 

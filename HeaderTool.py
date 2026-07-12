@@ -35,9 +35,9 @@ def parse_header(header_path):
     code = "// DO NOT EDIT. Auto-generated.\n"
     code += f'#include "{header_path}"\n\n'
 
-    code += '#include "Engine/Editor/Factory/Factory.h"\n\n'
+    code += '#include "Engine/Game/Core/Factory/Factory.h"\n\n'
+    code += '#include "Engine/Game/Core/Reflection/PropertyType/PropertyType.h"\n\n'
 
-    code += "#ifdef TR_EDITOR\n"
 
     code += f"void {class_name}::AutoExposeField(FieldCollector& collector) {{\n"
     for options, var_type, is_pointer, var_name in props:
@@ -60,7 +60,6 @@ def parse_header(header_path):
     code += "    return true;\n"
     code += "}();\n"
 
-    code += "#endif // TR_EDITOR\n"
     return code
 
 

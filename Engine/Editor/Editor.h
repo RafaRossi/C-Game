@@ -1,3 +1,5 @@
+#pragma once
+#ifdef TR_EDITOR
 #ifndef SDLPROJECT_EDITOR_H
 #define SDLPROJECT_EDITOR_H
 
@@ -91,3 +93,4 @@ private:
 };
 
 #endif //SDLPROJECT_EDITOR_H
+#endif

@@ -9,22 +9,77 @@ set(USER_PROJECT_DIR "${CMAKE_SOURCE_DIR}/Sandbox")
 option(BUILD_WITH_EDITOR "Compile with Editor Support" ON)
 
 file(GLOB_RECURSE COMPONENT_HEADERS CONFIGURE_DEPENDS
-    "${ENGINE_SOURCE_DIR}/*.h"
+        "${ENGINE_SOURCE_DIR}/*.h"
         "${USER_PROJECT_DIR}/*.h"
 )
 
-set(GENERATED_FILES ""
-        Engine/Editor/PropertyType/PropertyType.h
-        Engine/Editor/SceneSerializer/SceneSerializer.cpp
-        Engine/Editor/SceneSerializer/SceneSerializer.h
+set(CORE_SOURCES
+        main.cpp
+        Engine/Engine.h
+        Engine/Engine.cpp
+        Engine/Game/Game.h
+        Engine/Game/Game.cpp
+
+        Engine/Game/Core/Actor/Actor.h
+        Engine/Game/Core/Math/Vector2.h
+        Engine/Game/Core/Math/Math.h
         Engine/Game/Core/Color/Color.h
         Engine/Game/Core/Shape/Shape.h
-        Engine/Editor/Factory/Factory.h
+        Engine/Game/Core/Transform/Transform.h
+
+        Engine/Game/Core/Renderer/Renderer.h
         Engine/Game/Core/RenderType/RenderType.h
         Engine/Game/Core/RenderType/ShapeRender.cpp
-        Engine/Game/Core/RenderType/ShapeRender.h)
+        Engine/Game/Core/RenderType/ShapeRender.h
+
+        Engine/Game/Core/Inputs/InputManager.cpp
+        Engine/Game/Core/Inputs/InputManager.h
+
+        Engine/Game/Core/Component/Component.cpp
+        Engine/Game/Core/Component/Component.h
+        Engine/Game/Core/Camera/CameraComponent.h
+        Engine/Game/Core/Camera/CameraComponent.cpp
+        Engine/Game/Core/Camera/ClearFlags.h
+
+        Engine/Game/Core/Texture/TextureManager.h
+        Engine/Game/Core/Layer/Layer.h
+
+        Engine/Game/Core/Scene/Scene.cpp
+        Engine/Game/Core/Scene/Scene.h
+
+        Engine/Game/Core/Serialization/SceneSerializer/SceneSerializer.cpp
+        Engine/Game/Core/Serialization/SceneSerializer/SceneSerializer.h
+        Engine/Game/Core/Factory/Factory.h
+        Engine/Game/Core/Reflection/PropertyType/PropertyType.h
+        Engine/Game/Core/Macros/EngineMacros.h
+
+        Engine/ThirdParty/json.hpp
+        Engine/ThirdParty/portable-file-dialogs.h
+)
+
+set(EDITOR_SOURCES
+        Engine/Editor/Editor.cpp
+        Engine/Editor/Editor.h
+        Engine/Editor/Camera/EditorCamera.cpp
+        Engine/Editor/Camera/EditorCamera.h
+
+        imgui/imgui.cpp
+        imgui/imgui_draw.cpp
+        imgui/imgui_tables.cpp
+        imgui/imgui_widgets.cpp
+        imgui/imgui_demo.cpp
+        imgui/backends/imgui_impl_sdl3.cpp
+        imgui/backends/imgui_impl_sdlrenderer3.cpp
+)
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
+set(GENERATED_FILES ""
+        Engine/Game/Core/Macros/EngineMacros.h
+        Sandbox/Assets/Scripts/GameplayScene.h
+        Sandbox/Assets/Scripts/Player.h
+        Sandbox/Assets/Scripts/Weapon.h
+        Sandbox/Assets/Scripts/Bullet.h
+        Engine/Game/Core/Premades/Premades.h)
 
 foreach (HEADER ${COMPONENT_HEADERS})
     file(RELATIVE_PATH REL_PATH ${CMAKE_SOURCE_DIR} ${HEADER})
@@ -43,56 +98,11 @@ foreach (HEADER ${COMPONENT_HEADERS})
     list(APPEND GENERATED_FILES ${GENERATED_FILE})
 endforeach ()
 
-add_executable(
-        ${PROJECT_NAME} main.cpp
-        ${GENERATED_FILES}
-        Engine/Game/Core/Actor/Actor.h
-        Engine/Game/Core/Math/Vector2.h
-        Engine/Game/Core/Math/Math.h
-        Engine/Game/Game.h
-        Engine/Game/Game.cpp
-        Engine/Game/Core/Renderer/Renderer.h
-        Engine/Game/Core/Inputs/InputManager.cpp
-        Engine/Game/Core/Inputs/InputManager.h
-        Engine/Game/Core/Camera/CameraComponent.h
-        Engine/Game/Core/Component/Component.cpp
-        Engine/Game/Core/Component/Component.h
-        Engine/Game/Core/Camera/CameraComponent.cpp
-        Engine/Game/Core/Texture/TextureManager.h
-        Engine/Game/Core/Layer/Layer.h
-        Engine/Game/Core/Camera/ClearFlags.h
-        Engine/ThirdParty/json.hpp
-
-        Engine/ThirdParty/portable-file-dialogs.h
-
-        Engine/Editor/SceneSerializer/SceneSerializer.cpp
-        Engine/Editor/SceneSerializer/SceneSerializer.h
-
-        imgui/imgui.cpp
-        imgui/imgui_draw.cpp
-        imgui/imgui_tables.cpp
-        imgui/imgui_widgets.cpp
-        imgui/imgui_demo.cpp
-        imgui/backends/imgui_impl_sdl3.cpp
-        imgui/backends/imgui_impl_sdlrenderer3.cpp
-
-
-
-        Engine/Editor/Editor.cpp
-        Engine/Editor/Editor.h
-        Engine/Game/Core/Transform/Transform.h
-        Engine/Engine.h
-        Engine/Engine.cpp
-        Engine/Editor/Camera/EditorCamera.cpp
-        Engine/Editor/Camera/EditorCamera.h
-        Engine/Game/Core/Scene/Scene.cpp
-        Engine/Game/Core/Scene/Scene.h
-        Engine/Editor/Macros/EngineMacros.h
-        Engine/Editor/Factory/Factory.h
-)
+add_executable(${PROJECT_NAME} ${CORE_SOURCES} ${GENERATED_FILES})
 
 if(BUILD_WITH_EDITOR)
     target_compile_definitions(${PROJECT_NAME} PRIVATE TR_EDITOR)
+    target_sources(${PROJECT_NAME} PRIVATE ${EDITOR_SOURCES})
 endif ()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
@@ -137,9 +147,11 @@ if(WIN32)
             "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
     )
 
-    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/Engine/Editor/Fonts"
-            "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Editor/Fonts"
-    )
+    if(BUILD_WITH_EDITOR)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "${CMAKE_SOURCE_DIR}/Engine/Editor/Fonts"
+                "$<TARGET_FILE_DIR:${PROJECT_NAME}>/Editor/Fonts"
+        )
+    endif()
 endif()
