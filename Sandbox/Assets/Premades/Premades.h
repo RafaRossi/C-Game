@@ -13,6 +13,7 @@
 #include "Engine/Game/Core/Renderer/Renderer.h"
 #include "Engine/Game/Core/RenderType/ShapeRender.h"
 #include "Engine/Game/Core/Utils/DestroyActorAfterTime.h"
+#include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
 
 class Premades{
 public:
