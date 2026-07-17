@@ -13,6 +13,7 @@
 #include "Engine/Game/Core/Renderer/Renderer.h"
 #include "Engine/Game/Core/RenderType/ShapeRender.h"
 #include "Engine/Game/Core/Utils/DestroyActorAfterTime.h"
+#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 #include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
 
 class Premades{
@@ -20,12 +21,20 @@ public:
     static Actor* PlayerObject(Vector2 position, float rotation){
         Actor* player = Game::Instance().CreateActor("Player");;
         player->AddComponent<Player>();
-        auto* renderer = player->AddComponent<Renderer>();
-        renderer->renderSize = { 40.f, 40.f };
-        renderer->SetRenderType(new ShapeRender())->SetShape(new Square());
 
         player->transform()->position = position;
         player->transform()->rotation = rotation;
+
+        auto* rigidbody = player->AddComponent<Rigidbody>();
+
+
+        Actor* visual = GenericActor("Visual", player, player->GetWorldPosition(), player->GetWorldRotation());
+
+        auto* renderer = visual->AddComponent<Renderer>();
+        renderer->renderSize = { 40.f, 40.f };
+        renderer->SetRenderType(new ShapeRender())->SetShape(new Square());
+
+
 
         return player;
     }
