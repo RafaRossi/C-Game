@@ -1,3 +1,0 @@
-D:/Projetos/SDLProject/cmake-build-debug/CMakeFiles/SDLProject.dir
-D:/Projetos/SDLProject/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Projetos/SDLProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
