@@ -16,6 +16,7 @@ INSTANCED(Component)
 public:
     Actor* owner = nullptr;
 
+    virtual void Start() { }
     virtual void Update(float deltaTime) { }
     virtual void LateUpdate(float deltaTime) { }
 

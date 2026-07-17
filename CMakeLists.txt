@@ -13,6 +13,14 @@ file(GLOB_RECURSE COMPONENT_HEADERS CONFIGURE_DEPENDS
         "${USER_PROJECT_DIR}/*.h"
 )
 
+include(FetchContent)
+FetchContent_Declare(
+        box2d
+        GIT_REPOSITORY https://github.com/erincatto/box2d.git
+        GIT_TAG v2.4.1
+)
+FetchContent_MakeAvailable(box2d)
+
 set(CORE_SOURCES
         main.cpp
         Engine/Engine.h
@@ -90,7 +98,15 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Movement/ProjectileMovementComponent.cpp
         Sandbox/Assets/Scripts/WeaponComponent.cpp
         Engine/Game/Core/Utils/DestroyActorAfterTime.h
-        Sandbox/Assets/Scripts/Entity.h)
+        Sandbox/Assets/Scripts/Entity.h
+        Sandbox/Assets/Scripts/Weapon.cpp
+        Sandbox/Assets/Scripts/Player.cpp
+        Engine/Game/Core/Collision/Collider.cpp
+        Engine/Game/Core/Collision/Collider.h
+        Engine/Game/Core/Physics/PhysicsCore.h
+        Engine/Game/Core/Physics/PhyscsManager.h
+        Engine/Game/Core/Rigidbody/Rigidbody.h
+        Engine/Game/Core/Rigidbody/Rigidbody.cpp)
 
 foreach (HEADER ${COMPONENT_HEADERS})
     file(RELATIVE_PATH REL_PATH ${CMAKE_SOURCE_DIR} ${HEADER})
@@ -131,6 +147,7 @@ find_package(SDL3_image REQUIRED CONFIG)
 target_link_libraries(${PROJECT_NAME} PRIVATE
         SDL3::SDL3
         SDL3_image::SDL3_image
+        box2d
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
