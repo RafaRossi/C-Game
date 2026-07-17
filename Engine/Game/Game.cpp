@@ -3,8 +3,6 @@
 #include "Core/Renderer/Renderer.h"
 #include "Core/Texture/TextureManager.h"
 
-constexpr int WINDOW_WIDTH  = 800;
-constexpr int WINDOW_HEIGHT = 600;
 
 void Game::ProcessEvents(SDL_Event event) {
     InputManager::Instance().NewFrame();
@@ -19,10 +17,32 @@ void Game::ProcessEvents(SDL_Event event) {
 }
 
 void Game::Update(float deltaTime) {
+    m_Scene->ProcessPendingActors();
+
     for (auto* actor : m_Scene->GetActors()){
         if(!actor->IsActive()) continue;
 
         actor->Update(deltaTime);
+    }
+}
+
+void Game::LateUpdate(float deltaTime) {
+
+    auto& actors = m_Scene->GetActors();
+
+    for(auto it = actors.begin(); it != actors.end(); ){
+        Actor* actor = *it;
+
+        if(actor->IsPendingDestroy()){
+            delete actor;
+            it = actors.erase(it);
+        }
+        else{
+            if(actor->IsActive()){
+                actor->LateUpdate(deltaTime);
+            }
+            ++it;
+        }
     }
 }
 
@@ -74,4 +94,9 @@ void Game::Init(Scene *scene, SDL_Renderer* renderer) {
     m_Renderer = renderer;
 
     m_Scene->InitializeScene();
+}
+
+Actor* Game::CreateActor(const std::string& actorName)
+{
+    return m_Scene->CreateActor(actorName);
 }

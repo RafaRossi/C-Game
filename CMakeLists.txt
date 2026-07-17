@@ -77,9 +77,20 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Macros/EngineMacros.h
         Sandbox/Assets/Scripts/GameplayScene.h
         Sandbox/Assets/Scripts/Player.h
-        Sandbox/Assets/Scripts/Weapon.h
+        Sandbox/Assets/Scripts/WeaponComponent.h
         Sandbox/Assets/Scripts/Bullet.h
-        Engine/Game/Core/Premades/Premades.h)
+        Sandbox/Assets/Premades/Premades.h
+        Engine/Game/Core/Camera/Follow/InstantFollow.h
+        Engine/Game/Core/Camera/Follow/FollowStrategy.h
+        Engine/Game/Core/Camera/Follow/LookAheadFollow.h
+        Engine/Game/Core/Camera/Follow/SmoothFollow.h
+        Sandbox/Assets/Scripts/BulletStrategy.h
+        Sandbox/Assets/Scripts/DamageStrategy.h
+        Engine/Game/Core/Movement/ProjectileMovementComponent.h
+        Engine/Game/Core/Movement/ProjectileMovementComponent.cpp
+        Sandbox/Assets/Scripts/WeaponComponent.cpp
+        Engine/Game/Core/Utils/DestroyActorAfterTime.h
+        Sandbox/Assets/Scripts/Entity.h)
 
 foreach (HEADER ${COMPONENT_HEADERS})
     file(RELATIVE_PATH REL_PATH ${CMAKE_SOURCE_DIR} ${HEADER})

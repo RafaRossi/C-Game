@@ -22,6 +22,10 @@ public:
     Layer layer = Layer::Default;
 
     virtual ~Actor() {
+        if(parent){
+            parent->RemoveChild(this);
+        }
+
         for (auto* component : m_Components) {
             delete component;
         }
@@ -147,6 +151,11 @@ public:
             c->Update(deltaTime);
     }
 
+    virtual void LateUpdate(float deltaTime) {
+        for (auto* c : m_Components)
+            c->LateUpdate(deltaTime);
+    }
+
     void SetActive(bool active)
     {
         m_IsActive = active;
@@ -159,18 +168,38 @@ public:
         }
     }
 
-    bool IsActive() { return m_IsActive; }
+    bool IsActive() const { return m_IsActive; }
 
     virtual void OnEnabled() { };
     virtual void OnDisabled() { };
 
     virtual void OnCreated() { };
 
+    void Destroy(){
+        if(m_IsPendingDestroy) return;
+
+        m_IsPendingDestroy = true;
+        SetActive(false);
+
+        for (auto* child : children) {
+            if(child)
+            {
+                child->Destroy();
+            }
+        }
+    }
+
+    bool IsPendingDestroy() const {
+        return m_IsPendingDestroy;
+    }
+
 private:
     std::vector<Component*> m_Components;
     Transform* m_Transform = nullptr;
 
     bool m_IsActive = true;
+
+    bool m_IsPendingDestroy = false;
 };
 
 #endif //SDLPROJECT_ACTOR_H

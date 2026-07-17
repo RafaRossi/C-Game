@@ -1,27 +1,17 @@
 
 #include "CameraComponent.h"
+#include "../../Game.h"
 
 
 void CameraComponent::Apply(SDL_Renderer *renderer) {
     int w, h;
-
     SDL_GetCurrentRenderOutputSize(renderer, &w, &h);
 
+    SDL_Rect fullViewport = {0, 0, w, h};
+    SDL_SetRenderViewport(renderer, &fullViewport);
+
     RenderBackground(renderer);
-
     SDL_SetRenderScale(renderer, zoom, zoom);
-
-    Vector2 camPos = owner->GetWorldPosition();
-
-    float vx = w / 2.0f - camPos.x * zoom;
-    float vy = h / 2.0f - camPos.y * zoom;
-
-    int vpW = w + (int)std::max(0.0f, -vx);
-    int vpH = h + (int)std::max(0.0f, -vy);
-
-    SDL_Rect viewport = {(int)vx, (int)vy, vpW, vpH};
-
-    SDL_SetRenderViewport(renderer, &viewport);
 }
 
 void CameraComponent::RenderBackground(SDL_Renderer *renderer) {
@@ -39,34 +29,58 @@ void CameraComponent::RenderBackground(SDL_Renderer *renderer) {
 }
 
 void CameraComponent::Update(float deltaTime) {
-    if(!followTarget || target == nullptr) return;
+    if(!followTarget || target == nullptr || m_FollowStrategy == nullptr) return;
 
     Vector2 targetPos   = target->owner->GetWorldPosition();
     Vector2 camPos      = owner->transform()->position;
 
-    Vector2 desiredPos  = camPos;
+    Vector2 desiredPos = targetPos;
 
-    if(deadZone.width > 0.0f || deadZone.height > 0.0f){
+    if (deadZone.width > 0.0f || deadZone.height > 0.0f) {
         float halfW = deadZone.width  / 2.0f;
         float halfH = deadZone.height / 2.0f;
-
         Vector2 delta = targetPos - camPos;
 
-        if(delta.x >  halfW) desiredPos.x = targetPos.x - halfW;
-        if(delta.x < -halfW) desiredPos.x = targetPos.x + halfW;
-        if(delta.y >  halfH) desiredPos.y = targetPos.y - halfH;
-        if(delta.y < -halfH) desiredPos.y = targetPos.y + halfH;
-    }else{
-        desiredPos = targetPos;
+        desiredPos = camPos;
+
+        if (delta.x >  halfW) desiredPos.x = desiredPos.x - halfW;
+        if (delta.x < -halfW) desiredPos.x = desiredPos.x + halfW;
+        if (delta.y >  halfH) desiredPos.y = desiredPos.y - halfH;
+        if (delta.y < -halfH) desiredPos.y = desiredPos.y + halfH;
     }
 
-    float t = 1.0f - std::exp(-smoothSpeed * deltaTime);
-    Vector2 newPos = Vector2::Lerp(camPos, desiredPos, t);
+    FollowContext ctx = { camPos, desiredPos, deltaTime };
 
-    if(bounds.enabled){
+    Vector2 newPos = m_FollowStrategy->Calculate(ctx);
+
+    if (bounds.enabled) {
         newPos.x = Math::Clamp(newPos.x, bounds.min.x, bounds.max.x);
         newPos.y = Math::Clamp(newPos.y, bounds.min.y, bounds.max.y);
     }
 
     owner->transform()->position = newPos;
+}
+
+Vector2 CameraComponent::WorldToScreen(Vector2 worldPos) {
+    int w, h;
+    SDL_GetCurrentRenderOutputSize(Game::Instance().GetRenderer(), &w, &h);
+
+    Vector2 camPos = owner->GetWorldPosition();
+
+    float drawX = worldPos.x - camPos.x + (w / zoom) / 2.0f;
+    float drawY = worldPos.y - camPos.y + (h / zoom) / 2.0f;
+
+    return Vector2{drawX, drawY};
+}
+
+Vector2 CameraComponent::ScreenToWorld(Vector2 screenPos) {
+    int w, h;
+    SDL_GetCurrentRenderOutputSize(Game::Instance().GetRenderer(), &w, &h);
+
+    Vector2 camPos = owner->GetWorldPosition();
+
+    float worldX = screenPos.x + camPos.x - (w / zoom) / 2.0f;
+    float worldY = screenPos.y + camPos.y - (h / zoom) / 2.0f;
+
+    return Vector2{worldX, worldY};
 }

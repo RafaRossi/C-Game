@@ -16,7 +16,7 @@ public:
 
 class Square : public Shape{
 public:
-    virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
+    void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRect(renderer, &bounds);
     }

@@ -6,23 +6,28 @@
 #define SDLPROJECT_PLAYER_H
 
 #include "Engine/Game/Core/Actor/Actor.h"
-#include "Weapon.h"
+#include "Engine/Game/Game.h"
+#include "WeaponComponent.h"
 #include "Engine/Game/Core/Inputs/InputManager.h"
+#include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
+#include "Sandbox/Assets/Scripts/WeaponComponent.h"
+#include "Entity.h"
 
-class Player : public Component {
-    REGISTER_BODY(Player, Component)
+class Player : public Entity {
+    REGISTER_BODY(Player, Entity)
+
 public:
-    Player() { }
-    ~Player() { }
+    Player(){
+        SetBaseStat(Stats::Speed, 500.f);
+        currentWeapon = nullptr;
+    }
 
-    float moveSpeed = 500.f;
+    ~Player() override = default;
 
-    Weapon* currentWeapon;
+    WeaponComponent* currentWeapon;
 
-    void SetCurrentWeapon(Weapon* newWeapon){
-        currentWeapon->OnUnnequip();
+    void SetCurrentWeapon(WeaponComponent* newWeapon){
         currentWeapon = newWeapon;
-        currentWeapon->OnEquip();
     }
 
     bool IsUnique()  { return true; }
@@ -33,14 +38,8 @@ public:
 
         auto* transform = owner->transform();
 
-        transform->position.x += moveInput.x * moveSpeed * deltaTime;
-        transform->position.y += moveInput.y * moveSpeed * deltaTime;
-
-        printf("\n (%f %f)", transform->position.x, transform->position.y);
+        transform->position = transform->position + (moveInput * GetStat(Stats::Speed) * deltaTime);
     }
-
 };
-
-
 
 #endif //SDLPROJECT_PLAYER_H

@@ -10,7 +10,6 @@
 
 class Game {
 public:
-
     static Game& Instance(){
         static Game instance;
         return instance;
@@ -24,10 +23,15 @@ public:
     void ProcessEvents(SDL_Event event);
 
     void Update(float deltaTime);
+    void LateUpdate(float deltaTime);
+
+    Actor* CreateActor(const std::string& actorName);
+
     void Render();
     void Shutdown();
 
     SDL_Renderer* GetRenderer() { return m_Renderer; }
+    Scene* GetScene() { return m_Scene; }
 
 private:
     Game() = default;

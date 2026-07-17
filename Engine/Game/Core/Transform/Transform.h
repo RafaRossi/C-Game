@@ -14,7 +14,6 @@
 class Transform : public Component {
 REGISTER_BODY(Transform, Component)
 
-
 public:
     PROPERTY() Vector2 position;
     PROPERTY() float rotation = 0.0f;

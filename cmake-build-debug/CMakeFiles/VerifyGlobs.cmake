@@ -11,6 +11,10 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Game/Core/Actor/Actor.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Camera/CameraComponent.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Camera/ClearFlags.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Camera/Follow/FollowStrategy.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Camera/Follow/InstantFollow.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Camera/Follow/LookAheadFollow.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Camera/Follow/SmoothFollow.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Color/Color.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Component/Component.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Factory/Factory.h"
@@ -19,7 +23,7 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Game/Core/Macros/EngineMacros.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Math/Math.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Math/Vector2.h"
-  "D:/Projetos/SDLProject/Engine/Game/Core/Premades/Premades.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Movement/ProjectileMovementComponent.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Reflection/PropertyType/PropertyType.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/RenderType/RenderType.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/RenderType/ShapeRender.h"
@@ -29,6 +33,7 @@ set(OLD_GLOB
   "D:/Projetos/SDLProject/Engine/Game/Core/Shape/Shape.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Texture/TextureManager.h"
   "D:/Projetos/SDLProject/Engine/Game/Core/Transform/Transform.h"
+  "D:/Projetos/SDLProject/Engine/Game/Core/Utils/DestroyActorAfterTime.h"
   "D:/Projetos/SDLProject/Engine/Game/Game.h"
   "D:/Projetos/SDLProject/Engine/ThirdParty/portable-file-dialogs.h"
   )
@@ -40,10 +45,14 @@ endif()
 # COMPONENT_HEADERS at CMakeLists.txt:11 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/Projetos/SDLProject/Sandbox/*.h")
 set(OLD_GLOB
+  "D:/Projetos/SDLProject/Sandbox/Assets/Premades/Premades.h"
   "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/Bullet.h"
+  "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/BulletStrategy.h"
+  "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/DamageStrategy.h"
+  "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/Entity.h"
   "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/GameplayScene.h"
   "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/Player.h"
-  "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/Weapon.h"
+  "D:/Projetos/SDLProject/Sandbox/Assets/Scripts/WeaponComponent.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

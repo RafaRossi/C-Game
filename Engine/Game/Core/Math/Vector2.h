@@ -50,6 +50,11 @@ public:
     static float Dot(Vector2 a, Vector2 b){
         return a.x * b.x + a.y * b.y;
     }
+
+    static Vector2 SmoothDamp(Vector2 current, Vector2 target, float speed, float deltaTime) {
+        float t = 1.0f - std::exp(-speed * deltaTime);
+        return Vector2::Lerp(current, target, t);
+    }
 };
 
 #endif //SDLPROJECT_VECTOR2_H

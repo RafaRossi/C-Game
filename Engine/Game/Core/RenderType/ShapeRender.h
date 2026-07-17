@@ -12,7 +12,7 @@
 class ShapeRender : public RenderType {
     REGISTER_BODY(ShapeRender, RenderType)
 public:
-    ~ShapeRender() = default;
+    ~ShapeRender() override = default;
 
     void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
         m_Shape->Draw(renderer, bounds, color);

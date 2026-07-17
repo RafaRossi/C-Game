@@ -10,7 +10,6 @@ void CameraComponent::AutoExposeField(FieldCollector& collector) {
     collector.Expose("backgroundColor", &backgroundColor);
     collector.Expose("followTarget", &followTarget);
     collector.ExposePolymorphic<Transform>("target", &target);
-    collector.Expose("smoothSpeed", &smoothSpeed);
     collector.Expose("m_IsMainCamera", &m_IsMainCamera);
 }
 

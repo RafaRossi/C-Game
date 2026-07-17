@@ -23,6 +23,11 @@ public:
 
     PROPERTY(DisplayName = "Render Type") RenderType* renderType = nullptr;
 
+    void SetRenderSize(Vector2 size)
+    {
+        renderSize = size;
+    }
+
     void Draw() {
         if(renderType){
             renderType->Draw(Game::Instance().GetRenderer(), GetBounds(owner->GetWorldPosition(), renderSize), color);
@@ -40,9 +45,17 @@ public:
     }
 
     SDL_FRect GetBounds(Vector2 worldPosition, Vector2 size) const {
+        CameraComponent* mainCamera = Game::Instance().GetScene()->GetCamera();
+
+        Vector2 drawPos = worldPosition;
+
+        if (mainCamera != nullptr) {
+            drawPos = mainCamera->WorldToScreen(worldPosition);
+        }
+
         return {
-                worldPosition.x,
-                worldPosition.y,
+                drawPos.x - (size.x / 2.0f),
+                drawPos.y - (size.y / 2.0f),
                 size.x,
                 size.y
         };

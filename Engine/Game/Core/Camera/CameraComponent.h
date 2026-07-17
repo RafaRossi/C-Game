@@ -10,6 +10,7 @@
 #include "../Component/Component.h"
 #include "ClearFlags.h"
 #include "Engine/Game/Core/Color/Color.h"
+#include "Engine/Game/Core/Camera/Follow/FollowStrategy.h"
 
 struct CameraDeadZone {
     float width  = 0.0f;
@@ -33,33 +34,34 @@ public:
 
     PROPERTY() bool         followTarget = true;
     PROPERTY() Transform*   target       = nullptr;
-    PROPERTY() float        smoothSpeed  = 5.0f;
 
     CameraDeadZone deadZone;
     CameraBounds   bounds;
 
     void Update(float deltaTime) override;
-
     void Apply(SDL_Renderer* renderer);
     void RenderBackground(SDL_Renderer* renderer);
 
-    Vector2 WorldToScreen(const Vector2& worldPos) const {
-        return (worldPos - owner->GetWorldPosition()) * zoom;
-    }
-
-    Vector2 ScreenToWorld(const Vector2& screenPos) const {
-        return screenPos / zoom + owner->GetWorldPosition();
-    }
+    Vector2 WorldToScreen(Vector2 worldPos);
+    Vector2 ScreenToWorld(Vector2 screenPos);
 
     bool IsUnique() const override { return true; }
 
     bool IsMainCamera() const { return m_IsMainCamera; }
     void SetMainCamera(bool value) { m_IsMainCamera = value; }
 
+    template<typename T, typename... Args>
+    T* SetFollowMode(Args&&... args){
+        delete m_FollowStrategy;
+        auto* strategy = new T(std::forward<Args>(args)...);
+        m_FollowStrategy = strategy;
+        return strategy;
+    }
+
 private:
     PROPERTY() bool m_IsMainCamera = false;
 
-    Vector2 m_CurrentVelocity = { 0.0f, 0.0f};
+    FollowStrategy* m_FollowStrategy = nullptr;
 };
 
 

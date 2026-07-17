@@ -1,10 +1,12 @@
 #include "Engine.h"
-#include "Editor/Editor.h"
 #include "Sandbox/Assets/Scripts/GameplayScene.h"
 #include <iostream>
 
 constexpr int WINDOW_WIDTH  = 1024;
 constexpr int WINDOW_HEIGHT = 768;
+
+const int TARGET_FPS = 60;
+const int FRAME_DELAY = 1000 / TARGET_FPS;
 
 Engine::Engine() = default;
 
@@ -54,7 +56,12 @@ void Engine::Init() {
 void Engine::Run() {
     Game::Instance().Init(m_Scene, m_Renderer);
 
+    Uint64 frameStart;
+    Uint64 frameTime;
+
     while (m_IsRunning) {
+        frameStart = SDL_GetTicks();
+
         ApplySceneChange();
 
         ProcessEvents();
@@ -64,6 +71,12 @@ void Engine::Run() {
 #endif
         Update();
         Render();
+
+        frameTime = SDL_GetTicks() - frameStart;
+
+        if(FRAME_DELAY > frameTime){
+            SDL_Delay(FRAME_DELAY - frameTime);
+        }
     }
 }
 
@@ -148,6 +161,11 @@ void Engine::Pause() {
 float Engine::CalculateDeltaTime() {
     Uint64 current = SDL_GetTicks();
     float dt = (current - m_LastTime) / 1000.0f;
+
+    if(dt > 0.1f){
+        dt = 0.1f;
+    }
+
     m_LastTime = current;
     return dt;
 }
@@ -166,8 +184,11 @@ void Engine::ProcessEvents() {
 }
 
 void Engine::Update() {
-    if (m_IsPlaying && !m_IsPaused)
-        Game::Instance().Update(CalculateDeltaTime());
+    if (m_IsPlaying && !m_IsPaused){
+        float deltaTime = CalculateDeltaTime();
+        Game::Instance().Update(deltaTime);
+        Game::Instance().LateUpdate(deltaTime);
+    }
 }
 
 void Engine::Render() {

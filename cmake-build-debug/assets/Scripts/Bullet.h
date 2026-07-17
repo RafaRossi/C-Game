@@ -7,18 +7,13 @@
 
 #include "Engine/Game/Core/Actor/Actor.h"
 #include "Engine/Game/Core/Renderer/Renderer.h"
+#include "BulletStrategy.h"
 
-class Bullet : Component {
+class Bullet : public Component {
+    REGISTER_BODY(Bullet, Component)
 
 public:
-    Bullet(){
-        AddComponent<Renderer>();
-    }
 
-    void Shoot(Vector2 direction)
-    {
-
-    }
 
     float bulletDamage = 1.f;
 };

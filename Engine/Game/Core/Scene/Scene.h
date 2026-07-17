@@ -20,18 +20,23 @@ public:
     ~Scene();
 
     Actor* CreateActor(const std::string& actorName = "New Actor");
-    void RemoveActor(Actor* actor);
     std::vector<Actor*>& GetActors() { return m_Actors; }
 
-    CameraComponent* GetCamera() const { return m_CameraActor->GetComponent<CameraComponent>(); }
+    void ProcessPendingActors(){
+        for (Actor* actor : m_PendingActors) {
+            m_Actors.push_back(actor);
+        }
+        m_PendingActors.clear();
+    }
+
+    CameraComponent* GetCamera() const { return m_Camera; }
 
 
     void SetMainCamera(CameraComponent* cameraComponent) {
-        if(m_CameraActor){
-            GetCamera()->SetMainCamera(false);
-        }
-        m_CameraActor = cameraComponent->owner;
-        GetCamera()->SetMainCamera(true);
+        if(m_Camera) m_Camera->SetMainCamera(false);
+
+        m_Camera = cameraComponent;
+        m_Camera->SetMainCamera(true);
     }
 
     bool IsLayerOrderDirty() const { return m_LayerOrderDirty; }
@@ -43,8 +48,9 @@ public:
     virtual void InitializeScene() = 0;
 
 private:
-    Actor* m_CameraActor = nullptr;
+    CameraComponent* m_Camera = nullptr;
     std::vector<Actor*> m_Actors;
+    std::vector<Actor*> m_PendingActors;
 
     bool m_LayerOrderDirty = true;
     bool m_sceneIsDirty = false;

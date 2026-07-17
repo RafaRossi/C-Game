@@ -10,6 +10,10 @@ void InputManager::NewFrame() {
 
     m_MouseButtonsPressed.clear();
     m_MouseButtonsReleased.clear();
+
+    float mouseX, mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    m_MousePosition = { mouseX, mouseY };
 }
 
 void InputManager::ProcessEvent(const SDL_Event &event) {

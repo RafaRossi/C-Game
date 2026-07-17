@@ -5,10 +5,13 @@
 #include "Scene.h"
 
 Scene::Scene(){
-    m_CameraActor = nullptr;
+    m_Camera = nullptr;
 }
 
 Scene::~Scene(){
+    for(auto* actor : m_PendingActors)
+        delete actor;
+
     for(auto* actor : m_Actors)
         delete actor;
 
@@ -17,7 +20,7 @@ Scene::~Scene(){
 
 Actor* Scene::CreateActor(const std::string& actorName) {
     auto* actor = new Actor(actorName);
-    m_Actors.push_back(actor);
+    m_PendingActors.push_back(actor);
     m_LayerOrderDirty = true;
 
     m_sceneIsDirty = true;
@@ -25,27 +28,6 @@ Actor* Scene::CreateActor(const std::string& actorName) {
     actor->OnCreated();
 
     return actor;
-}
-
-void Scene::RemoveActor(Actor* actor) {
-    if (actor == nullptr) return;
-
-    for (auto* child : actor->children)
-    {
-        RemoveActor(child);
-    }
-
-    if (actor->parent != nullptr)
-        actor->parent->RemoveChild(actor);
-
-    auto it = std::find(m_Actors.begin(), m_Actors.end(), actor);
-    if (it != m_Actors.end()) {
-        delete *it;
-        m_Actors.erase(it);
-        m_LayerOrderDirty = true;
-    }
-
-    m_sceneIsDirty = true;
 }
 
 void Scene::Serialize() {
