@@ -7,19 +7,25 @@
 
 #include "Engine/Game/Core/Component/Component.h"
 #include "Engine/Game/Core/Math/Vector2.h"
+#include "Weapon.h"
 
 class WeaponComponent : public Component{
     REGISTER_BODY(WeaponComponent, Component)
 
 public:
-    PROPERTY() float fireRate = 0.2f;
-    PROPERTY() float bulletSpeed = 800.0f;
+    void SetWeapon(Weapon* weapon){
+        m_Weapon = weapon;
+    }
+
+    Weapon* GetCurrentWeapon() const { return m_Weapon; }
 
     void Update(float deltaTime) override;
-    bool TryShoot(Vector2 targetWorldPos);
+    bool TryShoot(Entity* entity, Vector2 targetWorldPos);
 
-protected:
-    float m_ShootTime = 0.0f;
+private:
+    Weapon* m_Weapon;
+
+    float m_ShootTime = 0.f;
 };
 
 #endif //SDLPROJECT_WEAPONCOMPONENT_H

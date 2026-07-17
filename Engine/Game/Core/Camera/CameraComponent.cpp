@@ -28,7 +28,7 @@ void CameraComponent::RenderBackground(SDL_Renderer *renderer) {
     SDL_RenderFillRect(renderer, &fullRect);
 }
 
-void CameraComponent::Update(float deltaTime) {
+void CameraComponent::LateUpdate(float deltaTime) {
     if(!followTarget || target == nullptr || m_FollowStrategy == nullptr) return;
 
     Vector2 targetPos   = target->owner->GetWorldPosition();

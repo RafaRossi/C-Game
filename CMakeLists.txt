@@ -90,7 +90,9 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Movement/ProjectileMovementComponent.cpp
         Sandbox/Assets/Scripts/WeaponComponent.cpp
         Engine/Game/Core/Utils/DestroyActorAfterTime.h
-        Sandbox/Assets/Scripts/Entity.h)
+        Sandbox/Assets/Scripts/Entity.h
+        Sandbox/Assets/Scripts/Weapon.cpp
+        Sandbox/Assets/Scripts/Player.cpp)
 
 foreach (HEADER ${COMPONENT_HEADERS})
     file(RELATIVE_PATH REL_PATH ${CMAKE_SOURCE_DIR} ${HEADER})

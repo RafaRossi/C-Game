@@ -38,7 +38,7 @@ public:
     CameraDeadZone deadZone;
     CameraBounds   bounds;
 
-    void Update(float deltaTime) override;
+    void LateUpdate(float deltaTime) override;
     void Apply(SDL_Renderer* renderer);
     void RenderBackground(SDL_Renderer* renderer);
 

@@ -17,27 +17,19 @@ REGISTER_BODY(Player, Entity)
 public:
     Player(){
         SetBaseStat(Stats::Speed, 500.f);
-        currentWeapon = nullptr;
+        SetBaseStat(Stats::AttackSpeed, .5f);
     }
 
     ~Player() override = default;
 
-    WeaponComponent* currentWeapon;
-
-    void SetCurrentWeapon(WeaponComponent* newWeapon){
-        currentWeapon = newWeapon;
-    }
-
     bool IsUnique()  { return true; }
 
-    void Update(float deltaTime) override
-    {
-        auto moveInput = InputManager::Instance().GetAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S).Normalized();
+    void Update(float deltaTime) override;
 
-        auto* transform = owner->transform();
+    void SetWeaponComponent(WeaponComponent* weaponComponent) { m_Weapon = weaponComponent; }
 
-        transform->position = transform->position + (moveInput * GetStat(Stats::Speed) * deltaTime);
-    }
+private:
+    WeaponComponent* m_Weapon = nullptr;
 };
 
 

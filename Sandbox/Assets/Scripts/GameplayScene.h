@@ -18,9 +18,15 @@ public:
 
     void InitializeScene() override {
         auto* playerActor = Premades::PlayerObject({ 0.f, 0.f }, 0);
+        auto* playerComponent = playerActor->GetComponent<Player>();
+
         auto* weaponActor = Premades::GenericActor("Weapon", playerActor, playerActor->GetWorldPosition(), 0.f);
 
-        (playerActor->GetComponent<Player>())->SetCurrentWeapon(weaponActor->AddComponent<WeaponComponent>());
+        auto* weaponComponent = weaponActor->AddComponent<WeaponComponent>();
+        playerComponent->SetWeaponComponent(weaponComponent);
+
+        auto weapon = new StandardGun(playerComponent);
+        weaponComponent->SetWeapon(weapon);
 
         auto* camera = (CreateActor("Main Camera"))->AddComponent<CameraComponent>();
         SetMainCamera(camera);
