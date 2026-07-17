@@ -9,6 +9,7 @@
 #include "Engine/Game/Core/Component/Component.h"
 #include "Engine/Game/Core/Math/Vector2.h"
 #include "Engine/Game/Core/Actor/Actor.h"
+#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 
 class Collider : public Component {
     REGISTER_BODY(Collider, Component)
@@ -22,12 +23,13 @@ class BoxCollider : public Collider{
     REGISTER_BODY(BoxCollider, Collider)
 
 public:
+    BoxCollider();
+
     PROPERTY() Vector2 size = { 100.f, 100.f };
 
-    PROPERTY() float GetLeft()   const { return owner->transform()->position.x + offset.x - (size.x / 2.0f); }
-    PROPERTY() float GetRight()  const { return owner->transform()->position.x + offset.x + (size.x / 2.0f); }
-    PROPERTY() float GetTop()    const { return owner->transform()->position.y + offset.y - (size.y / 2.0f); }
-    PROPERTY() float GetBottom() const { return owner->transform()->position.y + offset.y + (size.y / 2.0f); }
+private:
+    Rigidbody* m_Rigidbody;
+    b2PolygonShape boxShape;
 };
 
 
