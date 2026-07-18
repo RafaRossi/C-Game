@@ -3,13 +3,18 @@
 //
 #include "Player.h"
 #include "Engine/Game/Game.h"
+#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 
 void Player::Update(float deltaTime) {
     auto moveInput = InputManager::Instance().GetAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S).Normalized();
 
-    auto* transform = owner->transform();
+    auto* rigidbody = owner->GetComponent<Rigidbody>();
 
-    transform->position = transform->position + (moveInput * GetStat(Stats::Speed) * deltaTime);
+    if (rigidbody != nullptr) {
+        Vector2 targetVelocity = moveInput * GetStat(Stats::Speed);
+
+        rigidbody->SetVelocity(targetVelocity);
+    }
 
     if(InputManager::Instance().IsMouseButtonDown(1) && m_Weapon){
 

@@ -15,6 +15,7 @@
 #include "Engine/Game/Core/Utils/DestroyActorAfterTime.h"
 #include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 #include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
+#include "Engine/Game/Core/Collision/BoxCollider.h"
 
 class Premades{
 public:
@@ -26,15 +27,23 @@ public:
         player->transform()->rotation = rotation;
 
         auto* rigidbody = player->AddComponent<Rigidbody>();
+        rigidbody->SetRigidbodyType(RigidbodyType::Dynamic);
+        rigidbody->gravityScale = 0.f;
 
+        Actor* collider = GenericActor("Collider", player, player->GetWorldPosition(), player->GetWorldRotation());
+
+        auto* boxCollider = collider->AddComponent<BoxCollider>();
+        boxCollider->size = { 40.f, 40.f};
+
+        auto* r = collider->AddComponent<Renderer>();
+        r->SetRenderSize({ 40.f, 40.f} );
+        r->SetRenderType(new ShapeRender())->SetShape(new Square());
 
         Actor* visual = GenericActor("Visual", player, player->GetWorldPosition(), player->GetWorldRotation());
 
         auto* renderer = visual->AddComponent<Renderer>();
-        renderer->renderSize = { 40.f, 40.f };
+        renderer->SetRenderSize( {40.f, 40.f } );
         renderer->SetRenderType(new ShapeRender())->SetShape(new Square());
-
-
 
         return player;
     }
@@ -55,8 +64,9 @@ public:
         auto* actor = Game::Instance().CreateActor("Bullet");
 
         auto* renderer = actor->AddComponent<Renderer>();
-        renderer->renderSize = { 2.f, 2.f };
-        (renderer->SetRenderType(new ShapeRender))->SetShape(new Square());
+        renderer->SetRenderSize( {2.f, 2.f } );
+        renderer->SetRenderType(new ShapeRender)->SetShape(new Square());
+
 
         (actor->AddComponent<DestroyActorAfterTime>())->StartTimer(3.f);
 
