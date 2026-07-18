@@ -85,6 +85,7 @@ public:
 
         component->owner = this;
         m_Components.push_back(component);
+
         return component;
     }
 
@@ -146,9 +147,25 @@ public:
         return m_Components;
     }
 
-    virtual void Update(float deltaTime) {
+    virtual void Start() {
         for (auto* c : m_Components)
+        {
+            if(c->hasStarted) return;
+
+            c->Start();
+            c->hasStarted = true;
+        }
+    }
+
+    virtual void Update(float deltaTime) {
+        for (auto* c : m_Components){
+            if (!c->hasStarted) {
+                c->Start();
+                c->hasStarted = true;
+            }
+
             c->Update(deltaTime);
+        }
     }
 
     virtual void LateUpdate(float deltaTime) {

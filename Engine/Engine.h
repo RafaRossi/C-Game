@@ -36,6 +36,7 @@ public:
 
 private:
     void ProcessEvents();
+    void Start() const;
     void Update();
     void Render();
     float CalculateDeltaTime();

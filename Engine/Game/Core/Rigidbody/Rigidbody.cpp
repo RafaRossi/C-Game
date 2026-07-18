@@ -3,30 +3,7 @@
 //
 #include "Rigidbody.h"
 #include "Engine/Game/Core/Physics/PhysicsCore.h"
-#include "Engine/Game/Core/Physics/PhyscsManager.h"
-
-Rigidbody::Rigidbody() {
-    b2BodyDef bodyDef;
-
-    switch (m_RigidbodyType) {
-
-        case RigidbodyType::Dynamic:
-            bodyDef.type = b2_dynamicBody;
-            break;
-        case RigidbodyType::Kinematic:
-            bodyDef.type = b2_kinematicBody;
-            break;
-        case RigidbodyType::Static:
-            bodyDef.type = b2_staticBody;
-            break;
-    }
-
-    Vector2 pos = owner->GetWorldPosition();
-    bodyDef.position.Set(pos.x * PIXEL_TO_METERS, pos.y * PIXEL_TO_METERS);
-    bodyDef.fixedRotation = freezeRotation;
-
-    m_Body = PhysicsManager::GetWorld()->CreateBody(&bodyDef);
-}
+#include "Engine/Game/Core/Physics/PhysicsManager.h"
 
 void Rigidbody::SetVelocity(Vector2 velocity) {
     if(m_Body != nullptr){
@@ -60,6 +37,28 @@ void Rigidbody::SetRigidbodyType(RigidbodyType rigidbodyType) {
     }
 }
 
-void Rigidbody::SetShape(b2Shape* shape) {
-    m_Body->CreateFixture(shape, density);
+
+void Rigidbody::Start() {
+    b2BodyDef bodyDef;
+
+    switch (m_RigidbodyType) {
+
+        case RigidbodyType::Dynamic:
+            bodyDef.type = b2_dynamicBody;
+            break;
+        case RigidbodyType::Kinematic:
+            bodyDef.type = b2_kinematicBody;
+            break;
+        case RigidbodyType::Static:
+            bodyDef.type = b2_staticBody;
+            break;
+    }
+
+    Vector2 pos = owner->GetWorldPosition();
+    bodyDef.position.Set(pos.x * PIXEL_TO_METERS, pos.y * PIXEL_TO_METERS);
+    bodyDef.fixedRotation = freezeRotation;
+    bodyDef.gravityScale = gravityScale;
+    bodyDef.linearDamping = linearDamping;
+
+    m_Body = PhysicsManager::GetWorld()->CreateBody(&bodyDef);
 }

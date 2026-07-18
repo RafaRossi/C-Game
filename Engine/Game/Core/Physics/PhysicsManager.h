@@ -2,8 +2,8 @@
 // Created by rossi on 17/07/2026.
 //
 
-#ifndef SDLPROJECT_PHYSCSMANAGER_H
-#define SDLPROJECT_PHYSCSMANAGER_H
+#ifndef SDLPROJECT_PHYSICSMANAGER_H
+#define SDLPROJECT_PHYSICSMANAGER_H
 
 #include "box2d/b2_world.h"
 
@@ -23,4 +23,4 @@ private:
     static b2World* world;
 };
 
-#endif //SDLPROJECT_PHYSCSMANAGER_H
+#endif //SDLPROJECT_PHYSICSMANAGER_H

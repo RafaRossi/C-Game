@@ -105,10 +105,13 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Collision/Collider.cpp
         Engine/Game/Core/Collision/Collider.h
         Engine/Game/Core/Physics/PhysicsCore.h
-        Engine/Game/Core/Physics/PhyscsManager.h
+        Engine/Game/Core/Physics/PhysicsManager.h
         Engine/Game/Core/Rigidbody/Rigidbody.h
         Engine/Game/Core/Rigidbody/Rigidbody.cpp
-        )
+        Engine/Game/Core/Collision/BoxCollider.cpp
+        Engine/Game/Core/Collision/BoxCollider.h
+        Engine/Game/Core/Physics/PhysicsManager.cpp
+)
 
 
 foreach (HEADER ${COMPONENT_HEADERS})

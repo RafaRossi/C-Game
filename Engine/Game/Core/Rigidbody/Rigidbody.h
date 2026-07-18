@@ -25,7 +25,9 @@ private:
     RigidbodyType m_RigidbodyType = RigidbodyType::Dynamic;
 
 public:
-    Rigidbody();
+    ~Rigidbody() = default;
+
+    void Start() override;
 
     void Update(float deltaTime) override;
 
@@ -36,10 +38,12 @@ public:
     void SetVelocity(Vector2 velocity);
     void SetPosition(Vector2 newPosition);
 
-    void SetShape(b2Shape* shape);
+    b2Body* GetBody() { return m_Body; }
 
     PROPERTY() bool freezeRotation = true;
     PROPERTY() float density = 1.f;
+    PROPERTY() float gravityScale = 1.f;
+    PROPERTY() float linearDamping = 10.f;
 };
 
 #endif //SDLPROJECT_RIGIDBODY_H

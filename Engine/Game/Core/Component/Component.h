@@ -24,6 +24,8 @@ public:
 
     virtual bool IsUnique() const { return false; }
     virtual bool CanBeRemoved() { return true; }
+
+    bool hasStarted = false;
 };
 
 #endif //SDLPROJECT_COMPONENT_H

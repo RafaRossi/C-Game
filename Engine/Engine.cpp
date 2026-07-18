@@ -50,11 +50,12 @@ void Engine::Init() {
 
     m_LastTime  = SDL_GetTicks();
     m_IsRunning = true;
-
 }
 
 void Engine::Run() {
     Game::Instance().Init(m_Scene, m_Renderer);
+
+    Start();
 
     Uint64 frameStart;
     Uint64 frameTime;
@@ -180,6 +181,12 @@ void Engine::ProcessEvents() {
 #endif
         if (event.type == SDL_EVENT_QUIT)
             m_IsRunning = false;
+    }
+}
+
+void Engine::Start() const{
+    if (m_IsPlaying) {
+        Game::Instance().Start();
     }
 }
 

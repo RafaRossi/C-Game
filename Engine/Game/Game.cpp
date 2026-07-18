@@ -2,6 +2,7 @@
 #include "Core/Inputs/InputManager.h"
 #include "Core/Renderer/Renderer.h"
 #include "Core/Texture/TextureManager.h"
+#include "Engine/Game/Core/Physics/PhysicsManager.h"
 
 
 void Game::ProcessEvents(SDL_Event event) {
@@ -16,6 +17,14 @@ void Game::ProcessEvents(SDL_Event event) {
         m_IsRunning = false;
 }
 
+void Game::Start() {
+    for (auto* actor : m_Scene->GetActors()){
+        if(!actor->IsActive()) continue;
+
+        actor->Start();
+    }
+}
+
 void Game::Update(float deltaTime) {
     m_Scene->ProcessPendingActors();
 
@@ -24,6 +33,8 @@ void Game::Update(float deltaTime) {
 
         actor->Update(deltaTime);
     }
+
+    PhysicsManager::Update(deltaTime);
 }
 
 void Game::LateUpdate(float deltaTime) {
@@ -94,6 +105,8 @@ void Game::Init(Scene *scene, SDL_Renderer* renderer) {
     m_Renderer = renderer;
 
     m_Scene->InitializeScene();
+
+    PhysicsManager::Init();
 }
 
 Actor* Game::CreateActor(const std::string& actorName)

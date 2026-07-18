@@ -22,6 +22,8 @@ public:
 
     void ProcessEvents(SDL_Event event);
 
+    void Start();
+
     void Update(float deltaTime);
     void LateUpdate(float deltaTime);
 
