@@ -11,11 +11,11 @@
 class Weapon{
 
 public:
-    Weapon(Entity* entity){
+    explicit Weapon(Entity* entity){
         m_Entity = entity;
     }
 
-    ~Weapon() {}
+    virtual ~Weapon() = default;
 
     virtual void Shoot(Vector2 targetWorldPos) = 0;
 
@@ -28,7 +28,7 @@ public:
 
 protected:
     Entity* m_Entity;
-    float m_ShootFrequency;
+    float m_ShootFrequency{};
 };
 
 class StandardGun : public Weapon

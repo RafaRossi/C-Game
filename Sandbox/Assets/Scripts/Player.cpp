@@ -23,5 +23,7 @@ void Player::Update(float deltaTime) {
 
         m_Weapon->TryShoot(this, targetWorldPos);
     }
+
+    if(InputManager::Instance().IsMo)
 }
 

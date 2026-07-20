@@ -35,10 +35,6 @@ public:
         auto* boxCollider = collider->AddComponent<BoxCollider>();
         boxCollider->size = { 40.f, 40.f};
 
-        auto* r = collider->AddComponent<Renderer>();
-        r->SetRenderSize({ 40.f, 40.f} );
-        r->SetRenderType(new ShapeRender())->SetShape(new Square());
-
         Actor* visual = GenericActor("Visual", player, player->GetWorldPosition(), player->GetWorldRotation());
 
         auto* renderer = visual->AddComponent<Renderer>();

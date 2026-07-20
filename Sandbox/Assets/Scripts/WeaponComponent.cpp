@@ -17,8 +17,8 @@ bool WeaponComponent::TryShoot(Entity* entity, Vector2 targetWorldPos) {
         return false;
     }
 
-    m_ShootTime = m_Weapon->GetShootFrequency() * (1 / entity->GetStat(Stats::AttackSpeed));
-    m_Weapon->Shoot(targetWorldPos);
+    m_ShootTime = GetCurrentWeapon()->GetShootFrequency() * (1 / entity->GetStat(Stats::AttackSpeed));
+    GetCurrentWeapon()->Shoot(targetWorldPos);
 
     return true;
 }
