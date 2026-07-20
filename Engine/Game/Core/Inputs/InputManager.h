@@ -43,6 +43,9 @@ private:
     std::unordered_set<Uint8> m_MouseButtonsDown;
     std::unordered_set<Uint8> m_MouseButtonsPressed;
     std::unordered_set<Uint8> m_MouseButtonsReleased;
+
+    float m_MouseScroll = 0.0f;
+    float GetMouseScroll() const;
 };
 
 
