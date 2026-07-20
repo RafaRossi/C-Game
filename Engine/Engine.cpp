@@ -172,6 +172,8 @@ float Engine::CalculateDeltaTime() {
 }
 
 void Engine::ProcessEvents() {
+    InputManager::Instance().NewFrame();
+
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {

@@ -62,6 +62,18 @@ public:
         return m_Weapons[m_CurrentWeaponIndex];
     }
 
+    Weapon* EquipNextWeapon() {
+        return EquipWeapon(m_CurrentWeaponIndex + 1);
+    }
+
+    Weapon* EquipPreviousWeapon() {
+        if (m_CurrentWeaponIndex == 0) {
+            return EquipWeapon(m_Weapons.size() - 1);
+        } else {
+            return EquipWeapon(m_CurrentWeaponIndex - 1);
+        }
+    }
+
     void Update(float deltaTime) override;
     bool TryShoot(Entity* entity, Vector2 targetWorldPos);
 

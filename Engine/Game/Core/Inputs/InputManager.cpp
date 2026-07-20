@@ -2,6 +2,7 @@
 // Created by rossi on 30/06/2026.
 //
 
+#include <cstdio>
 #include "InputManager.h"
 
 void InputManager::NewFrame() {
@@ -48,6 +49,7 @@ void InputManager::ProcessEvent(const SDL_Event &event) {
 
         case SDL_EVENT_MOUSE_WHEEL:
             m_MouseScroll += event.wheel.y;
+            printf("scroll %f\n", m_MouseScroll);
             break;
 
         default:

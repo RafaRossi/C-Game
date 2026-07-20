@@ -27,6 +27,7 @@ public:
     void Update(float deltaTime) override;
 
     void SetWeaponComponent(WeaponComponent* weaponComponent) { m_Weapon = weaponComponent; }
+    WeaponComponent* GetWeaponComponent() { return m_Weapon; }
 
 private:
     WeaponComponent* m_Weapon = nullptr;

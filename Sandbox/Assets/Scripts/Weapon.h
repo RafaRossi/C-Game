@@ -31,17 +31,18 @@ protected:
     float m_ShootFrequency{};
 };
 
-class StandardGun : public Weapon
+class ProjectileGun : public Weapon
 {
 public:
     PROPERTY() float bulletSpeed = 800.f;
 
-    explicit StandardGun(Entity* entity) : Weapon(entity)
+    explicit ProjectileGun(Entity* entity, float shootFrequency = 0.5f) : Weapon(entity)
     {
-        m_ShootFrequency = 0.5f;
+        m_ShootFrequency = shootFrequency;
     }
 
     void Shoot(Vector2 targetWorldPos) override;
 };
+
 
 #endif //SDLPROJECT_WEAPON_H

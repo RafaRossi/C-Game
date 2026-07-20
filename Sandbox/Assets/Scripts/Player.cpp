@@ -24,6 +24,12 @@ void Player::Update(float deltaTime) {
         m_Weapon->TryShoot(this, targetWorldPos);
     }
 
-    if(InputManager::Instance().IsMo)
+    float scroll = InputManager::Instance().GetMouseScroll();
+
+    if(scroll > 0){
+        m_Weapon->EquipNextWeapon();
+    }else if(scroll < 0){
+        m_Weapon->EquipPreviousWeapon();
+    }
 }
 

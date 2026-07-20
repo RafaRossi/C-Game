@@ -25,8 +25,11 @@ public:
         auto* weaponComponent = weaponActor->AddComponent<WeaponComponent>();
         playerComponent->SetWeaponComponent(weaponComponent);
 
-        auto weapon = new StandardGun(playerComponent);
+        auto weapon = new ProjectileGun(playerComponent);
         weaponComponent->AddWeapon(weapon);
+
+        auto weapon2 = new ProjectileGun(playerComponent, 1.f);
+        weaponComponent->AddWeapon(weapon2);
 
         auto* camera = (CreateActor("Main Camera"))->AddComponent<CameraComponent>();
         SetMainCamera(camera);

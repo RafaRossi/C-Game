@@ -6,8 +6,6 @@
 
 
 void Game::ProcessEvents(SDL_Event event) {
-    InputManager::Instance().NewFrame();
-
     InputManager::Instance().ProcessEvent(event);
 
     if (event.type == SDL_EVENT_QUIT)

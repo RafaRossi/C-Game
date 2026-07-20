@@ -4,7 +4,7 @@
 #include "Weapon.h"
 #include "Sandbox/Assets/Premades/Premades.h"
 
-void StandardGun::Shoot(Vector2 targetWorldPos) {
+void ProjectileGun::Shoot(Vector2 targetWorldPos) {
     Vector2 sourcePosition = m_Entity->owner->GetWorldPosition();
 
     Vector2 direction = (targetWorldPos - sourcePosition).Normalized();
