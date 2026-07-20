@@ -14,6 +14,8 @@ void InputManager::NewFrame() {
     float mouseX, mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     m_MousePosition = { mouseX, mouseY };
+
+    m_MouseScroll = 0.f;
 }
 
 void InputManager::ProcessEvent(const SDL_Event &event) {
@@ -42,6 +44,10 @@ void InputManager::ProcessEvent(const SDL_Event &event) {
         case SDL_EVENT_MOUSE_BUTTON_UP:
             m_MouseButtonsDown.erase(event.button.button);
             m_MouseButtonsReleased.insert(event.button.button);
+            break;
+
+        case SDL_EVENT_MOUSE_WHEEL:
+            m_MouseScroll += event.wheel.y;
             break;
 
         default:
@@ -84,4 +90,8 @@ float InputManager::GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) 
 
 Vector2 InputManager::GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey) {
     return Vector2 {GetAxis(leftKey, rightKey), GetAxis(upKey, downKey)};
+}
+
+float InputManager::GetMouseScroll() const {
+    return m_MouseScroll;
 }
