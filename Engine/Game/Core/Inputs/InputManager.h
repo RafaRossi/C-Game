@@ -31,8 +31,8 @@ public:
 
     float GetMouseScroll() const;
 
-    float GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey);
-    Vector2 GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey);
+    float GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) const;
+    Vector2 GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey) const;
 
 private:
     InputManager() = default;
@@ -46,7 +46,7 @@ private:
     std::unordered_set<Uint8> m_MouseButtonsPressed;
     std::unordered_set<Uint8> m_MouseButtonsReleased;
 
-    float m_MouseScroll = 0.0f;
+    float m_MouseScroll = 0.f;
 };
 
 

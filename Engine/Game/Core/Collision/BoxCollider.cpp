@@ -7,18 +7,20 @@
 #include "Engine/Game/Core/Physics/PhysicsCore.h"
 
 void BoxCollider::Start() {
-    m_Rigidbody = owner->GetComponent<Rigidbody>();
+    if(!m_Rigidbody){
+        m_Rigidbody = owner->GetComponent<Rigidbody>();
 
-    if (m_Rigidbody == nullptr && owner->parent != nullptr) {
-        m_Rigidbody = owner->parent->GetComponent<Rigidbody>();
+        if (m_Rigidbody == nullptr && owner->parent != nullptr) {
+            m_Rigidbody = owner->parent->GetComponent<Rigidbody>();
+        }
+
+        if (m_Rigidbody == nullptr) {
+            return;
+        }
     }
 
-    if (m_Rigidbody == nullptr) {
-        return;
-    }
-
-    float halfWidth = ( size.x / 2.0f ) * PIXEL_TO_METERS;
-    float halfHeight = ( size.y / 2.0f ) * PIXEL_TO_METERS;
+    float halfWidth = ( m_Size.x / 2.0f ) * PIXEL_TO_METERS;
+    float halfHeight = ( m_Size.y / 2.0f ) * PIXEL_TO_METERS;
 
     boxShape.SetAsBox(halfWidth, halfHeight);
 

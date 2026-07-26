@@ -22,10 +22,19 @@ class Rigidbody : public Component{
 
 private:
     b2Body* m_Body = nullptr;
-    RigidbodyType m_RigidbodyType = RigidbodyType::Dynamic;
+    RigidbodyType m_RigidbodyType = RigidbodyType::Static;
 
 public:
-    ~Rigidbody() = default;
+    Rigidbody() = default;
+
+    explicit Rigidbody(RigidbodyType rigidbodyType)
+    {
+        m_RigidbodyType = rigidbodyType;
+    }
+
+    explicit Rigidbody(Actor* owner, RigidbodyType rigidbodyType) : Component(owner), m_RigidbodyType(rigidbodyType) { }
+
+    ~Rigidbody() override = default;
 
     void Start() override;
 

@@ -1,5 +1,6 @@
 #include "Engine.h"
-#include "Sandbox/Assets/Scripts/GameplayScene.h"
+#include "Sandbox/Assets/Scenes/GameplayScene.h"
+#include "Engine/Game/Core/Inputs/InputManager.h"
 #include <iostream>
 
 constexpr int WINDOW_WIDTH  = 1024;

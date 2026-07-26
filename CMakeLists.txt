@@ -83,7 +83,7 @@ set(EDITOR_SOURCES
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
 set(GENERATED_FILES ""
         Engine/Game/Core/Macros/EngineMacros.h
-        Sandbox/Assets/Scripts/GameplayScene.h
+        Sandbox/Assets/Scenes/GameplayScene.h
         Sandbox/Assets/Scripts/Player.h
         Sandbox/Assets/Scripts/WeaponComponent.h
         Sandbox/Assets/Scripts/Bullet.h
@@ -111,6 +111,10 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Collision/BoxCollider.cpp
         Engine/Game/Core/Collision/BoxCollider.h
         Engine/Game/Core/Physics/PhysicsManager.cpp
+        Sandbox/Assets/Premades/Premades.cpp
+        Engine/Game/Core/RenderType/ShapeRender.cpp
+        Engine/Game/Core/Shape/Shape.cpp
+        Sandbox/Assets/Scenes/GameplayScene.cpp
 )
 
 

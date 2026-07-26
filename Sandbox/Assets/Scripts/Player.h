@@ -12,13 +12,9 @@
 #include "Entity.h"
 
 class Player : public Entity {
-REGISTER_BODY(Player, Entity)
 
 public:
-    Player(){
-        SetBaseStat(Stats::Speed, 500.f);
-        SetBaseStat(Stats::AttackSpeed, .5f);
-    }
+    explicit Player(Actor* actor);
 
     ~Player() override = default;
 
@@ -31,6 +27,9 @@ public:
 
 private:
     WeaponComponent* m_Weapon = nullptr;
+
+    float m_ScrollCooldown = 0.f;
+    const float SCROLL_DELAY = .2f;
 };
 
 

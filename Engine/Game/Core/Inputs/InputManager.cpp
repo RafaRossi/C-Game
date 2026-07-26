@@ -49,7 +49,6 @@ void InputManager::ProcessEvent(const SDL_Event &event) {
 
         case SDL_EVENT_MOUSE_WHEEL:
             m_MouseScroll += event.wheel.y;
-            printf("scroll %f\n", m_MouseScroll);
             break;
 
         default:
@@ -81,7 +80,7 @@ bool InputManager::IsMouseButtonReleased(Uint8 button) const {
     return m_MouseButtonsReleased.contains(button);
 }
 
-float InputManager::GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) {
+float InputManager::GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) const {
     float value = 0.0f;
 
     if(IsKeyDown(negativeKey)) value -= 1.f;
@@ -90,7 +89,7 @@ float InputManager::GetAxis(SDL_Scancode negativeKey, SDL_Scancode positiveKey) 
     return value;
 }
 
-Vector2 InputManager::GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey) {
+Vector2 InputManager::GetAxis2D(SDL_Scancode leftKey, SDL_Scancode rightKey, SDL_Scancode upKey, SDL_Scancode downKey) const {
     return Vector2 {GetAxis(leftKey, rightKey), GetAxis(upKey, downKey)};
 }
 

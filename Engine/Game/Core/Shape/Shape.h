@@ -5,21 +5,17 @@
 #ifndef SDLPROJECT_SHAPE_H
 #define SDLPROJECT_SHAPE_H
 
-#include <SDL3/SDL_render.h>
 #include <string>
 #include "Engine/Game/Core/Color/Color.h"
 
 class Shape {
 public:
-    virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) = 0;
+    virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color32& color) = 0;
 };
 
 class Square : public Shape{
 public:
-    void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) override {
-        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-        SDL_RenderFillRect(renderer, &bounds);
-    }
+    void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color32& color) override;
 };
 
 #endif //SDLPROJECT_SHAPE_H

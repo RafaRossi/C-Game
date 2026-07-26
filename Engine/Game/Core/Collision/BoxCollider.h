@@ -7,21 +7,22 @@
 
 
 #include "Collider.h"
-#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 
 class BoxCollider : public Collider {
     REGISTER_BODY(BoxCollider, Collider)
 
 public:
+    BoxCollider() = default;
+
+    explicit BoxCollider(Actor* owner, Rigidbody* rigidbody, Vector2 size) : Collider(owner, rigidbody), m_Size(size) {};
     ~BoxCollider() override = default;
 
     void Start() override;
 
-    Vector2 size = { 100.f, 100.f };
-
 private:
-    Rigidbody* m_Rigidbody;
     b2PolygonShape boxShape;
+
+    PROPERTY() Vector2 m_Size = { 100.f, 100.f };
 };
 
 #endif //SDLPROJECT_BOXCOLLIDER_H

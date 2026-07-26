@@ -14,6 +14,10 @@ class Actor;
 class Component {
 INSTANCED(Component)
 public:
+
+    Component() = default;
+    explicit Component(Actor* owner) : owner(owner) {}
+
     Actor* owner = nullptr;
 
     virtual void Start() { }

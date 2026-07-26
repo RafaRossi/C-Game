@@ -8,17 +8,27 @@
 
 #include "Engine/Game/Core/Component/Component.h"
 #include "Engine/Game/Core/Math/Vector2.h"
+#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 
 class Collider : public Component {
     REGISTER_BODY(Collider, Component)
 
 public:
+    Collider(){
+        m_Rigidbody = new Rigidbody(RigidbodyType::Static);
+    }
+
+    explicit Collider(Actor* owner, Rigidbody* rigidbody) : Component(owner), m_Rigidbody(rigidbody) { }
+
     ~Collider() override = default;
 
     void Start() override { }
 
     PROPERTY() bool isTrigger = false;
     PROPERTY() Vector2 offset = { 0.0f, 0.0f };
+
+protected:
+    Rigidbody* m_Rigidbody;
 };
 
 

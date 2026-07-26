@@ -14,7 +14,12 @@
 class RenderType {
 INSTANCED(RenderType)
 public:
-    virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color) = 0;
+    virtual void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color32& color) = 0;
+
+    void Draw(SDL_Renderer* renderer, const SDL_FRect& bounds, const Color& color)
+    {
+        Draw(renderer, bounds, Color32(color.r, color.g, color.b, color.a));
+    }
 };
 
 #endif //SDLPROJECT_RENDERTYPE_H

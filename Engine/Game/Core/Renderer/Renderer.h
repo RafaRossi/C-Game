@@ -12,25 +12,41 @@
 #include "../Actor/Actor.h"
 #include "Engine/Game/Core/RenderType/RenderType.h"
 #include "../../Game.h"
+#include "Engine/Game/Core/RenderType/ShapeRender.h"
+#include "Engine/Game/Core/Shape/Shape.h"
 
 class Renderer : public Component {
 REGISTER_BODY(Renderer, Component)
 
 public:
-    PROPERTY() Color color = Color(255, 255, 255, 255);
     PROPERTY() int orderInLayer = 0;
-    PROPERTY() Vector2 renderSize = {100, 150};
 
-    PROPERTY(DisplayName = "Render Type") RenderType* renderType = nullptr;
+    Renderer() = default;
+    explicit Renderer(Actor* owner, Color color = Color::White(), Vector2 size = {100, 100}, RenderType* renderType = new ShapeRender(new Square()))
+            : Component(owner), m_Color(color), m_RenderSize(size), m_RenderType(renderType) {}
+
+    ~Renderer() override = default;
+
+private:
+    PROPERTY() Color m_Color = Color::White();
+    PROPERTY() Vector2 m_RenderSize = {100, 100};
+    PROPERTY(DisplayName = "Render Type") RenderType* m_RenderType = new ShapeRender(new Square());
+
+public:
 
     void SetRenderSize(Vector2 size)
     {
-        renderSize = size;
+        m_RenderSize = size;
+    }
+
+    void SetColor(Color color)
+    {
+        m_Color = color;
     }
 
     void Draw() {
-        if(renderType){
-            renderType->Draw(Game::Instance().GetRenderer(), GetBounds(owner->GetWorldPosition(), renderSize), color);
+        if(m_RenderType){
+            m_RenderType->Draw(Game::Instance().GetRenderer(), GetBounds(owner->GetWorldPosition(), m_RenderSize), m_Color);
         }
     }
 
@@ -39,7 +55,7 @@ public:
     {
         static_assert(std::is_base_of_v<RenderType, T>, "T is not a RenderType.");
 
-        renderType = type;
+        m_RenderType = type;
 
         return type;
     }
@@ -83,6 +99,10 @@ public:
 
     static bool SetRenderDrawColor(SDL_Renderer* renderer, const Uint8 r, const Uint8 g, const Uint8 b, const Uint8 a){
         return SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    }
+
+    static bool SetRenderDrawColor(SDL_Renderer* renderer, Color32 color){
+        return SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     }
 
     static bool SetRenderFillRect(SDL_Renderer* renderer, const SDL_FRect* bounds)

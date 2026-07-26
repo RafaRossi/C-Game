@@ -71,19 +71,33 @@ public:
         return parent->GetWorldRotation() + m_Transform->rotation;
     }
 
-    template<typename T>
-    T* AddComponent() {
+    template<typename T, typename... Args>
+    T* AddComponent(Args&&... args) {
         static_assert(std::is_base_of<Component, T>::value,
                       "T is not a component.");
 
-        auto* component = new T();
+        T* component = nullptr;
 
-        if(component->IsUnique() && HasComponent(component->GetTypeName())){
+        if constexpr (std::is_constructible_v<T, Actor*, Args...>) {
+            component = new T(this, std::forward<Args>(args)...);
+        }
+        else if constexpr (sizeof...(Args) == 0 && std::is_default_constructible_v<T>) {
+            component = new T();
+        }
+        else {
+            static_assert(std::is_constructible_v<T, Actor*, Args...> || (sizeof...(Args) == 0 && std::is_default_constructible_v<T>),
+                          "Component does not have a valid constructor matching the arguments.");
+        }
+
+        if (component->IsUnique() && HasComponent(component->GetTypeName())) {
             delete component;
             return nullptr;
         }
 
-        component->owner = this;
+        if (component->owner == nullptr) {
+            component->owner = this;
+        }
+
         m_Components.push_back(component);
 
         return component;
