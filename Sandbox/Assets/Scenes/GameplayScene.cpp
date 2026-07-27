@@ -4,22 +4,20 @@
 
 #include "GameplayScene.h"
 #include "Sandbox/Assets/Premades/Premades.h"
-#include "Engine/Game/Core/Renderer/Renderer.h"
 #include "Engine/Game/Core/Camera/Follow/InstantFollow.h"
-#include "Engine/Game/Core/Collision/BoxCollider.h"
+#include "LevelRoom.h"
 
 void GameplayScene::InitializeScene() {
-    auto* playerActor = Premades::PlayerObject({ 0.f, 0.f }, 0);
 
     auto* camera = (CreateActor("Main Camera"))->AddComponent<CameraComponent>();
     SetMainCamera(camera);
 
-    //TODO Fazer um script que carrega um map com base em um mapa de cores
-    auto* wall = Premades::GenericActor("Wall", nullptr, {100.f, 0.f}, 0.f);
-    Vector2 size = Vector2(100, 500);
+    auto* level = new Level();
+    level->GenerateLevel("../Sandbox/Assets/Scenes/Level_Test.bmp");
 
-    wall->AddComponent<Renderer>(Color::Amber(), size);
-    wall->AddComponent<BoxCollider>();
+    auto spawnPoint = Game::GetRandomElement<Vector2>(level->PlayerSpawnPoints()).value_or(Vector2(0.f, 0.f));
+
+    auto* playerActor = Premades::PlayerObject(spawnPoint, 0);
 
     camera->followTarget  = true;
     camera->target        = playerActor->transform();
@@ -28,7 +26,7 @@ void GameplayScene::InitializeScene() {
 
     camera->bounds.enabled = false;
     camera->bounds.min     = {0.0f,    0.0f};
-    camera->bounds.max     = {2000.0f, 1500.0f};
+    camera->bounds.max     = {static_cast<float>(level->Width()), static_cast<float>(level->Height())};
 
     camera->SetFollowMode<InstantFollow>();
 }

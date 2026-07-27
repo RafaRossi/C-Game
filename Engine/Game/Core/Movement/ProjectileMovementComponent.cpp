@@ -6,9 +6,12 @@
 
 void ProjectileMovementComponent::Update(float deltaTime) {
 
-    Vector2 currentPos = owner->transform()->position;
-
-    currentPos = currentPos + (direction * speed * deltaTime);
-
-    owner->transform()->position = currentPos;
+    if (m_Rigidbody) {
+        m_Rigidbody->SetVelocity(direction * speed);
+    }
+    else {
+        Vector2 currentPos = owner->transform()->position;
+        currentPos = currentPos + (direction * speed * deltaTime);
+        owner->transform()->position = currentPos;
+    }
 }

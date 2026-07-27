@@ -30,6 +30,8 @@ private:
 
     float m_ScrollCooldown = 0.f;
     const float SCROLL_DELAY = .2f;
+
+    Vector2 m_PlayerSize = { 16, 16 };
 };
 
 

@@ -14,6 +14,7 @@
 #include "../../Game.h"
 #include "Engine/Game/Core/RenderType/ShapeRender.h"
 #include "Engine/Game/Core/Shape/Shape.h"
+#include "Sandbox/Assets/Scripts/Player.h"
 
 class Renderer : public Component {
 REGISTER_BODY(Renderer, Component)
@@ -22,8 +23,8 @@ public:
     PROPERTY() int orderInLayer = 0;
 
     Renderer() = default;
-    explicit Renderer(Actor* owner, Color color = Color::White(), Vector2 size = {100, 100}, RenderType* renderType = new ShapeRender(new Square()))
-            : Component(owner), m_Color(color), m_RenderSize(size), m_RenderType(renderType) {}
+    explicit Renderer(Actor* owner, Color color = Color::White(), Vector2 size = {100, 100}, int orderInLayer = 0, RenderType* renderType = new ShapeRender(new Square()))
+            : Component(owner), m_Color(color), m_RenderSize(size), m_RenderType(renderType), orderInLayer(orderInLayer) {}
 
     ~Renderer() override = default;
 
@@ -67,6 +68,7 @@ public:
 
         if (mainCamera != nullptr) {
             drawPos = mainCamera->WorldToScreen(worldPosition);
+
         }
 
         return {

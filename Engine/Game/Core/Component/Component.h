@@ -9,6 +9,8 @@
 #include <string>
 #include "../../../Game/Core/Macros/EngineMacros.h"
 
+class Collider;
+
 class Actor;
 
 class Component {
@@ -28,6 +30,11 @@ public:
 
     virtual bool IsUnique() const { return false; }
     virtual bool CanBeRemoved() { return true; }
+
+    virtual void OnCollisionEnter(Collider* other) {};
+    virtual void OnCollisionExit(Collider* other)  {};
+    virtual void OnTriggerEnter(Collider* other)   {}
+    virtual void OnTriggerExit(Collider* other)    {}
 
     bool hasStarted = false;
 };

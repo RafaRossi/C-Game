@@ -29,6 +29,14 @@ struct Vector2{
         return {v.x * scalar, v.y * scalar};
     }
 
+    static const Vector2 Zero;
+    static const Vector2 One;
+    static const Vector2 Right;
+    static const Vector2 Left;
+    static const Vector2 Up;
+    static const Vector2 Down;
+
+
 public:
 
     inline float Length() const {

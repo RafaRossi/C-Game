@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Game.h"
 #include "Core/Inputs/InputManager.h"
 #include "Core/Renderer/Renderer.h"
@@ -102,6 +103,8 @@ void Game::Init(Scene *scene, SDL_Renderer* renderer) {
     m_Scene = scene;
     m_Renderer = renderer;
 
+    SetSeed(9999);
+
     m_Scene->InitializeScene();
 
     PhysicsManager::Init();
@@ -110,4 +113,26 @@ void Game::Init(Scene *scene, SDL_Renderer* renderer) {
 Actor* Game::CreateActor(const std::string& actorName)
 {
     return m_Scene->CreateActor(actorName);
+}
+
+void Game::SetSeed(unsigned int seed) {
+    m_CurrentSeed = seed;
+    m_Rng.seed(seed);
+}
+
+int Game::GetRandomInt(int min, int max) {
+    std::uniform_int_distribution<int> dist(min, max);
+    return dist(m_Rng);
+}
+
+float Game::GetRandomFloat(float min, float max) {
+    std::uniform_real_distribution<float> dist(min, max);
+    return dist(m_Rng);
+}
+
+void Game::GenerateRandomSeed() {
+    std::random_device rd;
+    unsigned int randomSeed = rd();
+
+    SetSeed(randomSeed);
 }

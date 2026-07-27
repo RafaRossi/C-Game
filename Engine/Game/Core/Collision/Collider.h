@@ -14,21 +14,24 @@ class Collider : public Component {
     REGISTER_BODY(Collider, Component)
 
 public:
-    Collider(){
-        m_Rigidbody = new Rigidbody(RigidbodyType::Static);
-    }
+    Collider() = default;
 
-    explicit Collider(Actor* owner, Rigidbody* rigidbody) : Component(owner), m_Rigidbody(rigidbody) { }
+    explicit Collider(Actor* owner, Rigidbody* rigidbody, bool isSensor) : Component(owner), m_Rigidbody(rigidbody), isTrigger(isSensor) { }
 
     ~Collider() override = default;
 
-    void Start() override { }
+    void Start() override;
 
     PROPERTY() bool isTrigger = false;
     PROPERTY() Vector2 offset = { 0.0f, 0.0f };
 
+    void OnCollisionEnter(Collider* other) override;
+    void OnCollisionExit(Collider* other)  override;
+    void OnTriggerEnter(Collider* other)   override;
+    void OnTriggerExit(Collider* other)    override;
+
 protected:
-    Rigidbody* m_Rigidbody;
+    Rigidbody* m_Rigidbody{};
 };
 
 

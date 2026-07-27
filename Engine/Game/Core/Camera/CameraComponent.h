@@ -26,7 +26,7 @@ struct CameraBounds{
 class CameraComponent : public Component {
     REGISTER_BODY(CameraComponent, Component)
 public:
-    PROPERTY() float zoom = 1.0f;
+    PROPERTY() float zoom = 2.0f;
     PROPERTY() Color backgroundColor = { 20, 30, 45, 255 };
 
     ClearFlags clearFlags = ClearFlags::SolidColor;

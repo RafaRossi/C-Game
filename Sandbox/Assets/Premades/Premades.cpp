@@ -10,6 +10,8 @@
 #include "Engine/Game/Core/Shape/Shape.h"
 #include "Engine/Game/Core/Utils/DestroyActorAfterTime.h"
 #include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
+#include "Engine/Game/Core/Rigidbody/Rigidbody.h"
+#include "Engine/Game/Core/Collision/BoxCollider.h"
 
 Actor *Premades::PlayerObject(Vector2 position, float rotation) {
     Actor* player = GenericActor("Player", nullptr, position, rotation);
@@ -35,7 +37,13 @@ Actor *Premades::Bullet(Vector2 direction, float speed, Vector2 position, float 
 
     (actor->AddComponent<DestroyActorAfterTime>())->StartTimer(3.f);
 
-    auto* projMove = actor->AddComponent<ProjectileMovementComponent>();
+    auto* rigidbody = actor->AddComponent<Rigidbody>(RigidbodyType::Dynamic);
+    rigidbody->gravityScale = 0.f;
+    rigidbody->linearDamping = 0.f;
+
+    actor->AddComponent<BoxCollider>(rigidbody,Vector2(5.f, 5.f), true);
+
+    auto* projMove = actor->AddComponent<ProjectileMovementComponent>(rigidbody);
     projMove->Shoot(direction, speed);
 
     actor->transform()->position = position;

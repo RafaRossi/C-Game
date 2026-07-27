@@ -10,7 +10,7 @@
 #include "Engine/Game/Core/RenderType/ShapeRender.h"
 
 Player::Player(Actor *actor) {
-    SetBaseStat(Stats::Speed, 500.f);
+    SetBaseStat(Stats::Speed, 320.f);
     SetBaseStat(Stats::AttackSpeed, .5f);
 
     auto* weaponActor = Premades::GenericActor("Weapon", actor, actor->GetWorldPosition(), 0.f);
@@ -27,16 +27,17 @@ Player::Player(Actor *actor) {
     auto* rigidbody = actor->AddComponent<Rigidbody>(RigidbodyType::Dynamic);
     rigidbody->gravityScale = 0.f;
 
-    Actor* collider = Premades::GenericActor("Collider", actor, actor->GetWorldPosition(), actor->GetWorldRotation());
-    collider->AddComponent<BoxCollider>(rigidbody, Vector2(40.f, 40.f));
+    Actor* collider = Premades::GenericActor("Collider", actor, Vector2::Zero, 0);
+    collider->AddComponent<BoxCollider>(rigidbody, m_PlayerSize, false);
 
-    Actor* visual = Premades::GenericActor("Visual", actor, actor->GetWorldPosition(), actor->GetWorldRotation());
+    Actor* visual = Premades::GenericActor("Visual", actor, Vector2::Zero, 0);
 
-    auto* renderer = visual->AddComponent<Renderer>(Color::Blue(), Vector2(40.f, 40.f));
+    auto* renderer = visual->AddComponent<Renderer>(Color::Blue(), m_PlayerSize, 10);
     renderer->SetRenderType(new ShapeRender())->SetShape(new Square());
 }
 
 void Player::Update(float deltaTime) {
+
     auto moveInput = InputManager::Instance().GetAxis2D(SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_W, SDL_SCANCODE_S).Normalized();
 
     auto* rigidbody = owner->GetComponent<Rigidbody>();

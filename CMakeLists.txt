@@ -115,6 +115,10 @@ set(GENERATED_FILES ""
         Engine/Game/Core/RenderType/ShapeRender.cpp
         Engine/Game/Core/Shape/Shape.cpp
         Sandbox/Assets/Scenes/GameplayScene.cpp
+        Sandbox/Assets/Scenes/LevelRoom.h
+        Engine/Game/Core/Math/Vector2.cpp
+        Engine/Game/Core/Physics/GameContactListener.cpp
+        Engine/Game/Core/Physics/GameContactListener.h
 )
 
 

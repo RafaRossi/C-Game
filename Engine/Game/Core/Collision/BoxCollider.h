@@ -14,7 +14,7 @@ class BoxCollider : public Collider {
 public:
     BoxCollider() = default;
 
-    explicit BoxCollider(Actor* owner, Rigidbody* rigidbody, Vector2 size) : Collider(owner, rigidbody), m_Size(size) {};
+    explicit BoxCollider(Actor* owner, Rigidbody* rigidbody, Vector2 size, bool isSensor = false) : Collider(owner, rigidbody, isSensor), m_Size(size) {};
     ~BoxCollider() override = default;
 
     void Start() override;

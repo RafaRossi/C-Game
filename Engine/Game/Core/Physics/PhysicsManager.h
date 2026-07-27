@@ -6,6 +6,7 @@
 #define SDLPROJECT_PHYSICSMANAGER_H
 
 #include "box2d/b2_world.h"
+#include "GameContactListener.h"
 
 class PhysicsManager{
 public:
@@ -13,6 +14,7 @@ public:
 
     static void Init(){
         world = new b2World(b2Vec2(0.f, 0.f));
+        world->SetContactListener(&m_ContactListener);
     }
 
     static void Update(float deltaTime){
@@ -21,6 +23,7 @@ public:
 
 private:
     static b2World* world;
+    static GameContactListener m_ContactListener;
 };
 
 #endif //SDLPROJECT_PHYSICSMANAGER_H

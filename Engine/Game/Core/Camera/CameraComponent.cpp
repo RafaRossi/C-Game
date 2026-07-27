@@ -79,8 +79,11 @@ Vector2 CameraComponent::ScreenToWorld(Vector2 screenPos) {
 
     Vector2 camPos = owner->GetWorldPosition();
 
-    float worldX = screenPos.x + camPos.x - (w / zoom) / 2.0f;
-    float worldY = screenPos.y + camPos.y - (h / zoom) / 2.0f;
+    float scaledX = screenPos.x / zoom;
+    float scaledY = screenPos.y / zoom;
+
+    float worldX = scaledX + camPos.x - (w / zoom) / 2.0f;
+    float worldY = scaledY + camPos.y - (h / zoom) / 2.0f;
 
     return Vector2{worldX, worldY};
 }
