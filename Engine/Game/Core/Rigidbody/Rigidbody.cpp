@@ -39,26 +39,12 @@ void Rigidbody::SetRigidbodyType(RigidbodyType rigidbodyType) {
 
 
 void Rigidbody::Start() {
-    b2BodyDef bodyDef;
 
-    switch (m_RigidbodyType) {
+}
 
-        case RigidbodyType::Dynamic:
-            bodyDef.type = b2_dynamicBody;
-            break;
-        case RigidbodyType::Kinematic:
-            bodyDef.type = b2_kinematicBody;
-            break;
-        case RigidbodyType::Static:
-            bodyDef.type = b2_staticBody;
-            break;
+Rigidbody::~Rigidbody() {
+    if (m_Body) {
+        PhysicsManager::GetWorld()->DestroyBody(m_Body);
+        m_Body = nullptr;
     }
-
-    Vector2 pos = owner->GetWorldPosition();
-    bodyDef.position.Set(pos.x * PIXEL_TO_METERS, pos.y * PIXEL_TO_METERS);
-    bodyDef.fixedRotation = freezeRotation;
-    bodyDef.gravityScale = gravityScale;
-    bodyDef.linearDamping = linearDamping;
-
-    m_Body = PhysicsManager::GetWorld()->CreateBody(&bodyDef);
 }

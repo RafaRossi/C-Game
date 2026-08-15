@@ -12,6 +12,7 @@
 #include "Engine/Game/Core/Movement/ProjectileMovementComponent.h"
 #include "Engine/Game/Core/Rigidbody/Rigidbody.h"
 #include "Engine/Game/Core/Collision/BoxCollider.h"
+#include "Engine/Game/Core/Collision/CollisionMask.h"
 
 Actor *Premades::PlayerObject(Vector2 position, float rotation) {
     Actor* player = GenericActor("Player", nullptr, position, rotation);
@@ -31,23 +32,20 @@ Actor *Premades::GenericActor(const std::string &actorName, Actor *parent, Vecto
     return actor;
 }
 
-Actor *Premades::Bullet(Vector2 direction, float speed, Vector2 position, float rotation) {
-    auto* actor = Game::Instance().CreateActor("Bullet");
+Actor *Premades::Bullet(Vector2 direction, float speed, Vector2 position, float rotation, uint16 collisionMask) {
+    auto* actor = GenericActor("Bullet", nullptr, position, rotation);
     actor->AddComponent<Renderer>(Color::White(), Vector2(5.f, 5.f));
 
     (actor->AddComponent<DestroyActorAfterTime>())->StartTimer(3.f);
 
     auto* rigidbody = actor->AddComponent<Rigidbody>(RigidbodyType::Dynamic);
-    rigidbody->gravityScale = 0.f;
-    rigidbody->linearDamping = 0.f;
+    rigidbody->SetGravityScale(0.f);
+    rigidbody->SetLinearDamping(0.f);
 
-    actor->AddComponent<BoxCollider>(rigidbody,Vector2(5.f, 5.f), true);
+    actor->AddComponent<BoxCollider>(rigidbody,Vector2(5.f, 5.f), false, collisionMask);
 
     auto* projMove = actor->AddComponent<ProjectileMovementComponent>(rigidbody);
     projMove->Shoot(direction, speed);
-
-    actor->transform()->position = position;
-    actor->transform()->rotation = rotation;
 
     return actor;
 }

@@ -19,6 +19,7 @@ public:
         if(m_CurrentTime >= m_Timer)
         {
             owner->Destroy();
+
             return;
         }
     }
@@ -26,8 +27,8 @@ public:
     void StartTimer(float time) { m_Timer = time; }
 
 private:
-    float m_Timer;
-    float m_CurrentTime;
+    float m_Timer = 0.f;
+    float m_CurrentTime = 0.f;
 };
 
 #endif //SDLPROJECT_DESTROYACTORAFTERTIME_H

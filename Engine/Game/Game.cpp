@@ -100,14 +100,14 @@ void Game::Shutdown() {
 }
 
 void Game::Init(Scene *scene, SDL_Renderer* renderer) {
+    PhysicsManager::Init();
+
     m_Scene = scene;
     m_Renderer = renderer;
 
     SetSeed(9999);
 
     m_Scene->InitializeScene();
-
-    PhysicsManager::Init();
 }
 
 Actor* Game::CreateActor(const std::string& actorName)

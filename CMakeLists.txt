@@ -119,6 +119,7 @@ set(GENERATED_FILES ""
         Engine/Game/Core/Math/Vector2.cpp
         Engine/Game/Core/Physics/GameContactListener.cpp
         Engine/Game/Core/Physics/GameContactListener.h
+        Engine/Game/Core/Collision/CollisionMask.h
 )
 
 

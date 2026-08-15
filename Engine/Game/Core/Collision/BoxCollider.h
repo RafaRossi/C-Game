@@ -7,6 +7,7 @@
 
 
 #include "Collider.h"
+#include "CollisionMask.h"
 
 class BoxCollider : public Collider {
     REGISTER_BODY(BoxCollider, Collider)
@@ -14,7 +15,7 @@ class BoxCollider : public Collider {
 public:
     BoxCollider() = default;
 
-    explicit BoxCollider(Actor* owner, Rigidbody* rigidbody, Vector2 size, bool isSensor = false) : Collider(owner, rigidbody, isSensor), m_Size(size) {};
+    explicit BoxCollider(Actor* owner, Rigidbody* rigidbody, Vector2 size, bool isSensor = false, uint16 collisionLayer = CollisionLayer::Default) : Collider(owner, rigidbody, isSensor, collisionLayer), m_Size(size) {};
     ~BoxCollider() override = default;
 
     void Start() override;

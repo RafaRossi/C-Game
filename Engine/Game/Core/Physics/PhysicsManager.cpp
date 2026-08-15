@@ -7,3 +7,4 @@
 //
 b2World* PhysicsManager::world = nullptr;
 GameContactListener PhysicsManager::m_ContactListener;
+std::unordered_map<uint16, uint16> PhysicsManager::m_LayerMatrix;

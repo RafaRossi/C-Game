@@ -8,6 +8,7 @@
 #include "Engine/Game/Core/Collision/BoxCollider.h"
 #include "Engine/Game/Core/Renderer/Renderer.h"
 #include "Engine/Game/Core/RenderType/ShapeRender.h"
+#include "Engine/Game/Core/Collision/CollisionMask.h"
 
 Player::Player(Actor *actor) {
     SetBaseStat(Stats::Speed, 320.f);
@@ -18,17 +19,17 @@ Player::Player(Actor *actor) {
     auto* weaponComponent = weaponActor->AddComponent<WeaponComponent>();
     SetWeaponComponent(weaponComponent);
 
-    auto weapon = new ProjectileGun(this);
+    auto weapon = new ProjectileGun(this, CollisionLayer::Player);
     weaponComponent->AddWeapon(weapon);
 
-    auto weapon2 = new ProjectileGun(this, 1.f);
+    auto weapon2 = new ProjectileGun(this, CollisionLayer::Player, 1.f);
     weaponComponent->AddWeapon(weapon2);
 
     auto* rigidbody = actor->AddComponent<Rigidbody>(RigidbodyType::Dynamic);
-    rigidbody->gravityScale = 0.f;
+    rigidbody->SetGravityScale(0.f);
 
     Actor* collider = Premades::GenericActor("Collider", actor, Vector2::Zero, 0);
-    collider->AddComponent<BoxCollider>(rigidbody, m_PlayerSize, false);
+    collider->AddComponent<BoxCollider>(rigidbody, m_PlayerSize, false, CollisionLayer::Player);
 
     Actor* visual = Premades::GenericActor("Visual", actor, Vector2::Zero, 0);
 

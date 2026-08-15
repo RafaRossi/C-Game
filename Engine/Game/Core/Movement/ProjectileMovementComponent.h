@@ -21,19 +21,13 @@ public:
 
     ~ProjectileMovementComponent() override = default;
 
-    PROPERTY() Vector2 direction = {1.0f, 0.0f};
-    PROPERTY() float speed = 500.0f;
-
-    void Update(float deltaTime) override;
-
-    void Shoot(Vector2 direction, float speed)
-    {
-        this->direction = direction.Normalized();
-        this->speed = speed;
-    }
+    void Shoot(Vector2 direction, float speed);
 
 private:
     Rigidbody* m_Rigidbody{};
+
+    PROPERTY() Vector2 m_Direction = Vector2::Zero;
+    PROPERTY() float m_Speed = 500.0f;
 };
 
 #endif //SDLPROJECT_PROJECTILEMOVEMENTCOMPONENT_H

@@ -9,7 +9,7 @@ void ProjectileGun::Shoot(Vector2 targetWorldPos) {
 
     Vector2 direction = (targetWorldPos - sourcePosition).Normalized();
 
-    Premades::Bullet(direction, bulletSpeed, sourcePosition, 0.f);
+    Premades::Bullet(direction, bulletSpeed, sourcePosition, 0.f, m_WeaponCollisionLayer);
 }
 
 void Weapon::OnEquip() {

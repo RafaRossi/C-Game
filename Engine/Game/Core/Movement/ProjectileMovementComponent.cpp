@@ -4,14 +4,11 @@
 #include "ProjectileMovementComponent.h"
 #include "../Actor/Actor.h"
 
-void ProjectileMovementComponent::Update(float deltaTime) {
+void ProjectileMovementComponent::Shoot(Vector2 direction, float speed) {
+    m_Direction = direction.Normalized();
+    m_Speed = speed;
 
-    if (m_Rigidbody) {
-        m_Rigidbody->SetVelocity(direction * speed);
-    }
-    else {
-        Vector2 currentPos = owner->transform()->position;
-        currentPos = currentPos + (direction * speed * deltaTime);
-        owner->transform()->position = currentPos;
+    if(m_Rigidbody){
+        m_Rigidbody->SetVelocity(m_Direction * m_Speed);
     }
 }

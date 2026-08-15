@@ -7,12 +7,15 @@
 
 #include "Entity.h"
 #include "Engine/Game/Core/Actor/Actor.h"
+#include "box2d/b2_types.h"
+#include "Engine/Game/Core/Collision/CollisionMask.h"
 
 class Weapon{
 
 public:
-    explicit Weapon(Entity* entity){
+    explicit Weapon(Entity* entity, uint16 weaponCollisionLayer = CollisionLayer::Default){
         m_Entity = entity;
+        m_WeaponCollisionLayer = weaponCollisionLayer;
     }
 
     virtual ~Weapon() = default;
@@ -29,6 +32,8 @@ public:
 protected:
     Entity* m_Entity;
     float m_ShootFrequency{};
+
+    uint16 m_WeaponCollisionLayer = CollisionLayer::Default;
 };
 
 class ProjectileGun : public Weapon
@@ -36,7 +41,7 @@ class ProjectileGun : public Weapon
 public:
     PROPERTY() float bulletSpeed = 800.f;
 
-    explicit ProjectileGun(Entity* entity, float shootFrequency = 0.5f) : Weapon(entity)
+    explicit ProjectileGun(Entity* entity, uint16 weaponCollisionLayer = CollisionLayer::Default, float shootFrequency = 0.5f) : Weapon(entity, weaponCollisionLayer)
     {
         m_ShootFrequency = shootFrequency;
     }

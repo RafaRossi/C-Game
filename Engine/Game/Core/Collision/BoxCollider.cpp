@@ -9,32 +9,12 @@
 void BoxCollider::Start() {
     Collider::Start();
 
-    if(!m_Rigidbody){
-        m_Rigidbody = owner->GetComponent<Rigidbody>();
-        if(owner->name == "Collider")
-        {
-            printf("Player");
-        }
-
-        if (m_Rigidbody == nullptr && owner->parent != nullptr) {
-            m_Rigidbody = owner->parent->GetComponent<Rigidbody>();
-        }
-
-        if (m_Rigidbody == nullptr) {
-            return;
-        }
-    }
-
     float halfWidth = ( m_Size.x / 2.0f ) * PIXEL_TO_METERS;
     float halfHeight = ( m_Size.y / 2.0f ) * PIXEL_TO_METERS;
 
     boxShape.SetAsBox(halfWidth, halfHeight);
 
-    b2FixtureDef fixtureDef;
     fixtureDef.shape = &boxShape;
-    fixtureDef.isSensor = this->isTrigger;
-    fixtureDef.density = 1.0f;
-    fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(this);
 
     m_Rigidbody->GetBody()->CreateFixture(&fixtureDef);
 }
